@@ -1,0 +1,20 @@
+{% extends "orders/_checkout_base.html" %}{% load ab %}
+{% block title %}Checkout: Apple Pay{% endblock %}
+{% block step %}
+<div class="sheet-wrap">
+  <section class="wallet stack" style="gap:0" aria-labelledby="wl-h">
+    <div class="wallet-top"><h1 id="wl-h">Apple Pay</h1><span class="wallet-sim">Simulation</span></div>
+    <dl class="wallet-rows">
+      <div><dt>Card</dt><dd class="num">{{ brand }} •••• {{ last4 }}</dd></div>
+      <div><dt>Deliver to</dt><dd>{{ d.recipient_name }}<br>{% if d.delivery_type == "halls" %}{{ d.halls }}, Room {{ d.room }}{% else %}{{ d.address_line }}, {{ d.postcode }}{% endif %}</dd></div>
+      <div><dt>Delivery</dt><dd>{{ d.delivery_date|date:"D j M" }}, {{ slot_label }}</dd></div>
+      <div><dt>Pay AstonBundle</dt><dd class="num wallet-total">{{ totals.total|money }}</dd></div>
+    </dl>
+    <form method="post" class="stack" style="gap:10px;padding:20px 24px 24px">{% csrf_token %}
+      <button class="applepay" type="submit" name="action" value="pay" data-once>Confirm with Face ID<span class="sr"> (simulated)</span></button>
+      <button class="btn btn-g" type="submit" name="action" value="cancel">Cancel</button>
+    </form>
+  </section>
+  <p class="small muted" style="text-align:center;max-width:420px">A simulation of the Apple Pay sheet for a university project. It is not connected to Apple and uses a test card. No money is taken.</p>
+</div>
+{% endblock %}

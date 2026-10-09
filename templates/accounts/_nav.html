@@ -1,0 +1,6 @@
+<nav class="anav stack hide-sm" aria-label="Account menu" style="width:240px;flex:none;gap:4px">
+  <a href="{% url 'accounts:overview' %}"{% if nav == 'overview' %} class="on" aria-current="page"{% endif %}><span class="i i-home" aria-hidden="true"></span>Overview</a>
+  <a href="{% url 'accounts:orders' %}"{% if nav == 'orders' %} class="on" aria-current="page"{% endif %}><span class="i i-clip" aria-hidden="true"></span>Orders</a>
+  <a href="{% url 'accounts:profile' %}"{% if nav == 'profile' %} class="on" aria-current="page"{% endif %}><span class="i i-gear" aria-hidden="true"></span>Profile &amp; settings</a>
+  <form method="post" action="{% url 'accounts:signout' %}">{% csrf_token %}<button class="lnkbtn" style="display:flex;align-items:center;gap:12px;min-height:48px;padding:0 14px;border-radius:12px;color:var(--navy);font-weight:700;width:100%" type="submit"><span class="i i-logout" aria-hidden="true"></span>Sign out</button></form>
+</nav>

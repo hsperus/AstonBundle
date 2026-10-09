@@ -1,0 +1,21 @@
+{% extends "orders/_checkout_base.html" %}{% load ab %}
+{% block title %}Checkout: confirm with your bank{% endblock %}
+{% block step %}
+<div class="sheet-wrap">
+  <section class="card pad-l stack bank3ds" style="gap:20px" aria-labelledby="ds-h">
+    <span class="bdg" style="align-self:flex-start;background:#FFF4D6;color:var(--navy);border:1.5px dashed var(--amber-ink)"><span class="i i-warn" aria-hidden="true"></span>Simulated bank page</span>
+    <div class="row" style="gap:12px"><span class="i i-shield s32" aria-hidden="true"></span><h1 id="ds-h" style="font-size:28px">Confirm this payment</h1></div>
+    <p>Your bank wants to check it is really you (3-D Secure). In real life this happens in your banking app.</p>
+    <dl class="ds-list">
+      <dt>Merchant</dt><dd>AstonBundle</dd>
+      <dt>Amount</dt><dd class="num"><b>{{ totals.total|money }}</b></dd>
+      <dt>Card</dt><dd class="num">{{ brand }} •••• {{ last4 }}</dd>
+    </dl>
+    <form method="post" class="row" style="gap:12px;flex-wrap:wrap">{% csrf_token %}
+      <button class="btn btn-p btn-lg" type="submit" name="action" value="approve" data-once><span class="i i-check" aria-hidden="true"></span>Approve payment</button>
+      <button class="btn btn-s btn-lg" type="submit" name="action" value="fail" data-once>Fail authentication</button>
+    </form>
+    <p class="small muted">Test mode: choose “Fail authentication” to see what happens when the bank refuses. No money is taken either way.</p>
+  </section>
+</div>
+{% endblock %}

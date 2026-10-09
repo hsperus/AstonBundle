@@ -1,0 +1,10 @@
+{% extends "staff/base.html" %}{% load ab %}
+{% block stitle %}Search{% endblock %}
+{% block top %}<h1 style="font-size:26px">Search</h1><form role="search" class="srch" style="margin-left:auto;width:min(360px,100%);height:44px;background:#fff"><span class="i i-search" aria-hidden="true"></span><label class="sr" for="as">Search</label><input id="as" name="q" value="{{ q }}"></form>{% endblock %}
+{% block content %}
+{% if not q %}<p class="muted">Type an order number, product name or customer name.</p>{% endif %}
+{% if results.orders %}<section class="card pad stack" style="gap:8px"><h2 style="font-size:20px">Orders</h2>{% for o in results.orders %}<a href="{% url 'staff:orders' %}?o={{ o.number }}" class="num">{{ o.number }}</a>{% endfor %}</section>{% endif %}
+{% if results.products %}<section class="card pad stack" style="gap:8px"><h2 style="font-size:20px">Products</h2>{% for p in results.products %}<a href="{% url 'staff:product_edit' p.pk %}">{{ p.name }} <span class="muted small">{{ p.sku }}</span></a>{% endfor %}</section>{% endif %}
+{% if results.customers %}<section class="card pad stack" style="gap:8px"><h2 style="font-size:20px">Customers</h2>{% for c in results.customers %}<a href="{% url 'staff:customers' %}?c={{ c.pk }}">{{ c.masked_name }}</a>{% endfor %}</section>{% endif %}
+{% if q and not results.orders and not results.products and not results.customers %}<p class="muted">No results for “{{ q }}”.</p>{% endif %}
+{% endblock %}

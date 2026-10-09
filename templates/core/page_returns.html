@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ title }}</span></nav>
+<article class="prose" style="max-width:760px"><h1>{{ title }}</h1>
+<p>You can ask to return most items within <b>30 days of delivery</b>. Items must be unused and in their original packaging.</p>
+<h2 style="font-size:24px">Items we can’t take back</h2>
+<p>For hygiene reasons we can’t accept pillows, mattress protectors, food containers or hot water bottles once opened, or SIM cards once activated. These items are marked “Not returnable” on the product page and in your order.</p>
+<h2 style="font-size:24px">How to return</h2>
+<ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Go to <a href="{% url 'accounts:orders' %}">Your orders</a> and open the order.</li><li>Choose <b>Request return</b> next to the item and tell us why.</li><li>We reply within 2 working days.</li><li>We collect the item from your halls reception, or you bring it to the campus pick-up desk.</li><li>Approved refunds go back to the original payment within 5–7 days.</li></ol>
+<div class="alert a-info"><span class="i i-info" aria-hidden="true"></span><div><b>Student project</b>AstonBundle is a university project. No real payments are taken, so refunds are simulated.</div></div>
+</article>
+{% endblock %}

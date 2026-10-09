@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Forgot password{% endblock %}
+{% block main_style %}padding-top:56px;padding-bottom:88px{% endblock %}
+{% block content %}
+<div class="rsp" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start">
+  <form method="post" class="card pad-l stack" style="gap:18px" aria-labelledby="fph" novalidate>{% csrf_token %}
+    <h1 id="fph" style="font-size:30px">Forgot your password?</h1>
+    <p>Enter your Aston email. We’ll send a link to set a new password.</p>
+    {% include "partials/field.html" with field=form.email type="email" autocomplete="email" %}
+    <button class="btn btn-p btn-lg" type="submit">Send reset link</button>
+    <a href="{% url 'accounts:signin' %}" class="lnk" style="min-height:44px;display:inline-flex;align-items:center"><span class="i i-cl" aria-hidden="true"></span>Back to sign in</a>
+  </form>
+  {% if sent_to %}
+  <div class="card pad-l stack" style="gap:16px" role="status">
+    <span class="ph t" style="width:64px;height:64px;border-radius:50%"><span class="i i-mail s32" aria-hidden="true"></span></span>
+    <h2 style="font-size:28px">Check your email</h2>
+    <p>If an account exists for <b>{{ sent_to }}</b>, you’ll get a reset link in a few minutes. The link works for 30 minutes.</p>
+    <p class="small muted">Testing? Open the <a href="{% url 'accounts:demo_inbox' %}?to={{ sent_to|urlencode }}">Demo inbox</a>.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

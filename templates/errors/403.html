@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}No access{% endblock %}
+{% block main_style %}padding-top:72px;padding-bottom:96px{% endblock %}
+{% block content %}
+<div class="card pad-l stack" style="gap:14px;max-width:620px;align-items:flex-start"><span class="ph" style="width:64px;height:64px;border-radius:50%;background:var(--red-50)"><span class="i i-lock s32" style="color:var(--red)" aria-hidden="true"></span></span><span class="eyebrow">Error 403</span><h1 style="font-size:30px">You don’t have access to this page</h1><p>{% if exception %}{{ exception }}{% else %}You may need to sign in with a different account.{% endif %}</p><div class="row" style="gap:10px;flex-wrap:wrap"><a href="{% url 'core:home' %}" class="btn btn-p">Go to the home page</a></div></div>
+{% endblock %}

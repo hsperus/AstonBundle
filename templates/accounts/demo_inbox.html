@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Demo inbox{% endblock %}
+{% block header %}
+<a class="skip" href="#main">Skip to main content</a>
+<div class="sim" role="region" aria-label="Simulation notice"><div class="wrap row rsp-flex" style="gap:14px;min-height:72px;padding-top:10px;padding-bottom:10px"><span class="i i-warn s28" style="color:var(--amber-ink)" aria-hidden="true"></span><div><b style="font:800 20px var(--disp)">Demo inbox (simulation — no real emails are sent)</b><br><span class="small">For markers and testers. For privacy, you only see messages for addresses used in this browser session. Password-reset links are shown only for the demo student account or an account you created in this browser.</span></div><span class="row" style="gap:8px;margin-left:auto"><a href="{% url 'core:home' %}" class="btn btn-s btn-sm">Back to the shop</a>{% if request.session.verify_uid %}<a href="{% url 'accounts:verify' %}" class="btn btn-p btn-sm">Back to verification</a>{% endif %}</span></div></div>
+{% endblock %}
+{% block footer %}{% endblock %}
+{% block main_style %}padding-top:32px;padding-bottom:64px{% endblock %}
+{% block content %}
+{% if disabled %}<div class="card empty"><h1 style="font-size:28px">Demo inbox is switched off</h1><p class="muted">This server sends real email, so messages are not shown here.</p></div>
+{% elif not addresses %}
+<div class="card empty"><span class="ph" style="width:72px;height:72px;border-radius:50%"><span class="i i-inbox s32" aria-hidden="true"></span></span><h1 style="font-size:28px">No messages yet</h1><p class="muted">Create an account or ask for a password reset in this browser, and the email will appear here.</p><a href="{% url 'accounts:register' %}" class="btn btn-p">Create an account</a></div>
+{% else %}
+<h1 class="sr">Demo inbox</h1>
+<div class="card rsp" style="display:grid;grid-template-columns:360px 1fr;min-height:560px;overflow:hidden">
+  <div style="border-right:1px solid var(--g200);display:flex;flex-direction:column">
+    <form method="get" style="padding:16px;border-bottom:1px solid var(--g200);display:flex;flex-direction:column;gap:10px" data-autosubmit><label class="lbl" for="dib">Show messages for</label><div class="selw"><select class="inp" id="dib" name="to">{% for a in addresses %}<option{% if a == to %} selected{% endif %}>{{ a }}</option>{% endfor %}</select><span class="i i-cd" aria-hidden="true"></span></div><noscript><button class="btn btn-s btn-sm">Show</button></noscript></form>
+    {% for m in mails %}<a href="?to={{ to|urlencode }}&m={{ m.pk }}" class="msgi{% if m == selected %} on{% endif %}"{% if m == selected %} aria-current="true"{% endif %}><span class="row" style="justify-content:space-between"><span>{% if not m.read %}<b>AstonBundle</b>{% else %}AstonBundle{% endif %}</span><span class="cap muted num">{{ m.created_at|date:"j M, H:i" }}</span></span><span class="small">{% if not m.read %}<b>{{ m.subject }}</b>{% else %}{{ m.subject }}{% endif %}</span><span class="small muted">{{ m.body|truncatechars:50 }}</span></a>{% empty %}<p class="muted" style="padding:16px">No messages for this address.</p>{% endfor %}
+  </div>
+  {% if selected %}
+  <article style="padding:32px 40px;display:flex;flex-direction:column;gap:20px" aria-labelledby="dsub">
+    <div class="stack" style="gap:6px;padding-bottom:16px;border-bottom:1px solid var(--g200)"><h2 id="dsub" style="font-size:26px">{{ selected.subject }}</h2><span class="small muted">From: AstonBundle &lt;no-reply@astonbundle.example&gt; · To: {{ selected.to_email }} · {{ selected.created_at|date:"j M Y, H:i" }}</span></div>
+    <div style="max-width:560px;margin:0 auto;width:100%;background:var(--cream);border-radius:16px;overflow:hidden;border:1px solid var(--g200)">
+      <div style="background:#5F0066;padding:20px 28px">{% include "partials/logo.html" with w="190" h="32" fill="#fff" %}</div>
+      <div style="padding:28px;display:flex;flex-direction:column;gap:16px;overflow-wrap:anywhere">
+        {% if code %}<div style="background:#fff;border:2px dashed var(--g400);border-radius:12px;padding:20px;text-align:center" class="code" id="code">{{ code }}</div>{% endif %}
+        {{ selected.body|urlize|linebreaks }}
+      </div>
+    </div>
+    {% if code %}<div class="row" style="gap:12px;justify-content:center;flex-wrap:wrap"><button class="btn btn-s" type="button" data-copy="{{ code }}"><span class="i i-clip" aria-hidden="true"></span>Copy code</button>{% if request.session.verify_uid %}<a href="{% url 'accounts:verify' %}" class="btn btn-p">Go to verification<span class="i i-ar" aria-hidden="true"></span></a>{% endif %}</div>{% endif %}
+  </article>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

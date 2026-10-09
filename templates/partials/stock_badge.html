@@ -1,0 +1,1 @@
+{% with s=p.stock_status %}<span class="bdg {% if s == 'ok' %}b-ok{% elif s == 'low' %}b-low{% else %}b-out{% endif %}" style="align-self:flex-start{% if size == 'lg' %};font-size:14px;min-height:32px{% endif %}"><span class="i {% if s == 'ok' %}i-okc{% elif s == 'low' %}i-warn{% else %}i-xc{% endif %}" aria-hidden="true"></span>{{ p.stock_label }}</span>{% endwith %}

@@ -1,0 +1,37 @@
+{% extends "staff/base.html" %}{% load ab %}
+{% block stitle %}Orders{% endblock %}
+{% block top %}<h1 style="font-size:26px">Orders</h1><span class="small muted num">{{ total }} total</span><a href="{% qs export='csv' %}" class="btn btn-g btn-sm" style="margin-left:auto"><span class="i i-upload" aria-hidden="true"></span>Export</a>{% endblock %}
+{% block content %}
+<div class="rsp-flex" style="display:flex;gap:20px;align-items:flex-start">
+  <div class="stack" style="gap:14px;flex:1;min-width:0">
+    <form method="get" class="row" style="gap:10px;flex-wrap:wrap;align-items:flex-end" data-autosubmit>
+      <div class="field" style="width:200px"><label class="lbl small" for="of">Status</label><div class="selw"><select class="inp" id="of" name="status" style="min-height:44px"><option value="">All statuses</option>{% for v, l, n in statuses %}<option value="{{ v }}"{% if v == status %} selected{% endif %}>{{ l }} ({{ n }})</option>{% endfor %}</select><span class="i i-cd" style="top:12px" aria-hidden="true"></span></div></div>
+      <div class="field"><label class="lbl small" for="ofr">From</label><input type="date" class="inp num" id="ofr" name="from" value="{{ from }}" style="min-height:44px"></div>
+      <div class="field"><label class="lbl small" for="oto">To</label><input type="date" class="inp num" id="oto" name="to" value="{{ to }}" style="min-height:44px"></div>
+      <div class="srch" style="flex:1;min-width:200px;height:44px;background:#fff"><span class="i i-search" aria-hidden="true"></span><label class="sr" for="oc">Customer or order number</label><input id="oc" name="q" value="{{ q }}" placeholder="Customer or order number"></div>
+      <button class="btn btn-s btn-sm" type="submit">Filter</button>
+    </form>
+    <div class="tbox"><table class="tbl"><thead><tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Delivery</th><th scope="col" class="r">Total</th><th scope="col">Status</th></tr></thead><tbody>
+      {% for o in page.object_list %}<tr{% if selected and selected.pk == o.pk %} class="sel"{% endif %}><td><a href="{% qs o=o.number %}" class="num" style="color:var(--navy)">{{ o.number }}</a><br><span class="cap muted num">{{ o.created_at|date:"j M, H:i" }}</span></td><td>{{ o.recipient_name }}</td><td class="small">{{ o.delivery_date|date:"D j M" }}, {{ o.slot_label }}</td><td class="r num">{{ o.total|money }}</td><td>{% order_chip o %}</td></tr>{% empty %}<tr><td colspan="5" class="muted">No orders match.</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% include "partials/pagination.html" %}
+  </div>
+  {% if selected %}
+  <aside class="card" style="width:400px;max-width:100%;flex:none;padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--sh-2);position:sticky;top:16px" aria-labelledby="odh">
+    <div class="row" style="justify-content:space-between"><h2 id="odh" class="num" style="font-size:20px">{{ selected.number }}</h2><a href="{% qs o='' %}" class="ibtn" aria-label="Close order panel"><span class="i i-x" aria-hidden="true"></span></a></div>
+    <div class="stack small" style="gap:4px"><span><b>{{ selected.user.masked_name }}</b> · <span class="mask">{{ selected.user.masked_email }}</span></span><span>{{ selected.address_display }}</span><span class="muted">Placed {{ selected.created_at|date:"j M Y, H:i" }} · test payment {% if selected.payment_label %}{{ selected.payment_label }}, {% endif %}{{ selected.payment_reference }}</span></div>
+    <div class="stack" style="gap:6px;border-top:1px solid var(--g200);padding-top:12px">{% for l in selected.lines.all %}<div class="row small" style="justify-content:space-between;gap:8px"><span>{{ l.name }} ×{{ l.quantity }}{% if l.bundle_name %} <span class="muted">({{ l.bundle_name }})</span>{% endif %}</span><span class="num">{{ l.line_total|money }}</span></div>{% endfor %}<div class="row" style="justify-content:space-between"><b>Total</b><b class="num">{{ selected.total|money }}</b></div></div>
+    {% with allowed=selected.allowed_transitions %}
+    {% if allowed %}<form method="post" class="stack" style="gap:10px">{% csrf_token %}<input type="hidden" name="order" value="{{ selected.number }}">
+      <div class="field"><label class="lbl" for="ost">Change status (now: {{ selected.get_status_display }})</label><div class="selw"><select class="inp" id="ost" name="status">{% for s in allowed %}<option value="{{ s }}">{{ s|capfirst }}</option>{% endfor %}</select><span class="i i-cd" aria-hidden="true"></span></div><span class="hint">The customer gets an email (Demo inbox). Cancelling puts the items back into stock.</span></div>
+      <div class="field"><label class="lbl" for="onote">Note <span class="opt">(optional)</span></label><input class="inp" id="onote" name="note" maxlength="200" placeholder="e.g. Van 2"></div>
+      <button class="btn btn-p btn-sm" type="submit">Save status</button></form>
+    {% else %}<p class="small muted">This order is {{ selected.get_status_display|lower }}. No further changes.</p>{% endif %}
+    {% endwith %}
+    <div class="stack" style="gap:10px"><b>Shipment</b><span class="small">Slot: <b>{{ selected.delivery_date|date:"D j M" }}, {{ selected.slot_label }}</b>{% if selected.shipment_number %} · {{ selected.shipment_number }}{% endif %}</span>
+      <ol class="ship small">{% for e in selected.events.all %}<li><span class="d"><span class="i i-check s16" aria-hidden="true"></span></span><span>{{ e.get_status_display }} · {{ e.created_at|date:"j M, H:i" }}{% if e.note %} · {{ e.note }}{% endif %}{% if e.by %} · {{ e.by.full_name }}{% endif %}</span></li>{% endfor %}</ol>
+    </div>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

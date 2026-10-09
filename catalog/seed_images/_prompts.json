@@ -1,0 +1,349 @@
+[
+  {
+    "sku": "KT-001",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: 3-Piece Non-stick Pan Set. Show: Three black non-stick pans, small to large."
+  },
+  {
+    "sku": "KT-002",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: 16-Piece Cutlery Set. Show: Stainless steel knives, forks and spoons."
+  },
+  {
+    "sku": "KT-003",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: 4-Person Plate & Bowl Set. Show: White plates and bowls stacked."
+  },
+  {
+    "sku": "KT-004",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: 1.7L Kettle, 3kW. Show: Cream electric kettle with UK plug."
+  },
+  {
+    "sku": "KT-005",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Food Containers, set of 6. Show: Clear food boxes with blue lids."
+  },
+  {
+    "sku": "KT-006",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Chopping Board & Knife Set. Show: Wooden board with two kitchen knives."
+  },
+  {
+    "sku": "KT-007",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Mug Set, 4 colours. Show: Four mugs in coral, plum, teal and cream."
+  },
+  {
+    "sku": "KT-008",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Logo Mug. Show: A deep plum mug with the white AstonBundle logo on the side."
+  },
+  {
+    "sku": "KT-009",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Water Bottle, 750 ml. Show: A plum insulated steel water bottle with the white AstonBundle logo."
+  },
+  {
+    "sku": "KT-010",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Travel Cup, 350 ml. Show: A plum reusable travel coffee cup with a lid and the white AstonBundle logo."
+  },
+  {
+    "sku": "KT-011",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Lunch Box. Show: A plum two-compartment lunch box with the white AstonBundle logo on the lid."
+  },
+  {
+    "sku": "KT-012",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Apron. Show: A cream cotton apron printed with the plum AstonBundle logo on the chest."
+  },
+  {
+    "sku": "KT-013",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Tea Towels ×2. Show: Two folded tea towels, one plum and one cream, each printed with the AstonBundle logo."
+  },
+  {
+    "sku": "RB-001",
+    "model": "gpt-image-1",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No text, no words, no logos, no brand marks, no watermarks, no people.\nProduct: Halls Duvet Set, Single, 10.5 tog. Show: White single duvet set with a pillowcase, folded on a cream background."
+  },
+  {
+    "sku": "RB-002",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Soft Pillow Pair. Show: Two white pillows stacked."
+  },
+  {
+    "sku": "RB-003",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No text, no words, no logos, no brand marks, no watermarks, no people.\nProduct: Bath Towel Set, 4 pieces. Show: Four folded teal towels."
+  },
+  {
+    "sku": "RB-004",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No text, no words, no logos, no brand marks, no watermarks, no people.\nProduct: Slim Hangers ×20. Show: A row of slim plum velvet hangers."
+  },
+  {
+    "sku": "RB-005",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No text, no words, no logos, no brand marks, no watermarks, no people.\nProduct: LED Desk Lamp, USB. Show: A small white LED desk lamp with a flexible neck."
+  },
+  {
+    "sku": "RB-006",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Mattress Protector, Single. Show: A white quilted mattress protector."
+  },
+  {
+    "sku": "RB-007",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Fleece Throw. Show: A folded plum fleece throw blanket with the white AstonBundle logo embroidered in the corner."
+  },
+  {
+    "sku": "RB-008",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Cushion. Show: A square cream cushion printed with the plum AstonBundle logo."
+  },
+  {
+    "sku": "RB-009",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Laundry Bag. Show: A large plum drawstring laundry bag with the white AstonBundle logo."
+  },
+  {
+    "sku": "RB-010",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Embroidered Bath Towel. Show: A folded plum bath towel with the white AstonBundle logo embroidered on the border."
+  },
+  {
+    "sku": "ST-001",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Scientific Calculator. Show: A grey scientific calculator."
+  },
+  {
+    "sku": "ST-002",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: A4 Notebook Pack ×5. Show: Five colourful A4 notebooks."
+  },
+  {
+    "sku": "ST-003",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Lab Coat, white. Show: A white lab coat on a hanger."
+  },
+  {
+    "sku": "ST-004",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Everyday Backpack 22L. Show: A plum backpack with a laptop sleeve."
+  },
+  {
+    "sku": "ST-005",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: USB Flash Drive 64GB. Show: A small metal USB drive."
+  },
+  {
+    "sku": "ST-006",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Highlighter & Pen Set. Show: A set of colourful highlighters and pens."
+  },
+  {
+    "sku": "ST-007",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Tote Bag. Show: A cream canvas tote bag printed with the plum AstonBundle logo."
+  },
+  {
+    "sku": "ST-008",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Notebook & Pen Set. Show: A plum A5 hardback notebook with the white AstonBundle logo and two pens."
+  },
+  {
+    "sku": "ST-009",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Lanyard & Card Holder. Show: A plum lanyard printed with the AstonBundle logo and a clear card holder."
+  },
+  {
+    "sku": "ST-010",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Pencil Case. Show: A cream canvas pencil case with a zip, printed with the plum AstonBundle logo."
+  },
+  {
+    "sku": "ST-011",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Sticker Pack. Show: A set of vinyl stickers showing the AstonBundle logo in plum and white."
+  },
+  {
+    "sku": "ST-012",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Academic Planner 2026/27. Show: A plum A5 planner with the white AstonBundle logo on the cover."
+  },
+  {
+    "sku": "ST-013",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Drawstring Gym Bag. Show: A plum drawstring gym bag with the white AstonBundle logo."
+  },
+  {
+    "sku": "TP-001",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: UK Plug Adapter ×2. Show: Two white UK travel plug adapters."
+  },
+  {
+    "sku": "TP-002",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: 4-Way Extension Lead. Show: A white four-socket extension lead with USB ports."
+  },
+  {
+    "sku": "TP-003",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: UK SIM Starter Pack. Show: A SIM card pack with a UK flag."
+  },
+  {
+    "sku": "TP-004",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Aluminium Laptop Stand. Show: A silver adjustable laptop stand."
+  },
+  {
+    "sku": "TP-005",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Wired Study Headphones. Show: Black over-ear headphones."
+  },
+  {
+    "sku": "TP-006",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: USB-C Fast Charger, UK. Show: A small white USB-C wall charger."
+  },
+  {
+    "sku": "TP-007",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Power Bank, 10,000 mAh. Show: A slim plum power bank printed with the white AstonBundle logo, with a USB-C cable."
+  },
+  {
+    "sku": "TP-008",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Laptop Sleeve, 14\". Show: A padded plum laptop sleeve with the white AstonBundle logo and a zip."
+  },
+  {
+    "sku": "TP-009",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Mouse Mat. Show: A rectangular plum mouse mat printed with the white AstonBundle logo."
+  },
+  {
+    "sku": "TP-010",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Cable Organiser. Show: A small plum zipped pouch with the white AstonBundle logo, holding charging cables."
+  },
+  {
+    "sku": "WR-001",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Waterproof Jacket. Show: A plum waterproof jacket with a hood."
+  },
+  {
+    "sku": "WR-002",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Thermal Base Layer Set. Show: A grey thermal top and leggings."
+  },
+  {
+    "sku": "WR-003",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Compact Umbrella. Show: A plum folding umbrella."
+  },
+  {
+    "sku": "WR-004",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Hat & Glove Set. Show: A knitted beanie with matching gloves."
+  },
+  {
+    "sku": "WR-005",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Hot Water Bottle with Cover. Show: A hot water bottle in a plum fleece cover."
+  },
+  {
+    "sku": "WR-006",
+    "model": "gpt-image-1",
+    "endpoint": "generations",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. No text, no words, no logos, no brand marks.\nProduct: Rice Cooker, 1L. Show: A small white rice cooker."
+  },
+  {
+    "sku": "WR-007",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Hoodie, plum. Show: A deep plum hoodie with the white AstonBundle logo on the chest."
+  },
+  {
+    "sku": "WR-008",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Beanie. Show: A plum knitted beanie with the white AstonBundle logo embroidered on the turn-up."
+  },
+  {
+    "sku": "WR-009",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Scarf. Show: A plum knitted scarf with the white AstonBundle logo near one end."
+  },
+  {
+    "sku": "WR-010",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Umbrella. Show: An open plum umbrella with the white AstonBundle logo printed on the canopy."
+  },
+  {
+    "sku": "WR-011",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Crewneck Sweatshirt. Show: A cream crewneck sweatshirt with the plum AstonBundle logo on the chest."
+  },
+  {
+    "sku": "WR-012",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Clean e-commerce product photograph, square. Soft natural daylight, gentle shadow, plain warm cream background (#FBF7F0), product centred with generous margin, subtle deep plum (#5F0066) accent only where natural. Photorealistic, minimal, consistent catalogue style. No people, no watermarks. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the wordmark 'AstonBundle'. Print exactly this logo (triangle mark and the single word AstonBundle, spelled exactly) on the product as described, cleanly and legibly, keeping its shape and proportions. Do not add any other text or logos. Where the product is described as plum, use the brand purple #5F0066 (a rich violet-purple, not burgundy or maroon).\nProduct: AstonBundle Cosy Socks ×2. Show: Two pairs of plum knitted socks with the white AstonBundle logo."
+  }
+]

@@ -1,0 +1,33 @@
+{% extends "staff/base.html" %}
+{% block stitle %}Staff & roles{% endblock %}
+{% block top %}<h1 style="font-size:26px">Staff &amp; roles</h1><span class="small muted">Only the Owner can see this page</span>{% endblock %}
+{% block content %}
+<div class="alert a-info" style="font-size:15px"><span class="i i-lock" aria-hidden="true"></span><div><b>No public admin sign-up.</b>Staff accounts are created only by invitation. The invite link works once and expires after 48 hours.</div></div>
+<div class="rsp" style="display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start">
+  <div class="stack" style="gap:20px">
+    <div class="tbox"><table class="tbl"><thead><tr><th scope="col">Staff member</th><th scope="col">Role</th><th scope="col">Last active</th><th scope="col">Status</th><th scope="col"><span class="sr">Actions</span></th></tr></thead><tbody>
+      {% for s in staff %}<tr><td><b>{{ s.full_name }}</b><br><span class="cap muted">{{ s.email }}</span></td>
+        <td>{% if s.role == 'owner' or s == user or not s.is_active %}{{ s.get_role_display }}{% else %}<form method="post" class="row" style="gap:6px" data-autosubmit>{% csrf_token %}<input type="hidden" name="action" value="role"><input type="hidden" name="user" value="{{ s.pk }}"><div class="selw" style="width:170px"><label class="sr" for="r{{ s.pk }}">Role for {{ s.full_name }}</label><select class="inp" id="r{{ s.pk }}" name="role" style="min-height:40px">{% for v, l in roles %}<option value="{{ v }}"{% if v == s.role %} selected{% endif %}>{{ l }}</option>{% endfor %}</select><span class="i i-cd" style="top:10px" aria-hidden="true"></span></div><noscript><button class="btn btn-s btn-sm">Save</button></noscript></form>{% endif %}</td>
+        <td class="num small">{% if s.last_seen %}{{ s.last_seen|date:"j M, H:i" }}{% else %}—{% endif %}</td>
+        <td>{% if s.is_active %}<span class="bdg b-ok"><span class="i i-okc" aria-hidden="true"></span>Active</span>{% else %}<span class="bdg b-out"><span class="i i-xc" aria-hidden="true"></span>Removed</span>{% endif %}</td>
+        <td>{% if s.role != 'owner' and s != user and s.is_active %}<form method="post" data-confirm="Remove access for {{ s.email }}?">{% csrf_token %}<input type="hidden" name="action" value="remove"><input type="hidden" name="user" value="{{ s.pk }}"><button class="ibtn" aria-label="Remove access for {{ s.full_name }}" style="color:var(--red)"><span class="i i-trash" aria-hidden="true"></span></button></form>{% endif %}</td></tr>{% endfor %}
+      {% for i in invites %}<tr><td><b>Invited</b><br><span class="cap muted">{{ i.email }}</span></td><td>{{ i.get_role_display }}</td><td class="num small">—</td><td><span class="bdg b-low"><span class="i i-clock" aria-hidden="true"></span>Invited · expires {{ i.expires_at|date:"j M H:i" }}</span></td><td></td></tr>{% endfor %}
+    </tbody></table></div>
+    <form method="post" class="card pad-l stack" style="gap:14px" novalidate aria-labelledby="ivh">{% csrf_token %}<input type="hidden" name="action" value="invite">
+      <h2 id="ivh" style="font-size:20px">Invite staff member</h2>
+      {% include "partials/field.html" with field=form.email type="email" placeholder="name@astonbundle.example" %}
+      <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column"><legend class="lbl">Role</legend>{% for v, l in form.role.field.choices %}<label class="chk"><input type="radio" name="role" value="{{ v }}"{% if form.role.value == v %} checked{% endif %}>{{ l }}</label>{% endfor %}</fieldset>
+      <button class="btn btn-p" style="align-self:flex-start" type="submit"><span class="i i-send" aria-hidden="true"></span>Send invitation</button>
+    </form>
+  </div>
+  <div class="stack" style="gap:20px">
+    <section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:12px" aria-labelledby="pmh"><h2 id="pmh" style="font-size:20px">What each role can do</h2>
+      <div class="tbox" tabindex="0" role="region" aria-label="Role permissions table"><table class="tbl pm"><thead><tr><th scope="col">Area</th><th scope="col">Owner</th><th scope="col">Stock</th><th scope="col">Support</th></tr></thead><tbody>
+        {% for area, cols in matrix %}<tr><th scope="row" style="background:none;color:var(--navy);font-size:15px">{{ area }}</th>{% for ok in cols %}<td class="{% if ok %}y{% else %}n{% endif %}"><span class="i {% if ok %}i-check{% else %}i-minus{% endif %}" aria-hidden="true"></span><span class="sr">{% if ok %}Yes{% else %}No{% endif %}</span></td>{% endfor %}</tr>{% endfor %}
+      </tbody></table></div>
+      <p class="small muted">Checked on the server for every request, not only hidden in the menu.</p>
+    </section>
+    <section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:8px"><h2 style="font-size:20px">Audit log</h2>{% for l in log %}<span class="small">{{ l.created_at|date:"j M, H:i" }} · {{ l.actor.full_name|default:"—" }} · {{ l.get_action_label|capfirst }} · <span class="muted">{{ l.target }}</span></span>{% empty %}<span class="small muted">Nothing logged yet.</span>{% endfor %}</section>
+  </div>
+</div>
+{% endblock %}

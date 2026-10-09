@@ -1,0 +1,23 @@
+<aside aria-label="Filters" class="filters" id="filters" style="width:272px;flex:none" data-filters>
+  <form method="get" data-autosubmit>
+    {% if q %}<input type="hidden" name="q" value="{{ q }}">{% endif %}
+    <input type="hidden" name="sort" value="{{ sort }}"><input type="hidden" name="f" value="1">
+    <div class="row" style="justify-content:space-between;padding-bottom:6px"><h2 style="font-size:22px">Filters</h2><span class="row" style="gap:4px"><a href="{% if q %}?q={{ q|urlencode }}{% else %}?f=1{% if category %}&cat={{ category.slug }}{% endif %}{% endif %}" class="lnk small">Clear all</a><button type="button" class="ibtn filters-btn" aria-label="Close filters" data-close-filters><span class="i i-x s24" aria-hidden="true"></span></button></span></div>
+    {% if f.errors %}<div class="alert a-err" role="alert" style="font-size:14px"><span class="i i-alert" aria-hidden="true"></span><div>{% for e in f.errors %}{{ e }}{% if not forloop.last %}<br>{% endif %}{% endfor %}</div></div>{% endif %}
+    <fieldset class="fgrp"><legend>Category</legend>
+      {% for c in categories %}<label class="chk"><input type="checkbox" name="cat" value="{{ c.slug }}"{% if c.slug in f.cats %} checked{% endif %}>{{ c.name }} <span class="muted small num">({{ cat_counts|get:c.slug|default:0 }})</span></label>{% endfor %}
+    </fieldset>
+    <fieldset class="fgrp"><legend>Price</legend>
+      <div class="row" style="gap:10px"><div class="field" style="flex:1"><label class="lbl small" for="fmin">Min £</label><input class="inp num" id="fmin" name="min" inputmode="decimal" value="{{ request.GET.min|default:'' }}" placeholder="0"></div><div class="field" style="flex:1"><label class="lbl small" for="fmax">Max £</label><input class="inp num" id="fmax" name="max" inputmode="decimal" value="{{ request.GET.max|default:'' }}" placeholder="100"></div></div>
+    </fieldset>
+    <fieldset class="fgrp"><legend>Availability</legend>
+      <label class="chk"><input type="checkbox" name="stock" value="1"{% if f.stock %} checked{% endif %}>In stock only</label>
+    </fieldset>
+    <fieldset class="fgrp" style="border-bottom:0"><legend>Rating</legend>
+      <label class="chk"><input type="radio" name="rating" value="4"{% if f.rating == 4 %} checked{% endif %}><span class="stars" aria-hidden="true"><span class="i i-starf"></span><span class="i i-starf"></span><span class="i i-starf"></span><span class="i i-starf"></span><span class="i i-star"></span></span>4 and above</label>
+      <label class="chk"><input type="radio" name="rating" value="3"{% if f.rating == 3 %} checked{% endif %}><span class="stars" aria-hidden="true"><span class="i i-starf"></span><span class="i i-starf"></span><span class="i i-starf"></span><span class="i i-star"></span><span class="i i-star"></span></span>3 and above</label>
+      <label class="chk"><input type="radio" name="rating" value="0"{% if not f.rating %} checked{% endif %}>Any rating</label>
+    </fieldset>
+    <button class="btn btn-p btn-blk" type="submit">Apply filters</button>
+  </form>
+</aside>

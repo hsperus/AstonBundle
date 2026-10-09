@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Page not found{% endblock %}
+{% block main_style %}padding-top:72px;padding-bottom:96px{% endblock %}
+{% block content %}
+<div class="rsp" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+  <div role="img" aria-label="Illustration: a lost suitcase with a luggage tag that says 404" class="hide-sm">{% include "partials/ill_404.html" %}</div>
+  <div class="stack" style="gap:20px"><span class="eyebrow">Error 404</span><h1>This page got lost on the way.</h1><p style="font-size:19px">The link may be old, or the page has moved. Your basket is safe.</p>
+    <form role="search" class="srch" style="max-width:480px" action="{% url 'catalog:search' %}"><span class="i i-search" aria-hidden="true"></span><label class="sr" for="e4s">Search products</label><input id="e4s" name="q" placeholder="Search for what you need"><button class="go" aria-label="Search"><span class="i i-ar s16" aria-hidden="true"></span></button></form>
+    <div class="row" style="gap:12px;flex-wrap:wrap"><a href="{% url 'core:home' %}" class="btn btn-p">Go to the home page</a><a href="{% url 'support:contact' %}" class="btn btn-s">Contact us</a></div></div>
+</div>
+{% endblock %}

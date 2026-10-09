@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Bundles{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">Bundles</span></nav>
+<div class="stack" style="gap:8px"><span class="eyebrow">Save time and money</span><h1>Bundles</h1><p class="muted">Ready-made sets chosen by students who arrived last year. Every bundle costs less than buying the items separately, and you can return single items.</p></div>
+<div class="cols-4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px">{% for b in bundles %}{% include "partials/bundle_card.html" with feature_first=True %}{% endfor %}</div>
+{% endblock %}

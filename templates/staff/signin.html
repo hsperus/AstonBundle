@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Staff sign-in{% endblock %}
+{% block header %}{% endblock %}{% block footer %}{% endblock %}
+{% block main %}
+<div style="background:var(--navy);min-height:100vh;display:grid;place-items:center;padding:48px 16px">
+<main id="main" class="stack" style="gap:28px;align-items:center;width:min(480px,100%)">
+  <div class="stack" style="align-items:center;gap:8px">{% include "partials/logo.html" with w="230" h="40" fill="#fff" %}<span style="font:700 13px var(--body);letter-spacing:.1em;color:var(--coral-on-navy)">ADMIN</span></div>
+  <form method="post" class="card pad-l stack" style="gap:18px;width:100%;box-shadow:var(--sh-3)" aria-labelledby="ash" novalidate>{% csrf_token %}
+    <h1 id="ash" style="font-size:28px">Staff sign-in</h1>
+    {% if error %}<div class="alert a-err" role="alert"><span class="i i-alert" aria-hidden="true"></span><div><b>{{ error }}</b></div></div>{% endif %}
+    {% include "partials/field.html" with field=form.email type="email" autocomplete="username" %}
+    {% include "partials/field.html" with field=form.password label="Password" autocomplete="current-password" %}
+    <button class="btn btn-p btn-lg" type="submit">Sign in</button>
+    <p class="small muted" style="display:flex;gap:8px"><span class="i i-lock s16" style="margin-top:2px" aria-hidden="true"></span>Staff only. Accounts are created by the shop owner — there is no sign-up. 5 failed attempts lock the account for 15 minutes.</p>
+  </form>
+  <a href="{% url 'core:home' %}" style="color:var(--coral-on-navy);font-weight:700">Go to the shop</a>
+</main>
+</div>
+{% endblock %}

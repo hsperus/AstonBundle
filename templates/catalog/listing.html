@@ -1,0 +1,23 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ title }}</span></nav>
+<div class="row rsp-flex" style="justify-content:space-between;align-items:flex-end;gap:24px">
+  <div class="stack" style="gap:8px"><h1>{{ title }}</h1>{% if category %}<p class="muted">{{ category.description }}</p>{% endif %}</div>
+  {% if bundle %}<a href="{{ bundle.get_absolute_url }}" class="card row card-link" style="gap:14px;padding:12px 16px;border:2px solid var(--coral)"><span class="i i-gift s28" style="color:var(--coral-ink)" aria-hidden="true"></span><span class="stack"><b>{{ bundle.name }}{% if 'Bundle' not in bundle.name %} bundle{% endif %}</b><span class="small muted">{{ bundle.item_count }} items{% if bundle.saving %} · save {{ bundle.saving|money }}{% endif %}</span></span><span class="i i-cr" aria-hidden="true"></span></a>{% endif %}
+</div>
+<div style="display:flex;gap:40px;align-items:flex-start">
+  {% include "partials/filters.html" %}
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:20px">
+    {% include "partials/results_bar.html" %}
+    {% if page.object_list %}
+    <div class="cols-4 keep2" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+      {% for p in page.object_list %}{% include "partials/product_card.html" %}{% endfor %}
+    </div>
+    {% else %}
+    <div class="card empty"><span class="ph" style="width:72px;height:72px;border-radius:50%"><span class="i i-search s32" aria-hidden="true"></span></span><h2 style="font-size:24px">Nothing matches these filters</h2><p class="muted">Try a wider price range or remove a filter.</p><a href="?f=1{% if category %}&cat={{ category.slug }}{% endif %}" class="btn btn-s">Clear filters</a></div>
+    {% endif %}
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

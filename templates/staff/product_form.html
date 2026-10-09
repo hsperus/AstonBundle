@@ -1,0 +1,35 @@
+{% extends "staff/base.html" %}{% load ab %}
+{% block stitle %}{% if product %}Edit {{ product.name }}{% else %}New product{% endif %}{% endblock %}
+{% block top %}<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'staff:products' %}">Products</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{% if product %}Edit{% else %}New{% endif %}</span></nav><h1 style="font-size:24px">{% if product %}{{ product.name }}{% else %}New product{% endif %}</h1>{% if product %}<a href="{% url 'staff:product_delete' product.pk %}" class="btn btn-ds btn-sm" style="margin-left:auto"><span class="i i-trash" aria-hidden="true"></span>Delete</a>{% endif %}{% endblock %}
+{% block content %}
+<form method="post" enctype="multipart/form-data" class="stack" style="gap:20px" novalidate>{% csrf_token %}
+  {% if form.errors %}<div class="alert a-err" role="alert" tabindex="-1" data-focus><span class="i i-alert" aria-hidden="true"></span><div><b>{{ form.errors|length }} field{{ form.errors|length|pluralize:" needs,s need" }} your attention.</b>{% for f in form %}{% if f.errors %}<a href="#{{ f.id_for_label }}">{{ f.label }}</a>{% if not forloop.last %} · {% endif %}{% endif %}{% endfor %}</div></div>{% endif %}
+  <div class="rsp" style="display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:start">
+    <div class="card pad-l stack" style="gap:18px">
+      {% include "partials/field.html" with field=form.name %}
+      <div class="g2">{% include "partials/field.html" with field=form.category %}{% include "partials/field.html" with field=form.sku num=True %}</div>
+      {% include "partials/field.html" with field=form.summary hint="One line shown on product cards." %}
+      {% include "partials/field.html" with field=form.description textarea=True maxlength=2000 %}
+      {% include "partials/field.html" with field=form.features textarea=True hint="One bullet point per line." %}
+      {% include "partials/field.html" with field=form.specs_text textarea=True hint="One per line, as Label: Value" %}
+      <div class="g2" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+        {% include "partials/field.html" with field=form.price num=True inputmode="decimal" %}
+        {% include "partials/field.html" with field=form.stock num=True inputmode="numeric" hint=product|yesno:"Changes are logged as a stock correction.,Opening stock." %}
+        {% include "partials/field.html" with field=form.low_stock_threshold num=True inputmode="numeric" hint="Show “Only X left” at or below this." %}
+        {% include "partials/field.html" with field=form.max_per_order num=True inputmode="numeric" %}
+      </div>
+    </div>
+    <div class="card pad-l stack" style="gap:16px">
+      <span class="lbl">Product image</span>
+      <div class="ph {{ form.instance.tone }}" style="height:200px">{% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.image_alt }}">{% else %}<span class="i i-{{ form.instance.icon|default:'box' }} s88" aria-hidden="true"></span>{% endif %}</div>
+      <div class="field"><label class="lbl" for="{{ form.image.id_for_label }}">{% if product.image %}Replace image{% else %}Upload image{% endif %} <span class="opt">(optional)</span></label><input type="file" id="{{ form.image.id_for_label }}" name="image" accept="image/jpeg,image/png,image/webp" class="inp" style="padding:10px">{% if form.image.errors %}<span class="msg err"><span class="i i-alert" aria-hidden="true"></span>{{ form.image.errors|join:" " }}</span>{% else %}<span class="hint">JPG or PNG, under 5 MB. Without a photo we show the placeholder icon.</span>{% endif %}</div>
+      {% include "partials/field.html" with field=form.image_alt hint="Example: “Cream electric kettle with UK plug”." %}
+      <div class="g2">{% include "partials/field.html" with field=form.icon %}{% include "partials/field.html" with field=form.tone hide_optional=True %}</div>
+      <label class="chk"><input type="checkbox" name="is_active"{% if form.is_active.value %} checked{% endif %}>Visible in shop</label>
+      <label class="chk"><input type="checkbox" name="returnable"{% if form.returnable.value %} checked{% endif %}>Can be returned (untick for hygiene items)</label>
+      {% if bundles %}<div class="alert a-info" style="font-size:14px"><span class="i i-gift" aria-hidden="true"></span><div><b>In {{ bundles|length }} bundle{{ bundles|length|pluralize }}</b>{% for b in bundles %}{{ b.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</div></div>{% endif %}
+    </div>
+  </div>
+  <div class="row" style="gap:10px"><a href="{% url 'staff:products' %}" class="btn btn-s">Cancel</a><button class="btn btn-p" type="submit">Save product</button></div>
+</form>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}First-week essentials for Aston students{% endblock %}
+{% block main_class %}{% endblock %}{% block main_style %}{% endblock %}
+{% block content %}
+<section class="wrap rsp" style="display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding-top:56px;padding-bottom:56px">
+  <div class="stack" style="gap:24px">
+    <span class="eyebrow">For new Aston students · January 2027 intake</span>
+    <h1 class="hero-title" style="font-size:60px;letter-spacing:-0.02em;line-height:1.08">Land in Birmingham. Your room’s already sorted.</h1>
+    <p style="font-size:19px">Order bedding, kitchen kit, UK adapters and winter wear before you fly. We deliver to your halls on the day you choose — so you sleep well on night one.</p>
+    <form class="card" method="get" action="{% url 'core:page' 'delivery' %}" style="padding:24px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--sh-2)" aria-labelledby="arrh">
+      <h2 id="arrh" style="font-size:22px;font-weight:700;letter-spacing:-0.01em">When do you arrive?</h2>
+      <div class="rsp" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end">
+        <div class="field"><label class="lbl" for="ad">Arrival date</label><input class="inp num" type="date" id="ad" name="arrival" required min="{{ earliest|date:'Y-m-d' }}" value="{{ arrival|date:'Y-m-d' }}"></div>
+        <div class="field"><label class="lbl" for="ah">Your halls</label><div class="selw"><select class="inp" id="ah" name="halls">{% for v, l in halls %}<option value="{{ v }}"{% if v == request.session.halls %} selected{% endif %}>{{ l }}</option>{% endfor %}</select><span class="i i-cd" aria-hidden="true"></span></div></div>
+        <button class="btn btn-c btn-lg" type="submit" style="grid-column:1/-1">Show delivery slots<span class="i i-ar" aria-hidden="true"></span></button>
+      </div>
+      <span class="hint" style="display:flex;gap:8px;align-items:center"><span class="i i-truck s16" aria-hidden="true"></span>We deliver on one of the 3 days before you arrive. Your halls reception keeps parcels safe.</span>
+    </form>
+  </div>
+  <div role="img" aria-label="Illustration: a halls bedroom with a made bed, a suitcase and an AstonBundle parcel, with the Birmingham skyline and a rain cloud through the window" class="hide-sm">{% include "partials/ill_hero.html" %}</div>
+</section>
+
+<section aria-label="Why AstonBundle" style="background:#fff;border-top:1px solid var(--g200);border-bottom:1px solid var(--g200)">
+  <ul class="wrap cols-4 keep2" style="list-style:none;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding-top:24px;padding-bottom:24px">
+    <li class="row" style="gap:14px"><span class="ph n" style="width:52px;height:52px;border-radius:14px;flex:none"><span class="i i-truck s28" aria-hidden="true"></span></span><span class="stack"><b>Delivered to your halls</b><span class="small muted">On the date you choose</span></span></li>
+    <li class="row" style="gap:14px"><span class="ph" style="width:52px;height:52px;border-radius:14px;flex:none"><span class="i i-return s28" aria-hidden="true"></span></span><span class="stack"><b>Easy 30-day returns</b><span class="small muted">Request online, we collect</span></span></li>
+    <li class="row" style="gap:14px"><span class="ph t" style="width:52px;height:52px;border-radius:14px;flex:none"><span class="i i-grad s28" aria-hidden="true"></span></span><span class="stack"><b>Aston students only</b><span class="small muted">Verified @aston.ac.uk accounts</span></span></li>
+    <li class="row" style="gap:14px"><span class="ph a" style="width:52px;height:52px;border-radius:14px;flex:none"><span class="i i-globe s28" aria-hidden="true"></span></span><span class="stack"><b>Prices in pounds</b><span class="small muted">With a home-currency estimate</span></span></li>
+  </ul>
+</section>
+
+<section class="wrap stack" style="gap:28px;padding-top:72px" aria-labelledby="fbh">
+  <div class="row rsp-flex" style="justify-content:space-between;align-items:flex-end;gap:12px"><div class="stack" style="gap:8px"><span class="eyebrow">Save time and money</span><h2 id="fbh">Featured bundles</h2></div><a href="{% url 'catalog:bundles' %}" class="btn btn-s">See all bundles<span class="i i-ar" aria-hidden="true"></span></a></div>
+  <div class="cols-4" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px">
+    {% for b in bundles %}{% include "partials/bundle_card.html" with feature_first=True %}{% endfor %}
+  </div>
+</section>
+
+<section class="wrap stack" style="gap:28px;padding-top:72px" aria-labelledby="cath">
+  <h2 id="cath">Shop by category</h2>
+  <div class="cols-5 keep2" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px">
+    {% for c in categories %}<a href="{{ c.get_absolute_url }}" class="card card-link" style="padding:20px;display:flex;flex-direction:column;gap:14px"><span class="ph {{ c.tone }}" style="height:150px"><span class="i i-{{ c.icon }} s64" aria-hidden="true"></span></span><b style="font:700 19px var(--disp)">{{ c.name }}</b><span class="small muted">{{ c.n }} products</span></a>{% endfor %}
+  </div>
+</section>
+
+{% if combo|length > 1 %}
+<section class="wrap" style="padding-top:72px" aria-labelledby="fbt">
+  <form class="card" method="post" action="{% url 'orders:basket_add_many' %}" style="padding:32px;display:flex;flex-direction:column;gap:24px">{% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <div class="stack" style="gap:8px"><span class="bdg b-ai" style="align-self:flex-start"><span class="i i-spark" aria-hidden="true"></span>Smart suggestion</span><h2 id="fbt" style="font-size:30px">Frequently bought together</h2><p class="muted small">Based on what other Aston students ordered. <a href="{% url 'catalog:how_suggestions_work' %}">How suggestions work</a></p></div>
+    <div class="rsp" style="display:grid;grid-template-columns:{% for p in combo %}1fr {% if not forloop.last %}auto {% endif %}{% endfor %}auto 1.1fr;gap:20px;align-items:center">
+      {% for p in combo %}
+      <div class="row" style="gap:14px"><span class="ph {{ p.tone }}" style="width:96px;height:96px;flex:none">{% if p.image %}<img src="{{ p.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ p.icon }} s48" aria-hidden="true"></span>{% endif %}</span><span class="stack" style="gap:4px"><label class="chk" style="padding:0;min-height:0"><input type="checkbox" name="p" value="{{ p.pk }}" checked><b>{{ p.name }}</b></label><span class="num" style="font-weight:700">{{ p.price|money }}</span><a class="small" href="{{ p.get_absolute_url }}">View<span class="sr"> {{ p.name }}</span></a></span></div>
+      {% if not forloop.last %}<span class="i i-plus s24 muted hide-sm" aria-hidden="true"></span>{% endif %}
+      {% endfor %}
+      <span class="hide-sm" style="font:800 28px var(--disp)" aria-hidden="true">=</span>
+      <div class="stack" style="gap:10px;background:var(--cream-2);border-radius:14px;padding:18px"><span class="small muted">Total for {{ combo|length }} items</span><span class="num" style="font:800 30px var(--disp)">{{ combo_total|money }}</span><button class="btn btn-p" type="submit">Add selected to basket</button></div>
+    </div>
+  </form>
+</section>
+{% endif %}
+
+<section class="wrap" style="padding-top:72px;padding-bottom:88px">
+  <div class="rsp" style="background:var(--navy);color:var(--cream);border-radius:24px;padding:48px;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center">
+    <div class="stack" style="gap:18px">
+      <span class="eyebrow" style="color:var(--coral-on-navy)">Arrival Guide</span>
+      <h2>New to the UK? Start here.</h2>
+      <p style="color:#E6D9EA;font-size:18px">Short, simple answers from students who arrived last year: which plug you need, how cold January is, how to get a SIM, and what to do in your first 48 hours.</p>
+      <div class="row" style="gap:12px;flex-wrap:wrap"><a href="{% url 'core:guide' %}" class="btn btn-c">Read the guide<span class="i i-ar" aria-hidden="true"></span></a><a href="{% url 'core:guide' %}#ck" class="btn" style="color:var(--cream);border-color:#8A5C96">First-week checklist</a></div>
+    </div>
+    <ul class="cols-2 keep2" style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <li style="background:#4A1A57;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px"><span class="i i-plug s32" style="color:var(--coral-on-navy)" aria-hidden="true"></span><b>UK plugs: type G</b><span class="small" style="color:#E6D9EA">Three flat pins, 230V</span></li>
+      <li style="background:#4A1A57;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px"><span class="i i-rain s32" style="color:var(--coral-on-navy)" aria-hidden="true"></span><b>January: 1–7°C</b><span class="small" style="color:#E6D9EA">Often wet and windy</span></li>
+      <li style="background:#4A1A57;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px"><span class="i i-phone s32" style="color:var(--coral-on-navy)" aria-hidden="true"></span><b>Get a UK SIM</b><span class="small" style="color:#E6D9EA">No contract needed</span></li>
+      <li style="background:#4A1A57;border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px"><span class="i i-clip s32" style="color:var(--coral-on-navy)" aria-hidden="true"></span><b>First 48 hours</b><span class="small" style="color:#E6D9EA">A simple checklist</span></li>
+    </ul>
+  </div>
+</section>
+{% endblock %}

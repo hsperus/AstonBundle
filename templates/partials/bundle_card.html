@@ -1,0 +1,8 @@
+{% load ab %}{% with av=b.availability %}<article class="card pc"{% if forloop.first and feature_first %} style="border:2px solid var(--coral)"{% endif %}>
+  {% if b.saving %}<span class="bdg b-bundle top"><span class="i i-gift" aria-hidden="true"></span>Save {{ b.saving|money }}</span>{% endif %}
+  <div class="ph {{ b.tone }}" role="img" aria-label="{{ b.name }}: {{ b.tagline }}">{% with photos=b.photo_urls %}{% if photos|length >= 4 %}<div class="collage">{% for u in photos %}<img src="{{ u }}" alt="" loading="lazy">{% endfor %}</div>{% else %}<div class="row" style="gap:6px;position:relative">{% for ic in b.icon_list %}<span class="i i-{{ ic }} s48" aria-hidden="true"></span>{% endfor %}</div>{% endif %}{% endwith %}</div>
+  <a href="{{ b.get_absolute_url }}" class="nm" style="font-size:18px">{{ b.name }}</a>
+  <span class="small muted">{{ b.item_count }} items · {{ b.tagline }}</span>
+  <span class="bdg {% if av.0 == 'ok' %}b-ok{% elif av.0 == 'low' %}b-low{% else %}b-out{% endif %}" style="align-self:flex-start"><span class="i {% if av.0 == 'ok' %}i-okc{% elif av.0 == 'low' %}i-warn{% else %}i-xc{% endif %}" aria-hidden="true"></span>{{ av.1 }}</span>
+  <div class="row" style="justify-content:space-between"><span class="row" style="gap:8px"><span class="pr">{{ b.price|money }}</span>{% if b.saving %}<span class="was num"><span class="sr">Normally </span>{{ b.separate_price|money }}</span>{% endif %}</span><a href="{{ b.get_absolute_url }}" class="btn btn-p btn-sm">View<span class="sr"> {{ b.name }}</span></a></div>
+</article>{% endwith %}

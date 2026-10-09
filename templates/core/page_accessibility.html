@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ title }}</span></nav>
+<article class="prose" style="max-width:760px"><h1>{{ title }}</h1>
+<p>We want everyone to be able to use AstonBundle, including people who use a keyboard, a screen reader, zoom or a phone. We aim to meet <b>WCAG 2.1 level AA</b>.</p>
+<h2 style="font-size:24px">What we have done</h2>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Text and controls meet AA colour contrast.</li><li>Every interactive element has a visible focus ring and works with a keyboard.</li><li>Buttons and links are at least 44 × 44 pixels.</li><li>Stock and order status always use an icon and text, never colour alone.</li><li>Form errors are shown next to the field in plain English.</li><li>The body font, Atkinson Hyperlegible, was designed for legibility.</li><li>Pages work from 320 px wide and at 200% zoom, and respect “reduce motion”.</li></ul>
+<h2 style="font-size:24px">Known limitations</h2>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>The forecast chart in the staff area has a table alternative, but the chart itself is not fully described.</li><li>Product images are illustrations, not photos.</li></ul>
+<h2 style="font-size:24px">Tell us about a problem</h2>
+<p>If something does not work for you, please <a href="{% url 'support:contact' %}">contact us</a>.</p>
+</article>
+{% endblock %}

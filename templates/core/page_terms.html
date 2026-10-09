@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ title }}</span></nav>
+<article class="prose" style="max-width:760px"><h1>{{ title }}</h1>
+<div class="alert a-info"><span class="i i-info" aria-hidden="true"></span><div><b>A university project</b>AstonBundle is a fictional shop built for the DG4AGA module at Aston University. Nothing here is a real offer to sell. No money is taken and nothing is delivered.</div></div>
+<h2 style="font-size:24px">1. Who can use AstonBundle</h2>
+<p>Accounts are for Aston University students with an <b>@aston.ac.uk</b> email address. Please use test details only.</p>
+<h2 style="font-size:24px">2. Prices and payment</h2>
+<p>Prices are shown in pounds sterling (GBP) and include VAT. Home-currency amounts are estimates for guidance only. Checkout is a simulation: you will never be asked for card details.</p>
+<h2 style="font-size:24px">3. Delivery</h2>
+<p>You choose a delivery slot at your halls reception on one of the 3 days before you arrive, or on your arrival day. Delivery is free on orders over £{{ free_delivery_threshold }}.</p>
+<h2 style="font-size:24px">4. Cancelling and returns</h2>
+<p>You can cancel an order online until we start processing it. Most items can be returned within 30 days of delivery — see the <a href="{% url 'core:page' 'returns' %}">returns policy</a>.</p>
+<h2 style="font-size:24px">5. Reviews</h2>
+<p>Only students who received an item can review it. Please keep reviews honest and polite, and do not include personal details. We may hide reviews that break these rules.</p>
+<h2 style="font-size:24px">6. Your data</h2>
+<p>See our <a href="{% url 'core:page' 'privacy' %}">privacy notice</a>. You can delete your account at any time.</p>
+</article>
+{% endblock %}

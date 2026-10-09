@@ -1,0 +1,46 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Your basket{% endblock %}
+{% block main_style %}padding-top:40px;padding-bottom:88px{% endblock %}
+{% block content %}
+{% if lines %}
+<div class="rsp" style="display:grid;grid-template-columns:1.7fr 1fr;gap:48px;align-items:start">
+  <section aria-labelledby="bkh">
+    <h1 id="bkh">Your basket <span class="muted num" style="font-size:24px;font-weight:700">({{ count }} item{{ count|pluralize }})</span></h1>
+    {% for l in lines %}{% if l.warning %}<div class="alert {% if l.max_quantity == 0 %}a-err{% else %}a-warn{% endif %}" role="status" style="margin-top:20px"><span class="i i-warn" aria-hidden="true"></span><div><b>{{ l.warning }}</b>{{ l.name }}</div></div>{% endif %}{% endfor %}
+    {% for l in lines %}
+    <div class="bl">
+      {% if l.is_bundle %}<span class="ph {{ l.obj.tone|default:'n' }}" style="width:112px;height:112px">{% with photos=l.obj.photo_urls %}{% if photos|length >= 4 %}<span class="collage">{% for u in photos %}<img src="{{ u }}" alt="" loading="lazy">{% endfor %}</span>{% else %}<span class="i i-gift s48" aria-hidden="true"></span>{% endif %}{% endwith %}</span>
+      <div class="stack" style="gap:6px"><span class="bdg b-bundle" style="align-self:flex-start"><span class="i i-gift" aria-hidden="true"></span>Bundle · {{ l.components|length }} items</span><a href="{{ l.obj.get_absolute_url }}" style="font:700 18px var(--body);color:var(--navy);text-decoration:none">{{ l.name }}</a><span class="small muted">{% for p, q in l.components %}{{ p.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>{% if l.saving %}<span class="small" style="color:var(--coral-ink);font-weight:700">You save {{ l.saving|money }}</span>{% endif %}
+        <form method="post" class="row" style="gap:16px">{% csrf_token %}<input type="hidden" name="key" value="{{ l.key }}"><a href="{{ l.obj.get_absolute_url }}" class="lnk small">Edit bundle</a><button class="btn btn-g btn-sm" style="color:var(--red)" name="remove" value="1"><span class="i i-trash" aria-hidden="true"></span>Remove<span class="sr"> {{ l.name }}</span></button></form></div>
+      {% else %}<span class="ph {{ l.obj.tone }}" style="width:112px;height:112px">{% if l.obj.image %}<img src="{{ l.obj.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ l.obj.icon }} s48" aria-hidden="true"></span>{% endif %}</span>
+      <div class="stack" style="gap:6px"><a href="{{ l.obj.get_absolute_url }}" style="font:700 18px var(--body);color:var(--navy);text-decoration:none">{{ l.obj.name }}</a>{% stock_badge l.obj %}<span class="small muted num">{{ l.obj.price|money }} each</span>
+        <form method="post">{% csrf_token %}<input type="hidden" name="key" value="{{ l.key }}"><button class="btn btn-g btn-sm" style="color:var(--red);align-self:flex-start" name="remove" value="1"><span class="i i-trash" aria-hidden="true"></span>Remove<span class="sr"> {{ l.obj.name }}</span></button></form></div>
+      {% endif %}
+      <form method="post" class="stack" style="gap:6px" data-autosubmit>{% csrf_token %}<input type="hidden" name="key" value="{{ l.key }}">
+        <div class="stepper" data-stepper{% if l.quantity >= l.max_quantity %} style="border-color:var(--amber-ink)"{% endif %}><button type="button" aria-label="Decrease quantity" data-step="-1"><span class="i i-minus" aria-hidden="true"></span></button><input aria-label="Quantity of {{ l.name }}" class="num" type="number" name="qty" value="{{ l.quantity }}" min="0" max="{{ l.max_quantity }}"><button type="button" aria-label="Increase quantity" data-step="1"{% if l.quantity >= l.max_quantity %} disabled style="color:var(--g400)"{% endif %}><span class="i i-plus" aria-hidden="true"></span></button></div>
+        {% if l.quantity >= l.max_quantity %}<span class="cap muted">Max {{ l.max_quantity }}</span>{% endif %}<noscript><button class="btn btn-s btn-sm">Update</button></noscript>
+      </form>
+      <span class="stack" style="align-items:flex-end"><b class="num" style="font-size:19px">{{ l.line_total|money }}</b>{% if l.saving %}<span class="small muted num" style="text-decoration:line-through"><span class="sr">Normally </span>{{ l.full_price|money }}</span>{% endif %}</span>
+    </div>
+    {% endfor %}
+    <a href="{% url 'catalog:bundles' %}" class="lnk" style="display:inline-flex;gap:6px;align-items:center;margin-top:20px;min-height:44px"><span class="i i-cl" aria-hidden="true"></span>Continue shopping</a>
+  </section>
+  <aside class="card pad-l stack" style="gap:14px;box-shadow:var(--sh-2);position:sticky;top:24px" aria-labelledby="osh">
+    <h2 id="osh" style="font-size:24px">Order summary</h2>
+    <div class="sr2 num"><span>Items at full price</span><span>{{ totals.items_total|money }}</span></div>
+    {% if totals.saving %}<div class="sr2 num" style="color:var(--coral-ink);font-weight:700"><span>Bundle savings</span><span>−{{ totals.saving|money }}</span></div>{% endif %}
+    <div class="sr2 num"><span>Delivery to your halls</span>{% if totals.delivery %}<span>{{ totals.delivery|money }}</span>{% else %}<span style="color:var(--teal-ink);font-weight:700">Free</span>{% endif %}</div>
+    {% if totals.delivery %}<span class="small muted">Add {{ totals.free_delivery_gap|money }} more for free delivery.</span>{% endif %}
+    <hr class="div">
+    <div class="sr2 num" style="align-items:baseline"><b style="font-size:19px">Total</b><span style="font:800 32px var(--disp)">{{ totals.total|money }}</span></div>
+    <span class="small muted num">{% fx totals.total %} (estimate)</span>
+    {% if blocked %}<button class="btn btn-lg" disabled>Go to checkout</button><span class="msg err"><span class="i i-alert" aria-hidden="true"></span>Remove out-of-stock items to continue.</span>
+    {% else %}<a href="{% url 'orders:checkout_delivery' %}" class="btn btn-p btn-lg">Go to checkout<span class="i i-ar" aria-hidden="true"></span></a>{% endif %}
+    <span class="hint" style="display:flex;gap:8px;align-items:center"><span class="i i-cal s16" aria-hidden="true"></span>You’ll choose your delivery date next.</span>
+    {% if rec %}<form method="post" action="{% url 'orders:basket_add' %}" class="card" style="padding:14px;display:flex;gap:12px;box-shadow:none;background:var(--cream-2);border:0">{% csrf_token %}<input type="hidden" name="kind" value="p"><input type="hidden" name="id" value="{{ rec.pk }}"><input type="hidden" name="next" value="{% url 'orders:basket' %}"><span class="i i-spark" style="color:var(--navy)" aria-hidden="true"></span><span class="small"><b>Smart suggestion — students also added:</b> <a href="{{ rec.get_absolute_url }}">{{ rec.name }}</a>, {{ rec.price|money }}. <button class="lnk" style="border:0;background:none;padding:0;font:inherit;font-weight:700;cursor:pointer;min-height:24px">Add<span class="sr"> {{ rec.name }}</span></button></span></form>{% endif %}
+  </aside>
+</div>
+{% else %}
+<div class="card empty" style="max-width:640px"><span class="ph" style="width:88px;height:88px;border-radius:50%"><span class="i i-bag s40" aria-hidden="true"></span></span><h1 style="font-size:32px">Your basket is empty</h1><p class="muted">Start with a bundle — it has everything for your first week and costs less.</p><div class="row" style="gap:12px;flex-wrap:wrap"><a href="{% url 'catalog:bundles' %}" class="btn btn-p">Browse bundles</a><a href="{% url 'catalog:all' %}" class="btn btn-s">All products</a></div></div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Order confirmed{% endblock %}
+{% block main_style %}padding-top:56px;padding-bottom:88px{% endblock %}
+{% block content %}
+<div class="rsp" style="display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start">
+  <div class="stack" style="gap:22px" role="status">
+    <span class="ph t" style="width:88px;height:88px;border-radius:50%"><span class="i i-okc s48" style="color:var(--teal-ink)" aria-hidden="true"></span></span>
+    <span class="bdg" style="background:#FFF4D6;color:var(--navy);border:1.5px dashed var(--amber-ink);align-self:flex-start"><span class="i i-warn" aria-hidden="true"></span>Test order — no payment taken</span>
+    <h1 style="font-size:52px">Thank you, {{ order.user.first_name }}. Your room is sorted.</h1>
+    <p style="font-size:19px">We’ve sent a confirmation to <b>{{ order.user.email }}</b> (see the <a href="{% url 'accounts:demo_inbox' %}">Demo inbox</a>).</p>
+    <div class="cols-2" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+      <div class="card pad stack" style="gap:4px"><span class="small muted">Order number</span><b class="num" style="font-size:22px">{{ order.number }}</b>{% if order.payment_label %}<span class="small muted">Paid with {{ order.payment_label }} (test)</span>{% endif %}</div>
+      <div class="card pad stack" style="gap:4px"><span class="small muted">Expected delivery</span><b style="font-size:20px">{{ order.delivery_date|date:"D j M" }}, {{ order.slot_label }}</b><span class="small muted">{{ order.address_display }}</span></div>
+    </div>
+    <div class="row" style="gap:12px;flex-wrap:wrap"><a href="{{ order.get_absolute_url }}" class="btn btn-p btn-lg"><span class="i i-truck" aria-hidden="true"></span>Track order</a><a href="{% url 'core:guide' %}" class="btn btn-s btn-lg">Read the Arrival Guide</a></div>
+  </div>
+  <aside class="card pad-l stack" style="gap:12px"><h2 style="font-size:22px">Order summary</h2>
+    {% for g in groups %}<div class="row" style="gap:12px"><span class="ph thumb {{ g.tone }}">{% if g.image %}<img src="{{ g.image }}" alt="" loading="lazy">{% else %}<span class="i i-{{ g.icon }}" aria-hidden="true"></span>{% endif %}</span><span style="flex:1">{{ g.name }}</span><b class="num">{{ g.total|money }}</b></div>{% endfor %}
+    <hr class="div">{% if order.bundle_saving %}<div class="sum small" style="color:var(--coral-ink);font-weight:700"><span>You saved</span><span class="num">{{ order.bundle_saving|money }}</span></div>{% endif %}
+    <div class="sum small"><span>Delivery</span><span class="num">{% if order.delivery_fee %}{{ order.delivery_fee|money }}{% else %}Free{% endif %}</span></div>
+    <div class="sum"><b>Total</b><b class="num" style="font-size:22px">{{ order.total|money }}</b></div>
+    <div class="alert a-info" style="font-size:15px;margin-top:8px"><span class="i i-cal" aria-hidden="true"></span><div>Plans changed? You can cancel this order online until we start processing it, or <a href="{% url 'support:contact' %}?order={{ order.number }}">contact us</a> to move the date.</div></div>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}{{ b.name }}{% endblock %}
+{% block main_style %}padding-top:28px;padding-bottom:80px;display:flex;flex-direction:column;gap:40px{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><a href="{% url 'catalog:bundles' %}">Bundles</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ b.name }}</span></nav>
+<section class="rsp" style="background:var(--navy);color:var(--cream);border-radius:24px;padding:40px 48px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center">
+  <div class="stack" style="gap:16px">
+    <span class="bdg b-bundle" style="align-self:flex-start"><span class="i i-gift" aria-hidden="true"></span>Bundle · {{ b.item_count }} items</span>
+    <h1>{{ b.name }}</h1>
+    <p style="color:#E6D9EA;font-size:19px">{{ b.description }}</p>
+    <div class="row" style="gap:20px;flex-wrap:wrap"><span class="row" style="gap:8px"><span class="i i-truck" style="color:var(--coral-on-navy)" aria-hidden="true"></span>Delivered together</span><span class="row" style="gap:8px"><span class="i i-return" style="color:var(--coral-on-navy)" aria-hidden="true"></span>Return single items</span></div>
+  </div>
+  <div class="hide-sm" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px" role="img" aria-label="The {{ lines|length }} bundle items">
+    {% for it in lines|slice:":9" %}<span class="ph {{ it.product.tone }}" style="aspect-ratio:1">{% if it.product.image %}<img src="{{ it.product.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ it.product.icon }} s48" aria-hidden="true"></span>{% endif %}</span>{% endfor %}
+  </div>
+</section>
+<form method="post" action="{% url 'orders:basket_add' %}" class="rsp" style="display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:start" data-bundle-form data-bundle-price="{{ b.price }}" data-bundle-full="{{ b.separate_price }}">{% csrf_token %}
+  <input type="hidden" name="kind" value="b"><input type="hidden" name="id" value="{{ b.pk }}"><input type="hidden" name="next" value="{{ request.path }}">
+  <section aria-labelledby="inh">
+    <div class="row" style="justify-content:space-between;padding-bottom:8px;gap:12px;flex-wrap:wrap"><h2 id="inh" style="font-size:28px">What’s inside</h2><label class="chk" style="padding:0"><input type="checkbox" name="customise" value="1" data-customise>Customise bundle</label></div>
+    <p class="muted small" style="padding-bottom:8px">Tick “Customise” to remove items you already have. You keep the same percentage discount (minimum 2 items).</p>
+    <ul style="list-style:none;margin:0;padding:0">
+      {% for it in lines %}{% with p=it.product %}
+      <li class="li"><span class="ph thumb {{ p.tone }}" style="width:56px;height:56px">{% if p.image %}<img src="{{ p.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ p.icon }} s28" aria-hidden="true"></span>{% endif %}</span><span class="stack" style="gap:2px"><a href="{{ p.get_absolute_url }}" style="font-weight:700;color:var(--navy);text-decoration:none">{{ p.name }}</a><span class="small muted">Qty {{ it.quantity }} · <span class="num">{{ p.price|money }}</span> on its own</span></span>{% stock_badge p %}<label class="chk" style="padding:0;min-height:44px;align-items:center"><input type="checkbox" name="only" value="{{ p.pk }}" checked data-price="{{ p.price }}" data-qty="{{ it.quantity }}" data-item><span class="sr">Include {{ p.name }}</span></label></li>
+      {% endwith %}{% endfor %}
+    </ul>
+  </section>
+  <aside class="card pad-l stack" style="gap:16px;position:sticky;top:24px;box-shadow:var(--sh-2)" aria-labelledby="bsum">
+    <h2 id="bsum" style="font-size:24px">Bundle price</h2>
+    <div class="sumrow"><span><span data-count>{{ b.item_count }}</span> items bought separately</span><span class="num" style="text-decoration:line-through;color:var(--g600)" data-full>{{ b.separate_price|money }}</span></div>
+    <div class="sumrow"><span style="font-weight:700;color:var(--coral-ink)">Bundle saving</span><span class="num" style="font-weight:700;color:var(--coral-ink)" data-saving>−{{ b.saving|money }}</span></div>
+    <hr class="div">
+    <div class="sumrow"><b style="font-size:19px">You pay</b><span class="num" style="font:800 40px/1 var(--disp)" data-price aria-live="polite">{{ b.price|money }}</span></div>
+    <span class="small muted num">{% fx b.price %} (estimate)</span>
+    {% with av=b.availability %}
+    {% if av.0 == 'out' %}<div class="alert a-err" style="font-size:15px"><span class="i i-xc" aria-hidden="true"></span><div><b>{{ av.1 }}.</b>Customise the bundle to buy the other items now.</div></div>
+    {% elif av.0 == 'low' %}<div class="alert a-warn" style="font-size:15px"><span class="i i-warn" aria-hidden="true"></span><div><b>{{ av.1 }}.</b>Stock is reserved only when you place your order.</div></div>{% endif %}
+    {% endwith %}
+    <button class="btn btn-p btn-lg" type="submit"{% if not available %} data-needs-custom{% endif %}><span class="i i-bag" aria-hidden="true"></span>Add bundle to basket</button>
+    <span class="hint" style="display:flex;gap:8px;align-items:center"><span class="i i-cal s16" aria-hidden="true"></span>Choose a delivery date that matches your arrival at checkout.</span>
+  </aside>
+</form>
+{% if others %}<section class="stack" style="gap:20px"><h2 style="font-size:28px">Other bundles</h2><div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">{% for b in others %}{% include "partials/bundle_card.html" %}{% endfor %}</div></section>{% endif %}
+{% endblock %}

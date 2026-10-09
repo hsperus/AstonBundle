@@ -1,0 +1,36 @@
+{% extends "staff/base.html" %}{% load ab %}
+{% block stitle %}Customers{% endblock %}
+{% block top %}<h1 style="font-size:26px">Customers</h1><span class="small muted num">{{ total }} verified students</span><form role="search" class="srch" style="margin-left:auto;width:min(320px,100%);height:44px;background:#fff"><span class="i i-search" aria-hidden="true"></span><label class="sr" for="cs">Search customers</label><input id="cs" name="q" value="{{ q }}" placeholder="Search by name"></form><a href="?status=suspended" class="btn btn-g btn-sm">Suspended</a>{% endblock %}
+{% block content %}
+<div class="rsp-flex" style="display:flex;gap:20px;align-items:flex-start">
+  <div class="stack" style="gap:12px;flex:1;min-width:0">
+    <div class="alert a-info" style="font-size:15px"><span class="i i-shield" aria-hidden="true"></span><div>Personal data is hidden by default. Revealing details is logged with your name and the time. We store only name, email, halls/room and an optional arrival date.</div></div>
+    <div class="tbox"><table class="tbl"><thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col" class="r">Orders</th><th scope="col">Joined</th><th scope="col"><span class="sr">Action</span></th></tr></thead><tbody>
+      {% for c in page.object_list %}<tr{% if selected and selected.pk == c.pk %} class="sel"{% endif %}><td><b>{{ c.masked_name }}</b>{% if not c.is_active %} <span class="bdg b-out bdg-sm"><span class="i i-lock" aria-hidden="true"></span>Suspended</span>{% endif %}</td><td class="mask small">{{ c.masked_email }}</td><td class="r num">{{ c.n_orders }}</td><td class="num small">{{ c.date_joined|date:"j M Y" }}</td><td><a href="{% qs c=c.pk %}" class="btn btn-g btn-sm">View<span class="sr"> {{ c.masked_name }}</span></a></td></tr>{% empty %}<tr><td colspan="5" class="muted">No customers match.</td></tr>{% endfor %}
+    </tbody></table></div>
+    {% include "partials/pagination.html" %}
+  </div>
+  {% if selected %}
+  <aside class="card" style="width:380px;max-width:100%;flex:none;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--sh-2);position:sticky;top:16px" aria-labelledby="cdh">
+    <div class="row" style="justify-content:space-between"><h2 id="cdh" style="font-size:20px">{{ selected.masked_name }}</h2><a href="{% qs c='' %}" class="ibtn" aria-label="Close customer panel"><span class="i i-x" aria-hidden="true"></span></a></div>
+    <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 16px;font-size:15px">
+      <dt class="muted">Full name</dt><dd style="margin:0"{% if not revealed %} class="mask"{% endif %}>{% if revealed %}{{ selected.full_name }}{% else %}{{ selected.masked_name }}{% endif %}</dd>
+      <dt class="muted">Email</dt><dd style="margin:0;overflow-wrap:anywhere" class="mask">{% if revealed %}{{ selected.email }}{% else %}{{ selected.masked_email }}{% endif %}</dd>
+      <dt class="muted">Address</dt><dd style="margin:0"{% if not revealed %} class="mask"{% endif %}>{% if revealed %}{{ selected.halls|default:"—" }}{% if selected.room %}, {{ selected.room }}{% endif %}{% else %}Hidden{% endif %}</dd>
+      <dt class="muted">Arrival</dt><dd style="margin:0">{% if selected.arrival_date %}{{ selected.arrival_date|date:"F Y" }}{% else %}—{% endif %}</dd>
+      <dt class="muted">Joined</dt><dd style="margin:0" class="num">{{ selected.date_joined|date:"j M Y" }}</dd>
+      <dt class="muted">Verified</dt><dd style="margin:0">{% if selected.email_verified %}<span class="bdg b-ok"><span class="i i-okc" aria-hidden="true"></span>Yes</span>{% else %}<span class="bdg b-low"><span class="i i-warn" aria-hidden="true"></span>No</span>{% endif %}</dd>
+    </dl>
+    {% if not selected.is_active %}<div class="alert a-warn" style="font-size:14px"><span class="i i-lock" aria-hidden="true"></span><div><b>Suspended.</b>This student cannot sign in.</div></div>{% endif %}
+    <div class="row" style="gap:8px;flex-wrap:wrap">{% if not revealed %}<form method="post">{% csrf_token %}<input type="hidden" name="customer" value="{{ selected.pk }}"><input type="hidden" name="action" value="reveal"><button class="btn btn-s btn-sm"><span class="i i-eye" aria-hidden="true"></span>Reveal details (logged)</button></form>{% else %}<span class="small muted">Shown for 5 minutes.</span>{% endif %}
+      <form method="post"{% if selected.is_active %} data-confirm="Disable this account? The student will not be able to sign in."{% endif %}>{% csrf_token %}<input type="hidden" name="customer" value="{{ selected.pk }}">{% if selected.is_active %}<input type="hidden" name="action" value="disable"><button class="btn btn-ds btn-sm"><span class="i i-lock" aria-hidden="true"></span>Disable account</button>{% else %}<input type="hidden" name="action" value="enable"><button class="btn btn-s btn-sm"><span class="i i-okc" aria-hidden="true"></span>Enable account</button>{% endif %}</form></div>
+    {% if not selected.is_active %}<div class="alert a-warn" style="font-size:14px"><span class="i i-lock" aria-hidden="true"></span><div><b>Account disabled.</b>The student cannot sign in.</div></div>{% endif %}
+    <form method="post" data-confirm="{% if selected.is_active %}Suspend this account? The student will not be able to sign in.{% else %}Restore this account?{% endif %}">{% csrf_token %}<input type="hidden" name="customer" value="{{ selected.pk }}">{% if selected.is_active %}<button class="btn btn-ds btn-sm" name="action" value="suspend"><span class="i i-lock" aria-hidden="true"></span>Suspend account</button>{% else %}<button class="btn btn-s btn-sm" name="action" value="restore">Restore account</button>{% endif %}</form>
+    <div class="stack" style="gap:8px;border-top:1px solid var(--g200);padding-top:12px"><b>Orders ({{ selected.orders.count }})</b>
+      {% for o in sel_orders %}<div class="row small" style="justify-content:space-between;gap:8px"><a href="{% url 'staff:orders' %}?o={{ o.number }}" class="num">{{ o.number }}</a>{% order_chip o %}</div>{% empty %}<span class="small muted">No orders.</span>{% endfor %}
+    </div>
+    {% if log %}<div class="stack small" style="gap:4px;border-top:1px solid var(--g200);padding-top:12px"><b>Access log</b>{% for l in log %}<span class="muted">{{ l.actor.full_name }} · {{ l.get_action_label }} · {{ l.created_at|date:"j M, H:i" }}</span>{% endfor %}</div>{% endif %}
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

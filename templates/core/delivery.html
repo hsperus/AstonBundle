@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Delivery dates{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">Delivery dates</span></nav>
+<div class="rsp" style="display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start">
+  <div class="stack" style="gap:24px">
+    <h1>Delivery dates</h1>
+    <p>We deliver to your halls reception on one of the <b>3 days before you arrive</b>, or on your arrival day. Reception keeps your parcel safe until you collect it with your keys.</p>
+    <form method="get" class="card pad stack" style="gap:16px" novalidate>
+      <div class="rsp" style="display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end">
+        <div class="field"><label class="lbl" for="arr">Arrival date</label><input type="date" id="arr" name="arrival" class="inp num{% if error %} err{% endif %}" value="{{ arrival|date:'Y-m-d' }}" min="{{ earliest|date:'Y-m-d' }}"{% if error %} aria-invalid="true" aria-describedby="arr-e"{% endif %}></div>
+        <div class="field"><label class="lbl" for="hl">Your halls</label><div class="selw"><select id="hl" name="halls" class="inp">{% for v, l in hall_choices %}<option value="{{ v }}"{% if v == halls %} selected{% endif %}>{{ l }}</option>{% endfor %}</select><span class="i i-cd" aria-hidden="true"></span></div></div>
+        <button class="btn btn-p" type="submit">Check dates</button>
+      </div>
+      {% if error %}<span class="msg err" id="arr-e"><span class="i i-alert" aria-hidden="true"></span>{{ error }}</span>{% endif %}
+    </form>
+    {% if days %}
+    <section class="stack" style="gap:14px" aria-labelledby="dh"><h2 id="dh" style="font-size:24px">Available slots for {{ arrival|date:"l j F Y" }}</h2>
+      <div class="cols-4 keep2" style="display:grid;grid-template-columns:repeat({{ days|length }},minmax(0,1fr));gap:12px">
+        {% for d in days %}<div class="card pad stack" style="gap:8px"><b>{{ d.date|date:"D j M" }}{% if d.is_arrival %} <span class="bdg b-new bdg-sm">Arrival</span>{% endif %}</b>{% for s in d.slots %}<span class="small {% if s.full %}muted{% endif %}">{{ s.label }} · {% if s.full %}Fully booked{% else %}Available{% endif %}</span>{% endfor %}</div>{% endfor %}
+      </div>
+      <p class="small muted">We saved your arrival date. You choose the exact slot at checkout.</p>
+      <a href="{% url 'catalog:bundles' %}" class="btn btn-c" style="align-self:flex-start">Start shopping<span class="i i-ar" aria-hidden="true"></span></a>
+    </section>
+    {% endif %}
+  </div>
+  <aside class="card pad-l stack" style="gap:12px"><h2 style="font-size:22px">Good to know</h2><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px"><li>Free delivery to Aston halls on orders over £{{ free_delivery_threshold }}.</li><li>Orders need at least 2 days to pack.</li><li>Each slot has a limit, so book early in intake weeks.</li><li>Living off campus? Choose “Other UK address” at checkout.</li></ul></aside>
+</div>
+{% endblock %}

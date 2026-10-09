@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ title }}</span></nav>
+<article class="prose" style="max-width:760px"><h1>{{ title }}</h1>
+<p>AstonBundle is a fictional shop built for a university module. Please use <b>test data only</b>. Do not enter real personal or payment information.</p>
+<h2 style="font-size:24px">What we store</h2>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Account: your name, Aston email address and a securely hashed password (we never store the password itself).</li><li>Delivery: halls and room number, or a UK address, an optional arrival date and an optional phone number.</li><li>Orders, returns, reviews and messages you send us.</li></ul>
+<h2 style="font-size:24px">What we don’t store</h2>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Card or bank details — checkout is a simulation with no payment form.</li><li>Date of birth, nationality, passport or visa details.</li></ul>
+<h2 style="font-size:24px">Emails</h2>
+<p>We do not send real emails. Verification codes and password-reset links appear in the <a href="{% url 'accounts:demo_inbox' %}">Demo inbox</a> for the address you used.</p>
+<h2 style="font-size:24px">Staff access</h2>
+<p>Staff see only what their role needs. Customer details are masked by default and every “reveal” is logged.</p>
+<h2 style="font-size:24px">AI features</h2>
+<p>“Frequently bought together” and the stock forecast use order history only — never names, emails or addresses. Suggestions are always labelled.</p>
+<h2 style="font-size:24px">Your choices</h2>
+<p>You can update your details or delete your account at any time from <a href="{% url 'accounts:profile' %}">Profile &amp; settings</a>. Order records are kept in anonymised form.</p>
+<h2 style="font-size:24px">Cookies</h2>
+<p>We use only essential cookies: one to keep you signed in and keep your basket, and one to protect forms (CSRF). No tracking or advertising cookies.</p>
+</article>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "orders/_checkout_base.html" %}{% load ab %}
+{% block title %}Checkout: delivery{% endblock %}
+{% block step %}
+<div class="rsp" style="display:grid;grid-template-columns:1.6fr 1fr;gap:48px;align-items:start">
+  <div class="stack" style="gap:24px">
+    <h1 style="font-size:40px">Where and when?</h1>
+    {% include "partials/form_errors.html" %}
+    <form method="get" class="card pad row rsp-flex" style="gap:14px;align-items:flex-end;box-shadow:none"><div class="field" style="flex:1"><label class="lbl" for="arr">Your arrival date</label><input type="date" class="inp num" id="arr" name="arrival" value="{{ arrival|date:'Y-m-d' }}" min="{{ earliest|date:'Y-m-d' }}"></div><button class="btn btn-s" type="submit">Update dates</button></form>
+    <form method="post" class="stack" style="gap:24px" novalidate>{% csrf_token %}
+      <fieldset class="card pad-l stack" style="gap:16px;margin:0"><legend class="sr">Delivery address</legend><h2 style="font-size:22px">Delivery address</h2>
+        <div class="row" style="gap:20px;flex-wrap:wrap" role="radiogroup" aria-label="Delivery type">{% for v, l in form.delivery_type.field.choices %}<label class="chk"><input type="radio" name="delivery_type" value="{{ v }}"{% if form.delivery_type.value == v %} checked{% endif %} data-dtype>{{ l }}</label>{% endfor %}</div>
+        {% include "partials/field.html" with field=form.recipient_name autocomplete="name" %}
+        <div class="g2" data-show-for="halls">{% include "partials/field.html" with field=form.halls label="Halls" hide_optional=True %}{% include "partials/field.html" with field=form.room label="Room number" placeholder="C-214" hide_optional=True %}</div>
+        <div class="g2" data-show-for="other">{% include "partials/field.html" with field=form.address_line autocomplete="street-address" hide_optional=True %}{% include "partials/field.html" with field=form.postcode autocomplete="postal-code" hide_optional=True placeholder="B4 7ET" %}</div>
+        {% include "partials/field.html" with field=form.phone type="tel" autocomplete="tel" hint="Only for the driver. Leave blank if you don’t have one yet." %}
+      </fieldset>
+      <fieldset class="card pad-l stack" style="gap:16px;margin:0"><legend class="sr">Delivery date and time</legend><h2 style="font-size:22px">Delivery date</h2>
+        <p class="small muted">Your arrival: <b>{{ arrival|date:"l j F Y" }}</b>. We show dates up to 3 days before you arrive. Halls reception keeps parcels safe until you collect them.</p>
+        {% if form.delivery_date.errors %}<span class="msg err"><span class="i i-alert" aria-hidden="true"></span>{{ form.delivery_date.errors|join:" " }}</span>{% endif %}
+        <div class="cols-4 keep2" role="radiogroup" aria-label="Choose a day" style="display:grid;grid-template-columns:repeat({{ days|length }},minmax(0,1fr));gap:10px">
+          {% for d in days %}<label class="day{% if d.date|date:'Y-m-d' == chosen_date %} on{% endif %}"{% if d.full %} style="opacity:.55;cursor:not-allowed"{% endif %}><input type="radio" class="sr" name="delivery_date" value="{{ d.date|date:'Y-m-d' }}"{% if d.date|date:'Y-m-d' == chosen_date %} checked{% endif %}{% if d.full %} disabled{% endif %} data-day>{{ d.date|date:"D" }}<span class="d num">{{ d.date|date:"j" }}</span>{{ d.date|date:"M" }}{% if d.is_arrival %}<span class="cap">Arrival</span>{% elif d.full %}<span class="cap">Full</span>{% endif %}</label>{% endfor %}
+        </div>
+        <h3 style="font-size:18px">Time slot</h3>
+        {% if form.delivery_slot.errors %}<span class="msg err"><span class="i i-alert" aria-hidden="true"></span>{{ form.delivery_slot.errors|join:" " }}</span>{% endif %}
+        {% for d in days %}<div class="cols-3" role="radiogroup" aria-label="Time slots for {{ d.date|date:'l j F' }}" data-slots-for="{{ d.date|date:'Y-m-d' }}" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+          {% for s in d.slots %}<label class="slot{% if s.full %} off{% endif %}{% if d.date|date:'Y-m-d' == chosen_date and s.code == chosen_slot %} on{% endif %}"><span class="row" style="gap:8px"><input type="radio" name="delivery_slot" value="{{ s.code }}"{% if s.full %} disabled{% endif %}{% if d.date|date:'Y-m-d' == chosen_date and s.code == chosen_slot %} checked{% endif %} style="width:20px;height:20px;accent-color:var(--navy)"><b>{{ s.label }}</b></span><span class="small {% if s.full %}muted{% endif %}">{% if s.full %}Fully booked{% else %}Free{% endif %} · {{ d.date|date:"D j" }}</span></label>{% endfor %}
+        </div>{% endfor %}
+      </fieldset>
+      <button class="btn btn-p btn-lg" style="align-self:flex-start" type="submit">Continue to review<span class="i i-ar" aria-hidden="true"></span></button>
+    </form>
+  </div>
+  {% include "orders/_summary.html" %}
+</div>
+{% endblock %}

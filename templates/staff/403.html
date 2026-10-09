@@ -1,0 +1,6 @@
+{% extends "staff/base.html" %}
+{% block stitle %}No access{% endblock %}
+{% block top %}<h1 style="font-size:24px">No access</h1>{% endblock %}
+{% block content %}
+<div class="card pad-l stack" style="gap:14px;max-width:560px;align-items:flex-start"><span class="ph" style="width:64px;height:64px;border-radius:50%;background:var(--red-50)"><span class="i i-lock s32" style="color:var(--red)" aria-hidden="true"></span></span><span class="eyebrow">Error 403</span><h2 style="font-size:30px">You don’t have access to {{ area }}</h2><p>Your role is <b>{{ user.get_role_display }}</b>. Each role only sees what it needs, to protect students’ personal data.</p><div class="row" style="gap:10px"><a href="{% url 'staff:dashboard' %}" class="btn btn-p">Back to dashboard</a></div></div>
+{% endblock %}

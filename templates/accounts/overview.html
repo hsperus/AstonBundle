@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Your account{% endblock %}
+{% block main_class %}{% endblock %}{% block main_style %}{% endblock %}
+{% block content %}
+<div class="wrap" style="padding-top:40px;padding-bottom:88px;display:flex;gap:48px;align-items:flex-start">
+  {% include "accounts/_nav.html" with nav="overview" %}
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:28px">
+    <div class="stack" style="gap:8px"><h1>Hello, {{ user.first_name }}</h1><p class="muted">{{ user.email }} · <span class="bdg b-ok" style="min-height:24px"><span class="i i-okc" aria-hidden="true"></span>Verified student</span></p></div>
+    <div class="row rsp-flex" style="background:var(--navy);color:var(--cream);border-radius:20px;padding:28px 32px;gap:28px">
+      {% if user.arrival_date and days_to_go >= 0 %}
+      <span class="stack" style="align-items:center;background:var(--coral);color:var(--navy);border-radius:16px;padding:14px 20px"><b class="num" style="font:800 44px/1 var(--disp)">{{ days_to_go }}</b><span class="small" style="font-weight:700">day{{ days_to_go|pluralize }} to go</span></span>
+      <div class="stack" style="gap:6px;flex:1"><h2 style="font-size:26px">You arrive on {{ user.arrival_date|date:"l j F" }}</h2><p style="color:#E6D9EA">{% if user.halls %}We can deliver to {{ user.halls }} reception from {{ deliver_from|date:"l j F" }}.{% else %}Add your halls so we know where to deliver.{% endif %}</p></div>
+      {% else %}
+      <div class="stack" style="gap:6px;flex:1"><h2 style="font-size:26px">When do you arrive?</h2><p style="color:#E6D9EA">Add your arrival date and we will suggest delivery slots that match.</p></div>
+      {% endif %}
+      <a href="{% url 'accounts:profile' %}" class="btn" style="color:var(--cream);border-color:#8A5C96">{% if user.arrival_date %}Change date{% else %}Add arrival date{% endif %}</a>
+    </div>
+    <section class="stack" style="gap:14px" aria-labelledby="ro"><div class="row" style="justify-content:space-between"><h2 id="ro" style="font-size:26px">Recent order</h2><a href="{% url 'accounts:orders' %}" class="lnk">All orders</a></div>
+      {% if recent %}
+      <article class="card pad row rsp-flex" style="gap:24px;align-items:center">
+        <div class="row">{% for l in recent.lines.all|slice:":2" %}<span class="ph thumb {{ l.tone }}" style="width:64px;height:64px{% if not forloop.first %};margin-left:-12px;border:3px solid #fff{% endif %}">{% if l.product.image %}<img src="{{ l.product.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ l.icon }} s32" aria-hidden="true"></span>{% endif %}</span>{% endfor %}</div>
+        <div class="stack" style="gap:4px;flex:1"><b class="num">{{ recent.number }}</b><span class="small muted">{{ recent.summary_text }} · {{ recent.total|money }}</span></div>
+        {% order_chip recent %}
+        <div class="stack" style="gap:2px"><span class="small muted">Delivery</span><b>{{ recent.delivery_date|date:"D j M" }}, {{ recent.slot_label }}</b></div>
+        <a href="{{ recent.get_absolute_url }}" class="btn btn-s btn-sm">View order<span class="sr"> {{ recent.number }}</span></a>
+      </article>
+      {% else %}
+      <div class="card empty"><p>You haven’t ordered yet.</p><a href="{% url 'catalog:bundles' %}" class="btn btn-p">Browse bundles</a></div>
+      {% endif %}
+    </section>
+    <section class="stack" style="gap:14px" aria-labelledby="qlh"><h2 id="qlh" style="font-size:26px">Quick links</h2>
+      <div class="cols-4 keep2" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+        <a href="{% url 'accounts:orders' %}" class="card ql"><span class="i i-truck s28" style="color:var(--coral-ink)" aria-hidden="true"></span><b>Track an order</b><span class="small muted">See delivery status</span></a>
+        <a href="{% url 'accounts:orders' %}?tab=delivered" class="card ql"><span class="i i-return s28" style="color:var(--coral-ink)" aria-hidden="true"></span><b>Return an item</b><span class="small muted">Within 30 days</span></a>
+        <a href="{% url 'accounts:profile' %}" class="card ql"><span class="i i-pin s28" style="color:var(--coral-ink)" aria-hidden="true"></span><b>Delivery address</b><span class="small muted">{% if user.halls %}{{ user.halls }}{% if user.room %}, {{ user.room }}{% endif %}{% else %}Not set yet{% endif %}</span></a>
+        <a href="{% url 'core:guide' %}" class="card ql"><span class="i i-map s28" style="color:var(--coral-ink)" aria-hidden="true"></span><b>Arrival Guide</b><span class="small muted">First-week checklist</span></a>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

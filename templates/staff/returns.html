@@ -1,0 +1,28 @@
+{% extends "staff/base.html" %}{% load ab %}
+{% block stitle %}Returns{% endblock %}
+{% block top %}<h1 style="font-size:26px">Returns</h1><nav class="tabs" aria-label="Return status" style="border:0;margin-left:16px"><a class="tab{% if tab == 'requested' %} on{% endif %}" href="?tab=requested">Waiting ({{ counts.requested|default:0 }})</a><a class="tab{% if tab == 'approved' %} on{% endif %}" href="?tab=approved">Approved</a><a class="tab{% if tab == 'rejected' %} on{% endif %}" href="?tab=rejected">Rejected</a></nav>{% endblock %}
+{% block content %}
+<div class="card" role="list" aria-label="Return requests">
+  {% for r in page.object_list %}
+  <div class="rq" role="listitem"{% if forloop.last %} style="border:0"{% endif %}>
+    {% with first=r.items.all.0 %}<span class="ph thumb {{ first.line.tone }}" style="width:56px;height:56px">{% if first.line.product.image %}<img src="{{ first.line.product.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ first.line.icon }} s28" aria-hidden="true"></span>{% endif %}</span>
+    <span class="stack"><b>{% for i in r.items.all %}{{ i.line.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</b><span class="small muted num">{{ r.reference }} · <a href="{% url 'staff:orders' %}?o={{ r.order.number }}">{{ r.order.number }}</a> · refund {{ r.refund_amount|money }}</span></span>{% endwith %}
+    <span class="stack small"><b>{{ r.user.masked_name }}</b>{% if tab == 'requested' and r.age_days >= 2 %}<span class="num" style="color:var(--red);font-weight:700;display:flex;gap:4px;align-items:center"><span class="i i-clock s16" aria-hidden="true"></span>{{ r.age_days }} days waiting</span>{% else %}<span class="muted num">{{ r.created_at|date:"j M, H:i" }}</span>{% endif %}</span>
+    <span class="stack small" style="gap:4px"><span><b>{{ r.get_reason_display }}</b>{% if r.comments %} — “{{ r.comments|truncatechars:90 }}”{% endif %}</span><span class="muted">{{ r.get_method_display }}</span>{% if r.photo %}<a href="{% url 'staff:return_photo' r.pk %}" class="lnk" target="_blank" rel="noopener"><span class="i i-img s16" aria-hidden="true"></span> 1 photo</a>{% endif %}{% if r.decision_note %}<span class="muted">Note: {{ r.decision_note }}</span>{% endif %}{% if tab != 'requested' %}<span class="muted">Decided {{ r.decided_at|date:"j M" }}{% if r.decided_by %} by {{ r.decided_by.full_name }}{% endif %}{% if r.restock %} · restocked{% endif %}</span>{% endif %}</span>
+    {% if tab == 'requested' %}
+      {% if reject_id == r.pk|stringformat:"s" %}
+      <form method="post" class="stack" style="gap:6px;grid-column:1/-1">{% csrf_token %}<input type="hidden" name="ret" value="{{ r.pk }}"><input type="hidden" name="action" value="reject"><label class="lbl small" for="rjr{{ r.pk }}">Reason for rejecting (sent to the student)</label><textarea class="inp err" id="rjr{{ r.pk }}" name="note" style="min-height:64px" aria-invalid="true" aria-describedby="rjre{{ r.pk }}" maxlength="300"></textarea><span class="msg err" id="rjre{{ r.pk }}"><span class="i i-alert" aria-hidden="true"></span>Write a short reason so the student understands.</span><span class="row" style="gap:8px"><a href="?tab=requested" class="btn btn-g btn-sm">Cancel</a><button class="btn btn-d btn-sm">Confirm reject</button></span></form>
+      {% else %}
+      <span class="stack" style="gap:8px">
+        <form method="post" class="stack" style="gap:6px">{% csrf_token %}<input type="hidden" name="ret" value="{{ r.pk }}"><input type="hidden" name="action" value="approve"><label class="chk small" style="min-height:32px;padding:0"><input type="checkbox" name="restock" value="1"{% if r.reason != 'damaged' %} checked{% endif %}>Put back in stock</label><button class="btn btn-p btn-sm"><span class="i i-check" aria-hidden="true"></span>Approve<span class="sr"> {{ r.reference }}</span></button></form>
+        <details><summary class="btn btn-ds btn-sm" style="list-style:none"><span class="i i-x" aria-hidden="true"></span>Reject</summary><form method="post" class="stack" style="gap:6px;margin-top:8px">{% csrf_token %}<input type="hidden" name="ret" value="{{ r.pk }}"><input type="hidden" name="action" value="reject"><label class="lbl small" for="rj{{ r.pk }}">Reason (sent to the student)</label><textarea class="inp" id="rj{{ r.pk }}" name="note" style="min-height:64px" maxlength="300" required></textarea><button class="btn btn-d btn-sm">Confirm reject</button></form></details>
+      </span>
+      {% endif %}
+    {% else %}
+      <span>{% if r.status == 'approved' %}<span class="chip c-deliv"><span class="i i-okc" aria-hidden="true"></span>Approved</span>{% else %}<span class="chip c-canc"><span class="i i-xc" aria-hidden="true"></span>Rejected</span>{% endif %}</span>
+    {% endif %}
+  </div>
+  {% empty %}<div class="empty"><p class="muted">No returns here.</p></div>{% endfor %}
+</div>
+{% include "partials/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}About us{% endblock %}
+{% block main_class %}{% endblock %}{% block main_style %}{% endblock %}
+{% block content %}
+<section class="wrap rsp" style="padding-top:72px;padding-bottom:64px;display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center">
+  <div class="stack" style="gap:20px"><span class="eyebrow">About us</span><h1 style="font-size:56px">We arrived to an empty room. You don’t have to.</h1><p style="font-size:19px">AstonBundle is built by Group 2 — five Aston students. Many new students land late at night to a bare mattress, no kettle and the wrong plug. We want to fix that first night.</p></div>
+  <div role="img" aria-label="Illustration: an empty halls room at night with one suitcase and a bare mattress" style="border-radius:24px;overflow:hidden" class="hide-sm">{% include "partials/ill_room.html" %}</div>
+</section>
+<section style="background:#fff;border-top:1px solid var(--g200);border-bottom:1px solid var(--g200)">
+  <div class="wrap cols-3" style="padding-top:64px;padding-bottom:64px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px">
+    <div class="stack" style="gap:12px"><span class="ph" style="width:64px;height:64px;border-radius:16px"><span class="i i-alert s32" aria-hidden="true"></span></span><h2 style="font-size:24px">The problem</h2><p>New students land after long flights, often at night. Shops are closed, everything is unfamiliar, and buying basics in your first days costs time, money and stress.</p></div>
+    <div class="stack" style="gap:12px"><span class="ph t" style="width:64px;height:64px;border-radius:16px"><span class="i i-pkg s32" aria-hidden="true"></span></span><h2 style="font-size:24px">Our idea</h2><p>Order before you fly. We pack your essentials and deliver them to your halls reception on the date you choose — so your room is ready when you are.</p></div>
+    <div class="stack" style="gap:12px"><span class="ph n" style="width:64px;height:64px;border-radius:16px"><span class="i i-heart s32" aria-hidden="true"></span></span><h2 style="font-size:24px">Our promise</h2><p>Fair prices in pounds, simple English, easy returns, and only the things you really need. No account data we don’t need.</p></div>
+  </div>
+</section>
+<section class="wrap stack" style="padding-top:72px;gap:28px" aria-labelledby="resp">
+  <div class="stack" style="gap:8px"><span class="eyebrow">How we work</span><h2 id="resp">Doing this responsibly</h2></div>
+  <div class="cols-4 keep2" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+    <div class="card pad stack" style="gap:10px"><span class="i i-truck s32" style="color:var(--teal-ink)" aria-hidden="true"></span><h3 style="font-size:19px">Fewer delivery trips</h3><p class="small">Orders for the same halls are grouped into delivery slots, so one van run serves many students instead of many separate parcels.</p></div>
+    <div class="card pad stack" style="gap:10px"><span class="i i-return s32" style="color:var(--teal-ink)" aria-hidden="true"></span><h3 style="font-size:19px">Less waste</h3><p class="small">Bundles contain only what a first-year room needs. Items come in reusable bags, and returned items go back into stock when they are unused.</p></div>
+    <div class="card pad stack" style="gap:10px"><span class="i i-shield s32" style="color:var(--teal-ink)" aria-hidden="true"></span><h3 style="font-size:19px">Minimal personal data</h3><p class="small">We keep only your name, Aston email, halls and room. Staff see customer details masked, and every reveal is logged. No card details are ever collected.</p></div>
+    <div class="card pad stack" style="gap:10px"><span class="i i-globe s32" style="color:var(--teal-ink)" aria-hidden="true"></span><h3 style="font-size:19px">Easy for everyone</h3><p class="small">Plain English, a legible typeface, prices in pounds with a home-currency estimate, and pages tested against WCAG 2.1 AA. <a href="{% url 'core:page' 'accessibility' %}">Accessibility statement</a></p></div>
+  </div>
+  <p class="small muted">Our AI suggestions use order history only, never personal details, and are always labelled. <a href="{% url 'catalog:how_suggestions_work' %}">How suggestions work</a></p>
+</section>
+<section class="wrap" style="padding-top:72px;padding-bottom:88px;display:flex;flex-direction:column;gap:32px">
+  <h2>The team</h2>
+  <div class="cols-5" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px">
+    {% for ini, name, bg in team %}<div class="card pad stack" style="gap:10px;align-items:flex-start"><span class="av" style="background:var(--{{ bg }})" aria-hidden="true">{{ ini }}</span><b>{{ name }}</b><span class="small muted">Group 2 · DG4AGA</span></div>{% endfor %}
+  </div>
+  <section id="credits" class="card pad-l stack" style="gap:14px" aria-labelledby="crh"><h2 id="crh" style="font-size:26px">Credits &amp; sources</h2><p class="muted">AstonBundle is a fictional business for the DG4AGA module. All products, prices, reviews, orders and people in the shop are test data. No real payments are taken and no emails are sent.</p>
+    <div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+      <div class="stack" style="gap:4px"><b>Fonts</b><span class="small">Bricolage Grotesque, Atkinson Hyperlegible, Alegreya Sans — SIL Open Font Licence 1.1, hosted on our own server</span></div>
+      <div class="stack" style="gap:4px"><b>Icons</b><span class="small">Outline icons based on Lucide — ISC Licence</span></div>
+      <div class="stack" style="gap:4px"><b>Images</b><span class="small">Illustrations and product placeholders made by the team. No third-party photos are used.</span></div>
+      <div class="stack" style="gap:4px"><b>Software</b><span class="small">Django (BSD-3), scikit-learn (BSD-3), pandas (BSD-3), NumPy (BSD-3), WhiteNoise (MIT), Gunicorn (MIT)</span></div>
+      <div class="stack" style="gap:4px"><b>Weather figures</b><span class="small">Rounded typical averages for Birmingham, for guidance only.</span></div>
+      <div class="stack" style="gap:4px"><b>Exchange rates</b><span class="small">Indicative rates for the home-currency estimate only. You always pay in GBP.</span></div>
+    </div></section>
+  <div class="card pad-l row rsp-flex" style="gap:24px;justify-content:space-between;background:var(--navy);color:var(--cream);border:0"><div class="stack" style="gap:6px"><h2 style="font-size:24px">Questions or ideas?</h2><p style="color:#E6D9EA">We read every message and usually reply within one working day.</p></div><a href="{% url 'support:contact' %}" class="btn btn-c">Contact us<span class="i i-ar" aria-hidden="true"></span></a></div>
+</section>
+{% endblock %}

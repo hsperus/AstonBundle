@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Profile & settings{% endblock %}
+{% block main_class %}{% endblock %}{% block main_style %}{% endblock %}
+{% block content %}
+<div class="wrap" style="padding-top:40px;padding-bottom:88px;display:flex;gap:48px;align-items:flex-start">
+  {% include "accounts/_nav.html" with nav="profile" %}
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:24px;max-width:860px">
+    <div class="stack" style="gap:8px"><h1>Profile &amp; settings</h1><p class="muted">We keep only what we need to deliver your order.</p></div>
+    <form method="post" class="card pad-l stack" style="gap:18px" aria-labelledby="pdh" novalidate>{% csrf_token %}<input type="hidden" name="action" value="details">
+      <h2 id="pdh" style="font-size:24px">Your details</h2>
+      <div class="g2">{% include "partials/field.html" with field=pform.full_name autocomplete="name" %}<div class="field"><label class="lbl" for="pe">Aston email</label><input class="inp" id="pe" value="{{ user.email }}" disabled aria-describedby="peh"><span class="hint" id="peh">Your verified email cannot be changed.</span></div></div>
+      <div class="g2">{% include "partials/field.html" with field=pform.halls label="Halls name" %}{% include "partials/field.html" with field=pform.room label="Room number" placeholder="C-214" %}</div>
+      <div class="g2">{% include "partials/field.html" with field=pform.arrival_date label="Arrival date" type="date" hint="We use it to suggest delivery dates." %}{% include "partials/field.html" with field=pform.phone label="UK mobile" type="tel" autocomplete="tel" hint="Only for the delivery driver." %}</div>
+      <button class="btn btn-p" style="align-self:flex-start" type="submit">Save changes</button>
+    </form>
+    <form method="post" class="card pad-l stack" style="gap:18px" aria-labelledby="pwh" novalidate id="password">{% csrf_token %}<input type="hidden" name="action" value="password">
+      <h2 id="pwh" style="font-size:24px">Change password</h2>
+      <div style="max-width:420px">{% include "partials/field.html" with field=pwform.old_password label="Current password" autocomplete="current-password" %}</div>
+      <div class="g2">{% include "partials/field.html" with field=pwform.new_password1 label="New password" autocomplete="new-password" hint="At least 10 characters, with a letter and a number." %}{% include "partials/field.html" with field=pwform.new_password2 label="Confirm new password" autocomplete="new-password" %}</div>
+      <button class="btn btn-s" style="align-self:flex-start" type="submit">Update password</button>
+    </form>
+    <section class="card pad-l stack" style="gap:14px;border:1.5px solid var(--red)" aria-labelledby="dah" id="delete">
+      <h2 id="dah" style="font-size:24px;color:var(--red)">Delete account</h2>
+      <p>This removes your profile and address. We keep order records because UK tax law requires it, but they will no longer be linked to your name.</p>
+      {% if open_orders %}<div class="alert a-warn" style="font-size:15px"><span class="i i-warn" aria-hidden="true"></span><div><b>You have {{ open_orders|length }} open order{{ open_orders|pluralize }}.</b>{% for o in open_orders %}{{ o.number }}{% if not forloop.last %}, {% endif %}{% endfor %} will still be delivered.</div></div>{% endif %}
+      <form method="post" class="stack" style="gap:14px;max-width:420px" novalidate>{% csrf_token %}<input type="hidden" name="action" value="delete">
+        {% include "partials/field.html" with field=dform.confirm label="Type DELETE to confirm" autocomplete="off" %}
+        <button class="btn btn-ds" style="align-self:flex-start" type="submit"><span class="i i-trash" aria-hidden="true"></span>Delete my account</button>
+      </form>
+    </section>
+  </div>
+</div>
+{% endblock %}

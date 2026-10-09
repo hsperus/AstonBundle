@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}How suggestions work{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">How suggestions work</span></nav>
+<article class="prose" style="max-width:760px">
+<span class="bdg b-ai" style="align-self:flex-start"><span class="i i-spark" aria-hidden="true"></span>Smart suggestion</span>
+<h1>How “Frequently bought together” works</h1>
+<p>We look at past orders and find products that students often buy <b>in the same order</b>. If many people who buy a kettle also buy a plate set — more often than chance — we suggest the plate set next to the kettle.</p>
+<h2 style="font-size:24px">What we use</h2>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Which products appear together in orders.</li><li>Nothing about you personally: no name, email, address, course or country.</li><li>Your own basket, only to choose suggestions for this visit.</li></ul>
+<h2 style="font-size:24px">What we never do</h2>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>We never suggest items that are out of stock.</li><li>Suggestions never change prices.</li><li>Suggestions are always labelled “Smart suggestion”.</li></ul>
+<h2 style="font-size:24px">How well it works</h2>
+{% if run and run.metrics.hit_rate_at_3 %}<p>We tested it on the most recent 20% of orders. When we hid one item from a basket, the hidden item was in our top 3 suggestions <b>{% widthratio run.metrics.hit_rate_at_3 1 100 %}%</b> of the time, compared with <b>{% widthratio run.metrics.baseline_hit_rate_at_3 1 100 %}%</b> for simply showing the most popular items. Last updated {{ run.trained_at|date:"j F Y" }}.</p>
+<p class="small muted">Note: AstonBundle is a student project and the order history is synthetic test data, so these numbers show that the method works, not real shopper behaviour.</p>{% else %}<p>The model has not been trained yet.</p>{% endif %}
+</article>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% block stitle %}Admin{% endblock %} · Admin{% endblock %}
+{% block header %}{% endblock %}{% block footer %}{% endblock %}
+{% block body_class %}adm-body{% endblock %}
+{% block main %}
+<a class="skip" href="#main">Skip to main content</a>
+<div class="adm">
+  <nav class="side" aria-label="Admin" id="side" data-side>
+    <a href="{% url 'staff:dashboard' %}" style="gap:10px;margin-bottom:12px;min-height:52px" aria-label="AstonBundle admin home"><span style="display:flex;flex-direction:column;gap:6px">{% include "partials/logo.html" with w="170" h="29" fill="#fff" %}<span style="font:700 12px var(--body);color:#FF8A6E;letter-spacing:.08em">ADMIN</span></span></a>
+    <button type="button" class="ibtn amenu" aria-label="Close menu" data-close-side style="color:#fff;position:absolute;right:8px;top:8px"><span class="i i-x" aria-hidden="true"></span></button>
+    <span class="grp">Overview</span>
+    <a href="{% url 'staff:dashboard' %}"{% if nav == 'dash' %} class="on" aria-current="page"{% endif %}><span class="i i-dash" aria-hidden="true"></span>Dashboard</a>
+    {% if user.role == 'owner' or user.role == 'stock' %}<span class="grp">Catalogue</span>
+    <a href="{% url 'staff:products' %}"{% if nav == 'prod' %} class="on" aria-current="page"{% endif %}><span class="i i-tag" aria-hidden="true"></span>Products</a>
+    <a href="{% url 'staff:inventory' %}"{% if nav == 'inv' %} class="on" aria-current="page"{% endif %}><span class="i i-box" aria-hidden="true"></span>Inventory{% if staff_counts.inventory %}<span class="cnt num" aria-hidden="true">{{ staff_counts.inventory }}</span><span class="sr">({{ staff_counts.inventory }} need attention)</span>{% endif %}</a>
+    <a href="{% url 'staff:ai' %}"{% if nav == 'ai' %} class="on" aria-current="page"{% endif %}><span class="i i-spark" aria-hidden="true"></span>AI insights</a>{% endif %}
+    <span class="grp">Customers</span>
+    <a href="{% url 'staff:orders' %}"{% if nav == 'ord' %} class="on" aria-current="page"{% endif %}><span class="i i-clip" aria-hidden="true"></span>Orders</a>
+    {% if user.role == 'owner' or user.role == 'support' %}
+    <a href="{% url 'staff:customers' %}"{% if nav == 'cus' %} class="on" aria-current="page"{% endif %}><span class="i i-users" aria-hidden="true"></span>Customers</a>
+    <a href="{% url 'staff:returns' %}"{% if nav == 'ret' %} class="on" aria-current="page"{% endif %}><span class="i i-return" aria-hidden="true"></span>Returns{% if staff_counts.returns %}<span class="cnt num" aria-hidden="true">{{ staff_counts.returns }}</span><span class="sr">({{ staff_counts.returns }} waiting)</span>{% endif %}</a>
+    <a href="{% url 'staff:enquiries' %}"{% if nav == 'enq' %} class="on" aria-current="page"{% endif %}><span class="i i-inbox" aria-hidden="true"></span>Enquiries{% if staff_counts.enquiries %}<span class="cnt num" aria-hidden="true">{{ staff_counts.enquiries }}</span><span class="sr">({{ staff_counts.enquiries }} unread)</span>{% endif %}</a>{% endif %}
+    {% if user.role == 'owner' %}<span class="grp">Settings</span>
+    <a href="{% url 'staff:access' %}"{% if nav == 'acc' %} class="on" aria-current="page"{% endif %}><span class="i i-shield" aria-hidden="true"></span>Staff &amp; roles</a>{% endif %}
+    <span style="flex:1"></span>
+    <a href="{% url 'staff:password' %}"><span class="i i-lock" aria-hidden="true"></span>Change password</a>
+    <a href="{% url 'core:home' %}"><span class="i i-ext" aria-hidden="true"></span>View shop</a>
+    <form method="post" action="{% url 'staff:signout' %}">{% csrf_token %}<button type="submit" class="lnkbtn" style="display:flex;align-items:center;gap:12px;min-height:44px;padding:0 12px;border-radius:10px;color:#E6D9EA;font:700 15px var(--body);width:100%"><span class="i i-logout" aria-hidden="true"></span>Sign out</button></form>
+    <span style="font-size:13px;color:#B99FC1;padding:8px 12px 0">Signed in as {{ user.full_name }} · {{ user.get_role_display }}</span>
+  </nav>
+  <div class="amain">
+    <header class="atop"><button type="button" class="ibtn bd amenu" aria-label="Open admin menu" aria-controls="side" aria-expanded="false" data-open-side><span class="i i-menu" aria-hidden="true"></span></button>{% block top %}{% endblock %}</header>
+    <main id="main" tabindex="-1" class="acont" {% block mainattr %}{% endblock %}>{% block content %}{% endblock %}</main>
+  </div>
+</div>
+{% endblock %}

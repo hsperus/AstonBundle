@@ -1,0 +1,6 @@
+{% load ab %}<aside class="card pad-l stack" style="gap:12px;position:sticky;top:24px" aria-labelledby="sumh"><h2 id="sumh" style="font-size:22px">Summary</h2>
+  {% for l in lines %}<div class="sum"><span>{{ l.name }}{% if l.quantity > 1 %} ×{{ l.quantity }}{% endif %}</span><span class="num">{{ l.line_total|money }}</span></div>{% endfor %}
+  {% if totals.saving %}<div class="sum" style="color:var(--coral-ink);font-weight:700"><span>Bundle savings</span><span class="num">−{{ totals.saving|money }}</span></div>{% endif %}
+  <div class="sum"><span>Delivery</span><span class="num">{% if totals.delivery %}{{ totals.delivery|money }}{% else %}Free{% endif %}</span></div>
+  <hr class="div"><div class="sum"><b>Total</b><b class="num" style="font-size:22px">{{ totals.total|money }}</b></div>
+</aside>

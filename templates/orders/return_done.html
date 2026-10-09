@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Return requested{% endblock %}
+{% block main_style %}padding-top:48px;padding-bottom:88px;display:grid;place-items:center{% endblock %}
+{% block content %}
+<div class="stack" style="gap:16px;width:min(620px,100%)" role="status">
+  <span class="ph t" style="width:72px;height:72px;border-radius:50%"><span class="i i-okc s40" style="color:var(--teal-ink)" aria-hidden="true"></span></span>
+  <h1 style="font-size:36px">Return requested</h1>
+  <p>We’ll check your request and reply by <b>{{ r.reply_by|date:"l j F" }}</b>.</p>
+  <div class="card pad stack" style="gap:8px"><span class="small muted">Return reference</span><b class="num">{{ r.reference }}</b><span class="small muted" style="margin-top:6px">Item{{ r.items.count|pluralize }}</span>{% for i in r.items.all %}<b>{{ i.line.name }}</b>{% endfor %}<span class="small muted" style="margin-top:6px">Reason</span><span>{{ r.get_reason_display }}</span><span class="small muted" style="margin-top:6px">Refund if approved</span><span class="num">{{ r.refund_amount|money }}</span><span class="chip c-rreq" style="align-self:flex-start;margin-top:6px"><span class="i i-return" aria-hidden="true"></span>Return requested</span></div>
+  <a href="{{ r.order.get_absolute_url }}" class="btn btn-p" style="align-self:flex-start">Back to order</a>
+</div>
+{% endblock %}

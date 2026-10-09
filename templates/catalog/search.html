@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Search: {{ q }}{% endblock %}
+{% block content %}
+<nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">Search</span></nav>
+{% if not total and not bundles and not active_filters %}
+<div class="rsp" style="display:grid;grid-template-columns:1fr 1.2fr;gap:56px;align-items:center;padding:32px 0 48px">
+  <div role="img" aria-label="Illustration: an empty parcel with a magnifying glass" style="display:grid;place-items:center" class="hide-sm">{% include "partials/ill_search.html" %}</div>
+  <div class="stack" style="gap:20px">
+    <h1 style="font-size:40px">No results for “{{ q }}”</h1>
+    {% if suggestion %}<p style="font-size:19px">Did you mean <a href="{% url 'catalog:search' %}?q={{ suggestion|urlencode }}" class="lnk">{{ suggestion }}</a>?</p>{% else %}<p style="font-size:19px">Check the spelling, or try a shorter word.</p>{% endif %}
+    <div class="stack" style="gap:10px"><b>Popular right now</b><div class="row" style="gap:10px;flex-wrap:wrap">{% for p in ideas %}<a href="{{ p.get_absolute_url }}" class="btn btn-s btn-sm">{{ p.name }}</a>{% endfor %}</div></div>
+    <p class="small muted">Still can’t find it? <a href="{% url 'support:contact' %}">Ask us</a> — we may be able to stock it before the January intake.</p>
+  </div>
+</div>
+{% else %}
+<div class="stack" style="gap:8px"><h1 style="font-size:40px">Results for “<span style="color:var(--coral-ink)">{{ q }}</span>”</h1><p role="status" class="muted num">{{ total }} product{{ total|pluralize }}{% if bundles %} and {{ bundles|length }} bundle{{ bundles|pluralize }}{% endif %}. Matching words are highlighted.</p></div>
+<div style="display:flex;gap:40px;align-items:flex-start">
+  {% include "partials/filters.html" %}
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:20px">
+    {% include "partials/results_bar.html" %}
+    <div class="cols-4 keep2" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+      {% if page.number == 1 %}{% for b in bundles %}{% with av=b.availability %}<article class="card pc" style="border:2px solid var(--coral)"><span class="bdg b-bundle top"><span class="i i-gift" aria-hidden="true"></span>Bundle</span><div class="ph {{ b.tone }}" role="img" aria-label="{{ b.name }}"><div class="row" style="gap:4px;position:relative">{% for ic in b.icon_list|slice:":2" %}<span class="i i-{{ ic }} s40" aria-hidden="true"></span>{% endfor %}</div></div><span class="bdg {% if av.0 == 'ok' %}b-ok{% elif av.0 == 'low' %}b-low{% else %}b-out{% endif %}" style="align-self:flex-start"><span class="i {% if av.0 == 'ok' %}i-okc{% elif av.0 == 'low' %}i-warn{% else %}i-xc{% endif %}" aria-hidden="true"></span>{{ av.1 }}</span><a href="{{ b.get_absolute_url }}" class="nm">{{ b.name|highlight:terms }}</a>{% if b.match_note %}<span class="small muted">{{ b.match_note }}</span>{% endif %}<div class="row" style="justify-content:space-between"><span class="pr">{{ b.price|money }}</span><a href="{{ b.get_absolute_url }}" class="btn btn-p btn-sm">View</a></div></article>{% endwith %}{% endfor %}{% endif %}
+      {% for p in page.object_list %}{% include "partials/product_card.html" %}{% endfor %}
+    </div>
+    {% if not page.object_list %}<div class="card empty"><h2 style="font-size:22px">No products match these filters</h2><a href="?q={{ q|urlencode }}" class="btn btn-s">Clear filters</a></div>{% endif %}
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

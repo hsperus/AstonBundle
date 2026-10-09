@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Arrival Guide{% endblock %}
+{% block main_class %}{% endblock %}{% block main_style %}{% endblock %}
+{% block content %}
+<section style="background:var(--navy);color:var(--cream)">
+  <div class="wrap rsp" style="padding-top:64px;padding-bottom:64px;display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:center">
+    <div class="stack" style="gap:18px"><span class="eyebrow" style="color:var(--coral-on-navy)">Arrival Guide · updated October 2026</span><h1 style="font-size:58px">Your first week in Birmingham, made simple.</h1><p style="color:#E6D9EA;font-size:19px">Written by Aston students who arrived last year. Short answers, plain English, no surprises. Reading time: 8 minutes.</p></div>
+    <div role="img" aria-label="Illustration: Birmingham skyline under a rain cloud" class="hide-sm">{% include "partials/ill_skyline.html" %}</div>
+  </div>
+</section>
+<div class="wrap rsp" style="padding-top:56px;padding-bottom:80px;display:grid;grid-template-columns:260px 1fr;gap:64px;align-items:start">
+  <nav class="toc stack" aria-label="On this page" style="gap:4px;position:sticky;top:24px"><b class="small muted" style="padding:0 12px 8px">On this page</b><a href="#ck">First-week checklist</a><a href="#pl">UK plugs explained</a><a href="#wx">The weather</a><a href="#sim">Getting a SIM</a><a href="#lk">Useful links</a></nav>
+  <article class="stack" style="gap:56px;max-width:820px">
+    <section id="ck" class="gsec" data-checklist><h2>First-week checklist</h2><p>Tick things off as you go. Your progress is saved on this device only.</p>
+      <div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+        <fieldset class="card pad" style="margin:0;display:flex;flex-direction:column"><legend class="sr">Before you fly</legend><b style="font:700 19px var(--disp);padding-bottom:6px" aria-hidden="true">Before you fly</b><label class="chk"><input type="checkbox" name="c1">Book your arrival slot with halls</label><label class="chk"><input type="checkbox" name="c2">Order your AstonBundle</label><label class="chk"><input type="checkbox" name="c3">Download your eVisa share code</label><label class="chk"><input type="checkbox" name="c4">Pack a UK plug adapter in hand luggage</label></fieldset>
+        <fieldset class="card pad" style="margin:0;display:flex;flex-direction:column"><legend class="sr">Day one</legend><b style="font:700 19px var(--disp);padding-bottom:6px" aria-hidden="true">Day one</b><label class="chk"><input type="checkbox" name="c5">Collect keys and your parcel at reception</label><label class="chk"><input type="checkbox" name="c6">Make your bed and charge your phone</label><label class="chk"><input type="checkbox" name="c7">Tell family you arrived safely</label></fieldset>
+        <fieldset class="card pad" style="margin:0;display:flex;flex-direction:column"><legend class="sr">First week</legend><b style="font:700 19px var(--disp);padding-bottom:6px" aria-hidden="true">First week</b><label class="chk"><input type="checkbox" name="c8">Enrol online and get your student ID</label><label class="chk"><input type="checkbox" name="c9">Register with a GP (doctor)</label><label class="chk"><input type="checkbox" name="c10">Open a UK bank account</label><label class="chk"><input type="checkbox" name="c11">Meet your flatmates</label></fieldset>
+      </div>
+      <div class="row" style="gap:12px"><div class="pw" style="width:240px" aria-hidden="true" data-progress><span></span><span></span><span></span><span></span><span></span></div><span class="small num" role="status"><b data-progress-text>0 of 11 done</b></span></div>
+    </section>
+    <section id="pl" class="gsec"><h2>UK plugs explained</h2>
+      <div class="rsp" style="display:grid;grid-template-columns:240px 1fr;gap:32px;align-items:center">
+        <div role="img" aria-label="Diagram of a UK type G plug: three rectangular pins in a triangle, the top one longer" class="ph" style="height:240px;border-radius:20px">{% include "partials/ill_plug.html" %}</div>
+        <div class="stack" style="gap:12px"><p>The UK uses <b>type G</b> plugs: three flat pins, 230 volts, 50 Hz. Most phone and laptop chargers work at 230V — check the label for “100–240V”.</p><ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px"><li>Sockets have a switch. Turn it on, or nothing will charge.</li><li>Hair dryers and straighteners from other countries may need a converter, not just an adapter.</li><li>One extension lead with USB ports means you need only one adapter.</li></ul><a href="{% url 'catalog:category' 'tech-power' %}" class="btn btn-s" style="align-self:flex-start"><span class="i i-plug" aria-hidden="true"></span>Shop UK adapters</a></div>
+      </div>
+    </section>
+    <section id="wx" class="gsec"><h2>The weather</h2><p>Birmingham is mild but often grey and wet. It rarely snows for long, but wind and rain make it feel colder. Layers work best.</p>
+      <div style="overflow-x:auto"><table class="wx" style="border-collapse:collapse;width:100%"><caption class="sr">Typical Birmingham temperatures</caption><thead><tr><th scope="col">Month</th><th scope="col">Day</th><th scope="col">Night</th><th scope="col">What to wear</th></tr></thead><tbody><tr><th scope="row" style="color:var(--navy);font-size:16px">January</th><td class="num">7°C</td><td class="num">1°C</td><td>Waterproof jacket, thermals, hat and gloves</td></tr><tr><th scope="row" style="color:var(--navy);font-size:16px">April</th><td class="num">13°C</td><td class="num">4°C</td><td>Light jacket and umbrella</td></tr><tr><th scope="row" style="color:var(--navy);font-size:16px">September</th><td class="num">19°C</td><td class="num">10°C</td><td>Jumper for evenings, umbrella</td></tr></tbody></table></div>
+      <p class="cap muted">Typical averages, rounded. Check a forecast before you travel.</p>
+      <a href="{% url 'catalog:category' 'uk-weather' %}" class="btn btn-s" style="align-self:flex-start"><span class="i i-rain" aria-hidden="true"></span>Shop UK Weather Ready</a>
+    </section>
+    <section id="sim" class="gsec"><h2>Getting a SIM</h2>
+      <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px">
+        <li class="row" style="gap:16px;align-items:flex-start"><span class="stepn" aria-hidden="true">1</span><div><b>Choose pay-as-you-go first.</b> No contract, no UK bank account or credit check needed.</div></li>
+        <li class="row" style="gap:16px;align-items:flex-start"><span class="stepn" aria-hidden="true">2</span><div><b>Check your phone is unlocked.</b> Ask your home provider before you travel.</div></li>
+        <li class="row" style="gap:16px;align-items:flex-start"><span class="stepn" aria-hidden="true">3</span><div><b>Insert the SIM and top up online.</b> Our starter pack includes 10 GB of data for the first 30 days.</div></li>
+      </ol>
+    </section>
+    <section id="lk" class="stack" style="gap:16px"><h2>Useful links</h2>
+      <div class="cols-2" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <a class="lk" href="https://www.aston.ac.uk/international" target="_blank" rel="noopener noreferrer"><span class="i i-grad s24" aria-hidden="true"></span><span style="flex:1"><b>Aston University — International students</b><br><span class="small muted">Official university advice</span></span><span class="i i-ext" aria-hidden="true"></span><span class="sr">(opens in a new tab)</span></a>
+        <a class="lk" href="https://www.gov.uk/evisa" target="_blank" rel="noopener noreferrer"><span class="i i-shield s24" aria-hidden="true"></span><span style="flex:1"><b>UK eVisa and immigration</b><br><span class="small muted">GOV.UK</span></span><span class="i i-ext" aria-hidden="true"></span><span class="sr">(opens in a new tab)</span></a>
+        <a class="lk" href="https://www.nhs.uk/nhs-services/gps/how-to-register-with-a-gp-surgery/" target="_blank" rel="noopener noreferrer"><span class="i i-heart s24" aria-hidden="true"></span><span style="flex:1"><b>Register with a GP</b><br><span class="small muted">NHS</span></span><span class="i i-ext" aria-hidden="true"></span><span class="sr">(opens in a new tab)</span></a>
+        <a class="lk" href="https://www.tfwm.org.uk/" target="_blank" rel="noopener noreferrer"><span class="i i-map s24" aria-hidden="true"></span><span style="flex:1"><b>Buses and trains in the West Midlands</b><br><span class="small muted">Transport for West Midlands</span></span><span class="i i-ext" aria-hidden="true"></span><span class="sr">(opens in a new tab)</span></a>
+      </div>
+      <p class="cap muted">External links open in a new tab. AstonBundle is not responsible for other websites.</p>
+    </section>
+  </article>
+</div>
+{% endblock %}

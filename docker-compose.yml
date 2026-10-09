@@ -1,0 +1,32 @@
+# Local / server deployment: PostgreSQL + the Django app.
+# Usage:  cp .env.example .env  (set DJANGO_SECRET_KEY)  then  docker compose up --build
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: astonbundle
+      POSTGRES_USER: astonbundle
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-astonbundle}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U astonbundle"]
+      interval: 5s
+      retries: 10
+  web:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://astonbundle:${POSTGRES_PASSWORD:-astonbundle}@db:5432/astonbundle
+      DJANGO_HTTPS: ${DJANGO_HTTPS:-true}
+      DJANGO_SECURE_SSL_REDIRECT: ${DJANGO_SECURE_SSL_REDIRECT:-false}
+    ports:
+      - "8000:8000"
+    volumes:
+      - media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  pgdata:
+  media:

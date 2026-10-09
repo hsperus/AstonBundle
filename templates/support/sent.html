@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Message sent{% endblock %}
+{% block main_style %}padding-top:56px;padding-bottom:88px;display:grid;place-items:center{% endblock %}
+{% block content %}
+<div class="card pad-l stack" style="gap:16px;width:min(620px,100%)" role="status">
+  <span class="ph t" style="width:72px;height:72px;border-radius:50%"><span class="i i-okc s40" style="color:var(--teal-ink)" aria-hidden="true"></span></span>
+  <h1 style="font-size:34px">Message sent</h1>
+  <p>Thank you, {{ e.name }}. We’ll reply to <b>{{ e.email }}</b> within one working day.</p>
+  <div class="card pad stack" style="gap:6px;box-shadow:none"><span class="small muted">Reference</span><b class="num">{{ e.reference }}</b><span class="small muted">Topic</span><span>{{ e.get_topic_display }}</span></div>
+  <a href="{% url 'core:home' %}" class="btn btn-p" style="align-self:flex-start">Back to the shop</a>
+</div>
+{% endblock %}

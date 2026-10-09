@@ -1,0 +1,71 @@
+{% extends "staff/base.html" %}{% load ab %}
+{% block stitle %}AI insights{% endblock %}
+{% block top %}<h1 style="font-size:26px">AI insights</h1>{% if run %}<span class="bdg b-ai"><span class="i i-spark" aria-hidden="true"></span>Forecast {{ run.version }} · trained {{ run.trained_at|date:"j M Y, H:i" }}</span>{% endif %}<span class="row" style="gap:10px;margin-left:auto"><form method="post">{% csrf_token %}<input type="hidden" name="action" value="retrain"><button class="btn btn-s btn-sm"{% if training %} disabled{% endif %}><span class="i i-return" aria-hidden="true"></span>{% if training %}Training…{% else %}Retrain now{% endif %}</button></form>{% if run %}<a href="?export=csv" class="btn btn-p btn-sm"><span class="i i-upload" aria-hidden="true"></span>Export forecast</a>{% endif %}</span>{% endblock %}
+{% block content %}
+<nav class="tabs" aria-label="AI features"><a class="tab{% if tab != 'recs' %} on{% endif %}" href="?tab=forecast"{% if tab != 'recs' %} aria-current="page"{% endif %}><span class="i i-trend" aria-hidden="true"></span>Demand forecast</a><a class="tab{% if tab == 'recs' %} on{% endif %}" href="?tab=recs"{% if tab == 'recs' %} aria-current="page"{% endif %}><span class="i i-gift" aria-hidden="true"></span>Recommendations</a></nav>
+<div class="alert a-info" style="font-size:15px"><span class="i i-shield" aria-hidden="true"></span><div><b>Suggestions only — a person decides.</b>The models never order stock or change prices by themselves. Every purchase order is created by a member of staff. All order history used for training is synthetic test data.</div></div>
+{% if tab != 'recs' %}
+{% if run and current %}
+<div class="rsp" style="display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:start">
+  <section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:12px" aria-labelledby="fch">
+    <form method="get" class="row" style="justify-content:space-between;gap:12px;flex-wrap:wrap" data-autosubmit><h2 id="fch" style="font-size:20px">{{ current.product.name }} — weekly units</h2><div class="selw" style="width:260px"><label class="sr" for="fp">Product</label><select class="inp" id="fp" name="p" style="min-height:44px">{% for f in forecasts %}<option value="{{ f.product_id }}"{% if f.pk == current.pk %} selected{% endif %}>{{ f.product.name }}</option>{% endfor %}</select><span class="i i-cd" style="top:12px" aria-hidden="true"></span></div><noscript><button class="btn btn-s btn-sm">Show</button></noscript></form>
+    <figure style="margin:0" class="chart">{{ chart }}
+      <figcaption class="small" style="display:flex;gap:20px;flex-wrap:wrap"><span class="row" style="gap:6px"><span style="width:20px;height:3px;background:#2B1236"></span>Actual</span><span class="row" style="gap:6px"><span style="width:20px;height:0;border-top:3px dashed #5F0066"></span>Forecast (median)</span><span class="row" style="gap:6px"><span style="width:20px;height:10px;background:#5F0066;opacity:.15"></span>Weekly 80% range</span></figcaption>
+    </figure>
+    <details><summary class="lnk small" style="cursor:pointer;min-height:32px">View as table</summary><div class="tbox" style="margin-top:8px;max-height:260px;overflow:auto"><table class="tbl"><thead><tr><th scope="col">Week of</th><th scope="col" class="r">Low</th><th scope="col" class="r">Median</th><th scope="col" class="r">High</th><th scope="col" class="r">Same week last year</th></tr></thead><tbody>{% for w in current.series.forecast %}<tr><td>{{ w.0 }}</td><td class="r num">{{ w.1|floatformat:0 }}</td><td class="r num">{{ w.2|floatformat:0 }}</td><td class="r num">{{ w.3|floatformat:0 }}</td><td class="r num">{% with ly=current.series.last_year %}{% for d, v in ly %}{% if d == w.0 %}{{ v }}{% endif %}{% endfor %}{% endwith %}</td></tr>{% endfor %}</tbody></table></div></details>
+    <div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+      <div class="card kpi" style="box-shadow:none"><span class="k">Predicted ({{ current.period_start|date:"j M" }} – {{ current.period_end|date:"j M" }})</span><span class="v">{{ current.low }}–{{ current.high }}</span><span class="kd muted">median {{ current.mid }}</span></div>
+      <div class="card kpi" style="box-shadow:none"><span class="k">Available now</span><span class="v">{{ current.product.stock }}</span><span class="kd muted">{% include "staff/_conf.html" with c=current.confidence %}</span></div>
+      <form method="post" action="{% url 'staff:create_po' %}" class="card kpi" style="box-shadow:none;border-color:var(--purple)">{% csrf_token %}<input type="hidden" name="product" value="{{ current.product_id }}"><input type="hidden" name="source" value="forecast {{ run.version }}"><input type="hidden" name="next" value="{{ request.get_full_path }}"><label class="k" for="poq">Suggested reorder</label><input id="poq" class="inp num" name="quantity" type="number" min="1" max="10000" value="{{ current.suggested_reorder }}" style="font:800 24px var(--disp);min-height:44px"><button class="btn btn-p btn-sm"{% if not current.suggested_reorder %} disabled{% endif %}>Create purchase order</button></form>
+    </div>
+    <p class="small muted">Suggested reorder = top of the 80% range − stock available now − stock already on order. You can edit the number before creating the order.</p>
+  </section>
+  <section class="card mc" style="padding:20px 24px" aria-labelledby="mch">
+    <h2 id="mch" style="font-size:20px">Model card</h2>
+    <dl style="margin:0">
+      <dt>Problem</dt><dd>Avoid running out of key items before an intake, and avoid over-ordering after it.</dd>
+      <dt>Method</dt><dd>Gradient-boosted regression trees (scikit-learn), one model per quantile (10th, 50th, 90th). Direct multi-horizon: each row predicts week <i>t+h</i> from data known at week <i>t</i>. The target is normalised by last year’s units × recent growth, so the model can follow a growing shop.</dd>
+      <dt>Inputs</dt><dd>Weekly units per product, horizon, week of year, weeks to the next intake, same week last year, recent 4-week sales, growth vs last year, new verified sign-ups, price, bundle membership, category. <b>No personal data.</b></dd>
+      <dt>Outputs</dt><dd>Units per product per week with a range; total for the intake period; suggested reorder.</dd>
+      <dt>Evaluation</dt><dd>Back-test on {{ metrics.period }} (trained only on earlier data). MAE per product: <b>{{ metrics.mae }}</b> units vs <b>{{ metrics.baseline_mae }}</b> for the baseline “same weeks last year”. WAPE {% widthratio metrics.wape 1 100 %}% vs {% widthratio metrics.baseline_wape 1 100 %}%.</dd>
+      <dt>80% range</dt><dd>Calibrated from back-test errors (×{{ metrics.range_low_factor }} to ×{{ metrics.range_high_factor }} of the median). Coverage {% widthratio metrics.range_coverage 1 100 %}% — in-sample, so expect lower on new data.</dd>
+      <dt>Limits &amp; risks</dt><dd>Trained on synthetic history. Little data for new products; one-off events (strikes, visa delays) are not in the data. Bias towards popular items — low-data products are flagged “Low data”.</dd>
+      <dt>Mitigation</dt><dd>Human approval, ranges not single numbers, retrain button, back-test shown below.</dd>
+    </dl>
+  </section>
+</div>
+<section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:12px" aria-labelledby="evh">
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><h2 id="evh" style="font-size:20px">How good were past forecasts?</h2><span class="small muted">Back-test: {{ metrics.period }} · top {{ metrics.backtest|length }} products by sales</span></div>
+  <div class="tbox"><table class="tbl"><thead><tr><th scope="col">Product</th><th scope="col" class="r">Forecast</th><th scope="col" class="r">80% range</th><th scope="col" class="r">Actual</th><th scope="col" class="r">Baseline</th><th scope="col" class="r">Error</th><th scope="col">Within range?</th></tr></thead><tbody>
+    {% for r in metrics.backtest %}<tr><td><b>{{ r.product }}</b></td><td class="r num">{{ r.forecast }}</td><td class="r num">{{ r.low }}–{{ r.high }}</td><td class="r num">{{ r.actual }}</td><td class="r num">{{ r.baseline }}</td><td class="r num">{% if r.error > 0 %}+{% endif %}{{ r.error }}</td><td>{% if r.within %}<span class="bdg b-ok"><span class="i i-okc" aria-hidden="true"></span>Yes</span>{% else %}<span class="bdg b-out"><span class="i i-xc" aria-hidden="true"></span>No</span>{% endif %}</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+<section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:12px" aria-labelledby="allh">
+  <h2 id="allh" style="font-size:20px">All products — next intake period</h2>
+  <div class="tbox"><table class="tbl"><thead><tr><th scope="col">Product</th><th scope="col" class="r">Available</th><th scope="col" class="r">Predicted</th><th scope="col">Confidence</th><th scope="col" class="r">Suggested reorder</th></tr></thead><tbody>
+    {% for f in forecasts %}<tr><td><a href="?p={{ f.product_id }}" style="color:var(--navy)">{{ f.product.name }}</a></td><td class="r num">{{ f.product.stock }}</td><td class="r num">{{ f.low }}–{{ f.high }}</td><td>{% include "staff/_conf.html" with c=f.confidence %}</td><td class="r num"><b>{{ f.suggested_reorder }}</b></td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% else %}<div class="card empty"><h2 style="font-size:22px">No forecast yet</h2><p class="muted">Press “Retrain now” once there is order history.</p></div>{% endif %}
+{% else %}
+<div class="rsp" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+  <section class="card mc" style="padding:20px 24px" aria-labelledby="rch">
+    <h2 id="rch" style="font-size:20px">Recommendations (“Frequently bought together”)</h2>
+    <dl style="margin:0">
+      <dt>Method</dt><dd>Item-to-item association rules (market-basket analysis) on anonymised order lines. For each pair A→B: support, confidence = P(B | A) and lift = confidence ÷ P(B). Only pairs seen in at least {{ rec_run.params.min_pair_count }} orders with lift &gt; 1 are kept. Score = confidence × √lift.</dd>
+      <dt>Where it is used</dt><dd>Home page, product page and basket, always labelled “Smart suggestion” with a “How suggestions work” link.</dd>
+      <dt>Data</dt><dd>{{ rec_run.data_summary.baskets }} baskets, {{ rec_run.data_summary.rules }} rules. Bundle contents are excluded so the model does not just learn our own bundles.</dd>
+      <dt>Evaluation</dt><dd>Time-based split: train on the oldest 80% of orders, test on the newest 20% ({{ rec_run.metrics.test_baskets }} baskets). Hide one item from each basket and check whether it is in the top 3. Hit rate@3: <b>{% widthratio rec_run.metrics.hit_rate_at_3 1 100 %}%</b> vs <b>{% widthratio rec_run.metrics.baseline_hit_rate_at_3 1 100 %}%</b> for “most popular items”.</dd>
+      <dt>Safeguards</dt><dd>Out-of-stock and hidden items are never recommended. No personal data is used. Suggestions never change prices.</dd>
+      <dt>Limits</dt><dd>New products have no co-purchase history (cold start) — we fall back to popular items. Popular items can dominate (popularity bias).</dd>
+    </dl>
+  </section>
+  <section class="card" style="padding:20px 24px;display:flex;flex-direction:column;gap:12px" aria-labelledby="rlh">
+    <h2 id="rlh" style="font-size:20px">Strongest rules</h2>
+    <div class="tbox"><table class="tbl"><thead><tr><th scope="col">If a student buys…</th><th scope="col">…suggest</th><th scope="col" class="r">Confidence</th><th scope="col" class="r">Lift</th></tr></thead><tbody>
+      {% for r in rules %}<tr><td>{{ r.source.name }}</td><td><b>{{ r.target.name }}</b></td><td class="r num">{% widthratio r.confidence 1 100 %}%</td><td class="r num">{{ r.lift|floatformat:1 }}</td></tr>{% empty %}<tr><td colspan="4" class="muted">No rules yet.</td></tr>{% endfor %}
+    </tbody></table></div>
+  </section>
+</div>
+{% endif %}
+{% endblock %}

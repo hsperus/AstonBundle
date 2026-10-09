@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Create your account{% endblock %}
+{% block main_style %}padding-top:56px;padding-bottom:88px{% endblock %}
+{% block content %}
+<div class="rsp" style="display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:start">
+  <aside style="background:var(--navy);color:var(--cream);border-radius:24px;padding:40px;display:flex;flex-direction:column;gap:20px">
+    <span class="i i-grad s48" style="color:var(--coral-on-navy)" aria-hidden="true"></span>
+    <h2 style="font-size:32px">Only for Aston students</h2>
+    <p style="color:#E6D9EA">We check that you have an <b style="color:#fff">@aston.ac.uk</b> email. This keeps prices fair and the shop safe for students.</p>
+    <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;color:#E6D9EA"><li><b style="color:#fff">Create your account</b> — 1 minute</li><li><b style="color:#fff">Enter the 6-digit code</b> we email you</li><li><b style="color:#fff">Shop and choose your delivery date</b></li></ol>
+    <p class="small" style="color:#CDB8D3">This is a demo: no real email is sent. Your code appears in the <a href="{% url 'accounts:demo_inbox' %}" style="color:var(--coral-on-navy)">Demo inbox</a>.</p>
+  </aside>
+  <form method="post" class="card pad-l stack" style="gap:20px;box-shadow:var(--sh-2)" novalidate aria-labelledby="rgh">{% csrf_token %}
+    <div class="stack" style="gap:6px"><h1 id="rgh" style="font-size:36px">Create your account</h1><p class="muted">Already have one? <a href="{% url 'accounts:signin' %}" class="lnk">Sign in</a></p></div>
+    {% include "partials/form_errors.html" %}
+    {% include "partials/field.html" with field=form.full_name autocomplete="name" hint="As on your student record." %}
+    {% include "partials/field.html" with field=form.email autocomplete="email" type="email" hint="It must end with @aston.ac.uk" placeholder="name@aston.ac.uk" %}
+    <div class="stack" style="gap:8px">
+      {% include "partials/field.html" with field=form.password autocomplete="new-password" strength=True %}
+      <div class="pw" aria-hidden="true" data-strength-bar><span></span><span></span><span></span><span></span></div>
+      <span class="small" role="status" data-strength-text></span>
+      <ul class="req" aria-label="Password requirements" data-reqs><li class="n" data-req="len"><span class="i i-minus s16" aria-hidden="true"></span>At least 10 characters</li><li class="n" data-req="letter"><span class="i i-minus s16" aria-hidden="true"></span>A letter</li><li class="n" data-req="num"><span class="i i-minus s16" aria-hidden="true"></span>A number</li><li class="n" data-req="sym"><span class="i i-minus s16" aria-hidden="true"></span>A symbol (! ? # …) — optional</li></ul>
+    </div>
+    <div class="stack" style="gap:4px"><label class="chk" style="font-size:15px"><input type="checkbox" name="terms" value="on"{% if form.terms.value %} checked{% endif %}{% if form.terms.errors %} aria-invalid="true" aria-describedby="terms-e"{% endif %}><span>I agree to the terms of use and have read the <a href="{% url 'core:page' 'privacy' %}">privacy notice</a>. We store only your name, email, delivery address and optional arrival date.</span></label>{% if form.terms.errors %}<span class="msg err" id="terms-e"><span class="i i-alert" aria-hidden="true"></span>{{ form.terms.errors|join:" " }}</span>{% endif %}</div>
+    <button class="btn btn-p btn-lg" type="submit">Create account</button>
+  </form>
+</div>
+{% endblock %}

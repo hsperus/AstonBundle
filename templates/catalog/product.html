@@ -1,0 +1,88 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}{{ p.name }}{% endblock %}
+{% block description %}{{ p.summary }}{% endblock %}
+{% block main_style %}padding-top:28px;padding-bottom:80px;display:flex;flex-direction:column;gap:56px{% endblock %}
+{% block content %}
+<div class="stack" style="gap:20px">
+  <nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><a href="{{ p.category.get_absolute_url }}">{{ p.category.name }}</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ p.name }}</span></nav>
+  <div class="rsp" style="display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:start">
+    <div class="ph pdp-img {{ p.tone }}"{% if not p.image %} role="img" aria-label="{{ p.image_alt }}"{% endif %}>{% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.image_alt }}">{% else %}<span class="i i-{{ p.icon }}" aria-hidden="true"></span>{% endif %}</div>
+    <div class="stack" style="gap:20px">
+      <span class="eyebrow">{{ p.category.name }}</span>
+      <h1 style="font-size:42px">{{ p.name }}</h1>
+      {% if p.rating_count %}<a href="#reviews" class="rate" style="text-decoration:none;color:var(--navy)">{% stars p.rating_avg %}<b class="num">{{ p.rating_avg|floatformat:1 }}</b><span class="lnk num" style="font-weight:400">{{ p.rating_count }} review{{ p.rating_count|pluralize }}</span><span class="sr"> — average {{ p.rating_avg|floatformat:1 }} out of 5</span></a>{% endif %}
+      <div class="stack" style="gap:6px">
+        <span class="num" style="font:800 40px/1 var(--disp)">{{ p.price|money }}</span>
+        <span class="small muted num" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="i i-globe s16" aria-hidden="true"></span>{% fx p.price %} <span class="cap" style="background:var(--g100);border-radius:6px;padding:2px 6px;font-weight:700">Estimate</span></span>
+        <span class="cap muted">Approximate, using rates from {% fx_date %}. You pay in GBP (£).</span>
+      </div>
+      {% stock_badge p "lg" %}
+      {% if p.feature_list %}<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">{% for f in p.feature_list %}<li>{{ f }}</li>{% endfor %}</ul>{% endif %}
+      {% if p.stock > 0 %}
+      <form method="post" action="{% url 'orders:basket_add' %}" class="stack" style="gap:8px">{% csrf_token %}
+        <input type="hidden" name="kind" value="p"><input type="hidden" name="id" value="{{ p.pk }}"><input type="hidden" name="next" value="{{ request.path }}">
+        <div class="row" style="gap:16px;align-items:flex-end;flex-wrap:wrap">
+          <div class="field"><label class="lbl" for="qty">Quantity</label><div class="stepper" data-stepper><button type="button" aria-label="Decrease quantity" data-step="-1"><span class="i i-minus" aria-hidden="true"></span></button><input id="qty" name="qty" class="num" type="number" inputmode="numeric" value="1" min="1" max="{{ p.order_limit }}"><button type="button" aria-label="Increase quantity" data-step="1"><span class="i i-plus" aria-hidden="true"></span></button></div></div>
+          <button class="btn btn-p btn-lg" style="flex:1;min-width:220px" type="submit"><span class="i i-bag" aria-hidden="true"></span>Add to basket</button>
+        </div>
+        {% if p.stock_status == 'low' %}<span class="hint">Max {{ p.order_limit }} per order while stock is low.</span>{% endif %}
+      </form>
+      {% else %}
+      <div class="alert a-err"><span class="i i-xc" aria-hidden="true"></span><div><b>Out of stock</b>We are restocking before the January intake. <a href="{% url 'support:contact' %}">Ask us</a> about dates.</div></div>
+      {% endif %}
+      <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:none">
+        <div class="row" style="gap:12px"><span class="i i-truck s24" style="color:var(--teal-ink)" aria-hidden="true"></span><span><b>Delivered on your move-in date.</b> Choose a slot at checkout.</span></div>
+        <div class="row" style="gap:12px"><span class="i i-return s24" style="color:var(--teal-ink)" aria-hidden="true"></span><span>{% if p.returnable %}<b>30-day returns</b> if unused and in the packaging.{% else %}<b>Not returnable once opened</b>, for hygiene reasons.{% endif %}</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rsp" style="display:grid;grid-template-columns:1.4fr 1fr;gap:56px;align-items:start">
+  <div class="stack" style="gap:20px" data-tabs>
+    <div class="tabs" role="tablist" aria-label="Product information"><button class="tab on" role="tab" id="t-desc" aria-controls="p-desc" aria-selected="true" type="button">Description</button><button class="tab" role="tab" id="t-spec" aria-controls="p-spec" aria-selected="false" tabindex="-1" type="button">Specifications</button><button class="tab" role="tab" id="t-del" aria-controls="p-del" aria-selected="false" tabindex="-1" type="button">Delivery &amp; returns</button></div>
+    <div role="tabpanel" id="p-desc" aria-labelledby="t-desc" class="prose" tabindex="0">{{ p.description|linebreaks }}</div>
+    <div role="tabpanel" id="p-spec" aria-labelledby="t-spec" tabindex="0" data-tabpanel-hidden>
+      <table class="spec" style="border-collapse:collapse;width:100%"><caption class="sr">Specifications</caption><tbody><tr><th scope="row">SKU</th><td>{{ p.sku }}</td></tr>{% for k, v in p.specs %}<tr><th scope="row">{{ k }}</th><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
+    </div>
+    <div role="tabpanel" id="p-del" aria-labelledby="t-del" tabindex="0" class="prose" data-tabpanel-hidden>
+      <p>We deliver to your halls reception on one of the 3 days before you arrive. Delivery is free on orders over £{{ free_delivery_threshold }}.</p>
+      <p>{% if p.returnable %}You can ask to return this item within 30 days of delivery if it is unused. We collect it from your halls.{% else %}For hygiene reasons this item can’t be returned once opened.{% endif %} <a href="{% url 'core:page' 'returns' %}">Returns policy</a></p>
+    </div>
+  </div>
+  {% if bundles %}
+  <aside class="stack" style="gap:16px" aria-labelledby="pob">
+    <h2 id="pob" style="font-size:24px">Part of these bundles</h2>
+    {% for b in bundles %}<a href="{{ b.get_absolute_url }}" class="card row card-link" style="gap:14px;padding:14px{% if forloop.first %};border:2px solid var(--coral){% endif %}"><span class="ph {{ b.tone }}" style="width:72px;height:72px;flex:none"><span class="i i-gift s32" aria-hidden="true"></span></span><span class="stack" style="gap:4px;flex:1"><b>{{ b.name }}</b><span class="small muted">{{ b.item_count }} items · {{ b.price|money }}</span>{% if b.saving %}<span class="cap" style="color:var(--coral-ink);font-weight:700">Save {{ b.saving|money }} vs buying separately</span>{% endif %}</span><span class="i i-cr" aria-hidden="true"></span></a>{% endfor %}
+  </aside>
+  {% endif %}
+</div>
+
+<section id="reviews" class="rsp" style="display:grid;grid-template-columns:360px 1fr;gap:56px;align-items:start" aria-labelledby="rvh">
+  <div class="card pad-l stack" style="gap:16px">
+    <h2 id="rvh" style="font-size:24px">Ratings &amp; reviews</h2>
+    {% if review_total %}
+    <div class="row" style="gap:14px"><span class="num" style="font:800 56px/1 var(--disp)">{{ p.rating_avg|floatformat:1 }}</span><span class="stack" style="gap:4px"><span role="img" aria-label="{{ p.rating_avg|floatformat:1 }} out of 5 stars">{% stars p.rating_avg "lg" %}</span><span class="small muted num">{{ review_total }} review{{ review_total|pluralize }} · {{ recommend_pct }}% recommend</span></span></div>
+    <div class="stack" style="gap:8px">{% for n, c, pc in dist %}<div class="row small num" style="gap:10px"><span style="width:52px">{{ n }} star{{ n|pluralize }}</span><span class="bar" role="img" aria-label="{{ pc }}% of reviews"><span style="width:{{ pc }}%"></span></span><span style="width:36px;text-align:right">{{ c }}</span></div>{% endfor %}</div>
+    {% else %}<p class="muted">No reviews yet.</p>{% endif %}
+    {% if can_review %}<a href="{% url 'reviews:write' p.slug %}" class="btn btn-s">Write a review</a>{% endif %}
+    <p class="cap muted">Only students who bought this item can review it.</p>
+  </div>
+  <div class="stack">
+    {% if reviews %}
+    <div class="row" style="justify-content:space-between;padding-bottom:4px;gap:12px;flex-wrap:wrap"><b>Showing {{ reviews|length }} of {{ review_total }}</b><form method="get" action="#reviews" data-autosubmit class="row" style="gap:8px"><div class="selw" style="width:200px"><label class="sr" for="rs">Sort reviews</label><select class="inp" id="rs" name="rsort"><option value="recent"{% if review_sort == 'recent' %} selected{% endif %}>Most recent</option><option value="high"{% if review_sort == 'high' %} selected{% endif %}>Highest rating</option><option value="low"{% if review_sort == 'low' %} selected{% endif %}>Lowest rating</option></select><span class="i i-cd" aria-hidden="true"></span></div>{% if show_all_reviews %}<input type="hidden" name="reviews" value="all">{% endif %}<noscript><button class="btn btn-s btn-sm">Sort</button></noscript></form></div>
+    {% for r in reviews %}<article class="rev"{% if forloop.last %} style="border:0"{% endif %}><div class="row" style="gap:10px"><span role="img" aria-label="{{ r.rating }} out of 5 stars">{% stars r.rating %}</span><b>{{ r.title }}</b></div><p>{{ r.body }}</p><span class="small muted">{{ r.author_display }}{% if r.course %} · {{ r.course }}{% endif %} · {% if r.verified_buyer %}<span class="bdg b-ok bdg-sm"><span class="i i-okc" aria-hidden="true"></span>Verified buyer</span> · {% endif %}{{ r.created_at|date:"j F Y" }}</span></article>{% endfor %}
+    {% if not show_all_reviews and review_total > reviews|length %}<a href="?reviews=all&rsort={{ review_sort }}#reviews" class="btn btn-g" style="align-self:flex-start">Show more reviews<span class="i i-cd" aria-hidden="true"></span></a>{% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% if recs %}
+<section class="card" style="padding:32px;display:flex;flex-direction:column;gap:20px" aria-labelledby="fbt">
+  <div class="stack" style="gap:8px"><span class="bdg b-ai" style="align-self:flex-start"><span class="i i-spark" aria-hidden="true"></span>Smart suggestion</span><h2 id="fbt" style="font-size:28px">Frequently bought together</h2><p class="small muted">Students who bought this also chose these. <a href="{% url 'catalog:how_suggestions_work' %}">How suggestions work</a></p></div>
+  <div class="cols-4 keep2" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+    {% for r in recs %}<article class="pc" style="padding:0"><div class="ph {{ r.tone }}">{% if r.image %}<img src="{{ r.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ r.icon }} s64" aria-hidden="true"></span>{% endif %}</div><a href="{{ r.get_absolute_url }}" class="nm">{{ r.name }}</a><div class="row" style="justify-content:space-between"><span class="pr">{{ r.price|money }}</span><form method="post" action="{% url 'orders:basket_add' %}">{% csrf_token %}<input type="hidden" name="kind" value="p"><input type="hidden" name="id" value="{{ r.pk }}"><input type="hidden" name="next" value="{{ request.path }}"><button class="btn btn-s btn-sm" type="submit">Add<span class="sr"> {{ r.name }}</span></button></form></div></article>{% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

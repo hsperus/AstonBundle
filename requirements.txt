@@ -1,0 +1,11 @@
+Django>=5.1,<5.2
+dj-database-url>=2.2
+python-dotenv>=1.0
+psycopg[binary]>=3.2
+whitenoise>=6.7
+gunicorn>=22.0
+Pillow>=10.4
+numpy>=1.26
+scikit-learn>=1.4
+pytest>=8.0
+pytest-django>=4.8

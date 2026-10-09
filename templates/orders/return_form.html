@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Request a return{% endblock %}
+{% block main_style %}padding-top:28px;padding-bottom:88px{% endblock %}
+{% block content %}
+<div class="rsp" style="display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:start">
+  <form method="post" enctype="multipart/form-data" class="stack" style="gap:24px" aria-labelledby="rth" novalidate>{% csrf_token %}
+    <nav class="bc" aria-label="Breadcrumb"><a href="{% url 'accounts:orders' %}">Orders</a><span class="i i-cr" aria-hidden="true"></span><a href="{{ order.get_absolute_url }}" class="num">{{ order.number }}</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">Return</span></nav>
+    <h1 id="rth" style="font-size:40px">Request a return</h1>
+    {% include "partials/form_errors.html" %}
+    <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px"{% if form.lines.errors %} aria-describedby="lines-e"{% endif %}><legend class="lbl" style="margin-bottom:10px;font-size:18px">1. Which items?</legend>
+      {% if form.lines.errors %}<span class="msg err" id="lines-e"><span class="i i-alert" aria-hidden="true"></span>{{ form.lines.errors|join:" " }}</span>{% endif %}
+      {% for l in all_lines %}{% with pk=l.pk|stringformat:"s" %}{% if pk in eligible_ids %}
+      <label class="ri{% if pk in selected %} on{% endif %}" data-ri><input type="checkbox" name="lines" value="{{ l.pk }}"{% if pk in selected %} checked{% endif %} style="width:22px;height:22px;accent-color:var(--navy)"><span class="ph thumb {{ l.tone }}">{% if l.product.image %}<img src="{{ l.product.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ l.icon }}" aria-hidden="true"></span>{% endif %}</span><span style="flex:1"><b>{{ l.name }}</b><br><span class="small muted num">{{ l.unit_price|money }} paid · Qty {{ l.returnable_quantity }}</span></span></label>
+      {% else %}
+      <label class="ri off"><input type="checkbox" disabled style="width:22px;height:22px"><span class="ph thumb {{ l.tone }}">{% if l.product.image %}<img src="{{ l.product.image.url }}" alt="" loading="lazy">{% else %}<span class="i i-{{ l.icon }}" aria-hidden="true"></span>{% endif %}</span><span style="flex:1"><b>{{ l.name }}</b><br><span class="small">{{ l.return_block_reason }}</span></span></label>
+      {% endif %}{% endwith %}{% endfor %}
+    </fieldset>
+    {% include "partials/field.html" with field=form.reason label="2. Why are you returning it?" hide_optional=True %}
+    {% include "partials/field.html" with field=form.comments textarea=True maxlength=500 %}
+    <div class="field"><label class="lbl" for="{{ form.photo.id_for_label }}">Photo <span class="opt">(optional, helps us decide faster)</span></label><input type="file" name="photo" id="{{ form.photo.id_for_label }}" accept="image/jpeg,image/png,image/webp" class="inp" style="padding:10px"{% if form.photo.errors %} aria-invalid="true" aria-describedby="ph-e"{% endif %}>{% if form.photo.errors %}<span class="msg err" id="ph-e"><span class="i i-alert" aria-hidden="true"></span>{{ form.photo.errors|join:" " }}</span>{% else %}<span class="hint">JPG or PNG, up to 5 MB.</span>{% endif %}</div>
+    <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column"><legend class="lbl" style="font-size:18px;margin-bottom:4px">3. How do you want to send it back?</legend>{% for v, l in form.method.field.choices %}<label class="chk"><input type="radio" name="method" value="{{ v }}"{% if form.method.value == v %} checked{% endif %}>{{ l }}</label>{% endfor %}</fieldset>
+    <button class="btn btn-p btn-lg" style="align-self:flex-start" type="submit" data-once>Send return request</button>
+  </form>
+  <aside class="card pad-l stack" style="gap:14px;margin-top:84px"><h2 style="font-size:22px">How returns work</h2><ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px"><li>Request within 30 days of delivery.</li><li>We reply within 2 working days.</li><li>We collect the item from your halls.</li><li>Refund to your original payment in 5–7 days (simulated).</li></ol><a href="{% url 'core:page' 'returns' %}" class="lnk small">Full returns policy</a></aside>
+</div>
+{% endblock %}

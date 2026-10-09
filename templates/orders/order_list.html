@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Your orders{% endblock %}
+{% block main_class %}{% endblock %}{% block main_style %}{% endblock %}
+{% block content %}
+<div class="wrap" style="padding-top:40px;padding-bottom:88px;display:flex;gap:48px;align-items:flex-start">
+  {% include "accounts/_nav.html" with nav="orders" %}
+  <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:20px">
+    <h1>Your orders</h1>
+    <nav class="tabs" aria-label="Filter orders" style="overflow-x:auto">{% for k, l, n in tabs %}<a class="tab{% if k == tab %} on{% endif %}" href="?tab={{ k }}"{% if k == tab %} aria-current="page"{% endif %}>{{ l }} ({{ n }})</a>{% endfor %}</nav>
+    {% if orders %}
+    <div class="card" role="table" aria-label="Orders">
+      <div class="orow" role="row" style="background:#F7F3EC;padding-top:12px;padding-bottom:12px;border-radius:16px 16px 0 0"><span role="columnheader" class="small muted" style="font-weight:700">Order</span><span role="columnheader" class="small muted" style="font-weight:700">Placed</span><span role="columnheader" class="small muted" style="font-weight:700">Items</span><span role="columnheader" class="small muted" style="font-weight:700">Status</span><span role="columnheader" class="sr">Action</span></div>
+      {% for o in orders %}<div class="orow" role="row"><span role="cell" class="stack"><b class="num">{{ o.number }}</b><span class="small muted num">{{ o.total|money }}</span></span><span role="cell" class="num">{{ o.created_at|date:"j M Y" }}</span><span role="cell" class="small">{{ o.summary_text }}</span><span role="cell">{% order_chip o %}</span><span role="cell"><a href="{{ o.get_absolute_url }}" class="btn btn-s btn-sm">View<span class="sr"> order {{ o.number }}</span></a></span></div>{% endfor %}
+    </div>
+    {% else %}
+    <div class="card empty"><p>No orders here yet.</p><a href="{% url 'catalog:bundles' %}" class="btn btn-p">Start shopping</a></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

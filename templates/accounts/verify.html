@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Verify your email{% endblock %}
+{% block main_style %}padding-top:64px;padding-bottom:96px;display:grid;place-items:center{% endblock %}
+{% block content %}
+<form method="post" class="card pad-l stack" style="gap:22px;width:min(600px,100%);box-shadow:var(--sh-2)" aria-labelledby="vh" novalidate data-otp-form>{% csrf_token %}
+  <span class="ph" style="width:72px;height:72px;border-radius:50%"><span class="i i-mail s40" aria-hidden="true"></span></span>
+  <h1 id="vh" style="font-size:36px">Check your Aston email</h1>
+  <p>We sent a 6-digit code to <b>{{ email }}</b>. <a href="{% url 'accounts:register' %}" class="lnk">Wrong email?</a></p>
+  {% if error %}<div class="alert a-err" role="alert"><span class="i i-alert" aria-hidden="true"></span><div><b>{{ error }}</b></div></div>{% elif form.code.errors %}<div class="alert a-err" role="alert"><span class="i i-alert" aria-hidden="true"></span><div><b>{{ form.code.errors|join:" " }}</b></div></div>{% endif %}
+  <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:10px"><legend class="lbl" style="margin-bottom:10px">Verification code</legend>
+    <input type="hidden" name="code" data-otp-value>
+    <div class="otp" data-otp>{% for i in "123456" %}<input class="num{% if error %} bad{% endif %}" inputmode="numeric" maxlength="1" pattern="[0-9]" {% if forloop.first %}autocomplete="one-time-code" autofocus{% else %}autocomplete="off"{% endif %} aria-label="Digit {{ i }} of 6">{% endfor %}</div>
+    <noscript><input class="inp num" name="code" inputmode="numeric" maxlength="6" aria-label="6-digit code"></noscript>
+    <span class="hint">Tip: you can paste the whole code into the first box.</span>
+  </fieldset>
+  <div class="row" style="gap:10px;background:var(--cream-2);border-radius:12px;padding:12px 14px"><span class="i i-clock" style="color:var(--teal-ink)" aria-hidden="true"></span><span>{% if seconds_left %}Code expires in <b class="num" data-countdown="{{ seconds_left }}">{% widthratio seconds_left 60 1 %} min</b>{% else %}<b>This code has expired.</b> Ask for a new one below.{% endif %}</span></div>
+  <button class="btn btn-p btn-lg" type="submit" name="verify" value="1">Verify email</button>
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:12px"><span class="small">Didn’t get it? <button type="submit" name="resend" value="1" class="btn btn-g btn-sm" formnovalidate>Send a new code</button></span><a href="{% url 'accounts:demo_inbox' %}?to={{ email|urlencode }}" class="small lnk" target="_blank" rel="noopener">Open Demo inbox<span class="sr"> (opens in a new tab)</span></a></div>
+  <p class="cap muted">You have {{ attempts_left }} attempt{{ attempts_left|pluralize }} left for this code.</p>
+</form>
+{% endblock %}

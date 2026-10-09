@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block main_style %}padding-top:56px;padding-bottom:88px{% endblock %}
+{% block content %}
+<div style="max-width:520px;margin:0 auto">
+  <form method="post" class="card pad-l stack" style="gap:20px;box-shadow:var(--sh-2)" aria-labelledby="sih" novalidate>{% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <h1 id="sih" style="font-size:36px">Welcome back</h1>
+    {% if error %}<div class="alert a-err" role="alert"><span class="i i-alert" aria-hidden="true"></span><div><b>{{ error }}</b>{% if 'Staff' in error %} <a href="{% url 'staff:signin' %}">Go to Staff sign-in</a>{% endif %}</div></div>{% endif %}
+    {% include "partials/field.html" with field=form.email label="Aston email" type="email" autocomplete="email" %}
+    <div class="stack" style="gap:6px"><div class="row" style="justify-content:flex-end"><a href="{% url 'accounts:forgot' %}" class="small lnk">Forgot password?</a></div>{% include "partials/field.html" with field=form.password label="Password" autocomplete="current-password" %}</div>
+    <label class="chk"><input type="checkbox" name="remember" value="on" checked>Keep me signed in on this device</label>
+    <button class="btn btn-p btn-lg" type="submit">Sign in</button>
+    <p class="muted" style="text-align:center">New to AstonBundle? <a href="{% url 'accounts:register' %}" class="lnk">Create an account</a></p>
+    <p class="small muted" style="text-align:center;padding-top:16px;border-top:1px solid var(--g200)"><span class="i i-lock" aria-hidden="true"></span> AstonBundle staff? <a href="{% url 'staff:signin' %}" class="lnk">Staff sign-in</a></p>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Contact us{% endblock %}
+{% block main_style %}padding-top:56px;padding-bottom:88px{% endblock %}
+{% block content %}
+<div class="rsp" style="display:grid;grid-template-columns:1fr 1.3fr;gap:64px;align-items:start">
+  <div class="stack" style="gap:20px">
+    <span class="eyebrow">Contact</span>
+    <h1>We’re here to help.</h1>
+    <p style="font-size:19px">Ask about delivery dates, your order, returns or anything about arriving in Birmingham. We reply within one working day.</p>
+    <div class="card pad stack" style="gap:14px;box-shadow:none">
+      <div class="row" style="gap:12px"><span class="i i-clock s24" style="color:var(--teal-ink)" aria-hidden="true"></span><span>Monday to Friday, 9:00–17:00 (UK time)</span></div>
+      <div class="row" style="gap:12px"><span class="i i-pin s24" style="color:var(--teal-ink)" aria-hidden="true"></span><span>Pick-up desk on Aston campus, Birmingham (fictional)</span></div>
+      <div class="row" style="gap:12px"><span class="i i-map s24" style="color:var(--teal-ink)" aria-hidden="true"></span><span>Many answers are in the <a href="{% url 'core:guide' %}">Arrival Guide</a>.</span></div>
+    </div>
+  </div>
+  <form method="post" class="card pad-l stack" style="gap:20px;box-shadow:var(--sh-2)" novalidate aria-labelledby="cfh">{% csrf_token %}
+    <h2 id="cfh" style="font-size:26px">Send us a message</h2>
+    {% if limited %}<div class="alert a-err" role="alert"><span class="i i-alert" aria-hidden="true"></span><div><b>Too many messages.</b>Please wait an hour before sending another message.</div></div>{% endif %}
+    {% if form.errors %}<div class="alert a-err" role="alert" data-focus tabindex="-1"><span class="i i-alert" aria-hidden="true"></span><div><b>Please fix {{ form.errors|length }} thing{{ form.errors|length|pluralize }} before sending.</b>{% for f in form %}{% if f.errors %}<a href="#{{ f.id_for_label }}">{{ f.label }}</a>{% if not forloop.last %} · {% endif %}{% endif %}{% endfor %}{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div></div>{% endif %}
+    {% include "partials/field.html" with field=form.name autocomplete="name" %}
+    {% include "partials/field.html" with field=form.email type="email" autocomplete="email" placeholder="name@aston.ac.uk" %}
+    <div class="g2">{% include "partials/field.html" with field=form.topic %}{% include "partials/field.html" with field=form.order_number placeholder="AB-261009-0001" %}</div>
+    {% include "partials/field.html" with field=form.message textarea=True maxlength=2000 %}
+    <div style="position:absolute;left:-9999px" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+    <p class="small muted">We only use your details to reply. See our <a href="{% url 'core:page' 'privacy' %}">privacy notice</a>.</p>
+    <button class="btn btn-p btn-lg" style="align-self:flex-start" type="submit" data-once><span class="i i-send" aria-hidden="true"></span>Send message</button>
+  </form>
+</div>
+{% endblock %}
