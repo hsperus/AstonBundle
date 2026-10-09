@@ -21,7 +21,8 @@ services:
       DJANGO_HTTPS: ${DJANGO_HTTPS:-true}
       DJANGO_SECURE_SSL_REDIRECT: ${DJANGO_SECURE_SSL_REDIRECT:-false}
     ports:
-      - "8000:8000"
+      # Loopback only: on a server, put a reverse proxy (nginx) with HTTPS in front.
+      - "127.0.0.1:${WEB_PORT:-8000}:8000"
     volumes:
       - media:/app/media
     depends_on:
