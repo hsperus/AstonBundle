@@ -25,3 +25,5 @@ jobs:
       - run: python manage.py check --deploy --fail-level ERROR || true
       - run: python manage.py makemigrations --check --dry-run
       - run: pytest
+      - name: Production static build (same as the Docker image)
+        run: DJANGO_DEBUG=false python manage.py collectstatic --noinput
