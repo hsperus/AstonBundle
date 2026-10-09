@@ -36,6 +36,13 @@
   </div>
 </section>
 
+{% if living_from %}<section class="wrap" style="padding-top:72px" aria-labelledby="livh">
+  <a href="{% url 'living:overview' %}" class="liv-teaser rsp">
+    {% if living_image %}<img src="{{ living_image }}" alt="Bundle House student residence with a purple AstonBundle sign" loading="lazy">{% endif %}
+    <div class="stack" style="gap:12px;padding:32px"><span class="eyebrow" style="color:var(--coral-on-navy)">New · AstonBundle Living</span><h2 id="livh" style="color:#fff">Need a room too? Live at Bundle House.</h2><p style="color:#E6D9EA">En-suite rooms and studios six minutes from campus, all bills included, from {{ living_from.price_per_week|money }} a week.</p><span class="btn btn-p" style="align-self:flex-start">See rooms and facilities<span class="i i-ar" aria-hidden="true"></span></span></div>
+  </a>
+</section>
+{% endif %}
 <section class="wrap stack" style="gap:28px;padding-top:72px" aria-labelledby="cath">
   <h2 id="cath">Shop by category</h2>
   <div class="cols-5 keep2" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px">

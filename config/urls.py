@@ -9,6 +9,7 @@ urlpatterns = [
     path("", include("orders.urls")),
     path("", include("reviews.urls")),
     path("", include("support.urls")),
+    path("living/", include("living.urls")),
     path("staff/", include("staff.urls")),
 ]
 
@@ -16,6 +17,7 @@ urlpatterns = [
 # they are only available to staff through staff:return_photo.
 urlpatterns += [
     re_path(r"^media/products/(?P<path>[\w.\-/]+)$", serve, {"document_root": settings.MEDIA_ROOT / "products"}),
+    re_path(r"^media/living/(?P<path>[\w.\-/]+)$", serve, {"document_root": settings.MEDIA_ROOT / "living"}),
 ]
 
 handler404 = "core.views.error_404"

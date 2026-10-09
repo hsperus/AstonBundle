@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}Student accommodation – Bundle House{% endblock %}
+{% block description %}Bundle House by AstonBundle Living: en-suite rooms and studios six minutes from Aston campus, all bills included.{% endblock %}
+{% block main_style %}padding-top:28px;padding-bottom:88px;display:flex;flex-direction:column;gap:64px{% endblock %}
+{% block content %}
+<div class="stack" style="gap:20px">
+  <nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">Accommodation</span></nav>
+  <section class="liv-hero">
+    {% if building_image %}<img src="{{ building_image }}" alt="{{ building.image_alt }}">{% endif %}
+    <div class="liv-hero-text stack" style="gap:16px">
+      <span class="bdg" style="align-self:flex-start;background:var(--coral);color:#fff"><span class="i i-home" aria-hidden="true"></span>AstonBundle Living</span>
+      <h1>{{ building.name }}: your room, ready when you land.</h1>
+      <p style="font-size:19px">En-suite rooms and studios six minutes from campus, with every bill included and your AstonBundle essentials waiting in your room on day one.</p>
+      <div class="row" style="gap:12px;flex-wrap:wrap"><a href="#rooms" class="btn btn-p btn-lg">See room types</a><a href="#facilities" class="btn btn-s btn-lg liv-btn-light">Explore the building</a></div>
+    </div>
+  </section>
+  <p class="small muted">Fictional residence for a university project. Prices and availability are examples; no booking or payment is made.</p>
+</div>
+
+<section class="stack" style="gap:24px" aria-labelledby="rooms-h" id="rooms">
+  <div class="stack" style="gap:8px"><span class="eyebrow">Room types</span><h2 id="rooms-h">Choose your room</h2></div>
+  <div class="liv-rooms">
+    {% for r in rooms %}<article class="card pc">
+      <div class="ph liv-ph">{% if r.image %}<img src="{{ r.image.url }}" alt="{{ r.image_alt }}" loading="lazy">{% else %}<span class="i i-bed s64" aria-hidden="true"></span>{% endif %}</div>
+      {% if r.accessible %}<span class="bdg b-ok" style="align-self:flex-start"><span class="i i-users" aria-hidden="true"></span>Wheelchair accessible</span>{% endif %}
+      <a href="{{ r.get_absolute_url }}" class="nm" style="font-size:19px">{{ r.name }}</a>
+      <span class="small muted">{{ r.size_m2 }} m² · {{ r.bathroom }} · {{ r.kitchen }}</span>
+      <div class="row" style="justify-content:space-between;align-items:flex-end;gap:8px"><span><span class="pr">{{ r.price_per_week|money }}</span><span class="small muted"> / week</span></span><a href="{{ r.get_absolute_url }}" class="btn btn-p btn-sm">View<span class="sr"> {{ r.name }}</span></a></div>
+      <span class="small {% if r.rooms_available %}muted{% endif %}"{% if not r.rooms_available %} style="color:var(--red)"{% endif %}>{% if r.rooms_available %}{{ r.rooms_available }} left for January{% else %}Waiting list only{% endif %}</span>
+    </article>{% endfor %}
+  </div>
+</section>
+
+<section class="stack" style="gap:24px" aria-labelledby="fac-h" id="facilities">
+  <div class="stack" style="gap:8px"><span class="eyebrow">Shared spaces</span><h2 id="fac-h">More than a bedroom</h2><p style="max-width:720px">Every resident can use all of these, included in the rent.</p></div>
+  <div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+    {% for f in facilities %}<article class="card liv-fac">
+      <div class="liv-fac-img">{% if f.image %}<img src="{{ f.image.url }}" alt="{{ f.image_alt }}" loading="lazy">{% else %}<span class="i i-{{ f.icon }} s48" aria-hidden="true"></span>{% endif %}</div>
+      <div class="stack" style="gap:6px;padding:18px 20px 20px"><h3 style="font-size:19px;display:flex;gap:8px;align-items:center"><span class="i i-{{ f.icon }}" style="color:var(--purple)" aria-hidden="true"></span>{{ f.name }}</h3><p class="small">{{ f.summary }}</p></div>
+    </article>{% endfor %}
+  </div>
+</section>
+
+<section class="rsp liv-band" aria-labelledby="inc-h">
+  <div class="stack" style="gap:12px"><span class="eyebrow" style="color:var(--coral-on-navy)">One weekly price</span><h2 id="inc-h">What’s included</h2><p style="color:#E6D9EA">No extra bills to set up when you arrive. Add an AstonBundle bundle to your request and it will be in your room when you collect your key.</p><a href="{% url 'catalog:bundles' %}" class="btn btn-s" style="align-self:flex-start">Browse bundles</a></div>
+  <ul class="liv-incl">{% for i in included %}<li><span class="i i-check" aria-hidden="true"></span>{{ i }}</li>{% endfor %}</ul>
+</section>
+{% endblock %}

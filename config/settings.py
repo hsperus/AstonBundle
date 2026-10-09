@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "support",
     "staff",
     "ai",
+    "living",
 ]
 
 MIDDLEWARE = [

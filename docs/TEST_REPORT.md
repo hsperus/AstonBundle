@@ -1,6 +1,6 @@
 # Automated test report
 
-Generated: 09 October 2026 · Command: `pytest` · Result: **76 passed, 0 failed**
+Generated: 09 October 2026 · Command: `pytest` · Result: **86 passed, 0 failed**
 
 Run on SQLite locally (Python 3.13). GitHub Actions re-runs the suite against PostgreSQL 16 on every push.
 
@@ -84,6 +84,21 @@ Run on SQLite locally (Python 3.13). GitHub Actions re-runs the suite against Po
 | 10 | 3d secure page needs a pending payment | ✅ Pass |
 | 11 | Apple pay confirm | ✅ Pass |
 | 12 | Apple pay cancel and direct access | ✅ Pass |
+
+## Student accommodation (Bundle House) (`tests/test_living.py`)
+
+| # | What is checked | Result |
+|---|---|---|
+| 1 | Overview lists rooms facilities and is in nav | ✅ Pass |
+| 2 | Room page shows price contract total and form | ✅ Pass |
+| 3 | Booking request creates enquiry for staff | ✅ Pass |
+| 4 | Booking request validation (change0-request, not a booking) | ✅ Pass |
+| 5 | Booking request validation (change1-Choose a start date) | ✅ Pass |
+| 6 | Booking request validation (change2-Select a valid choice) | ✅ Pass |
+| 7 | Booking request validation (change3-Enter an email address) | ✅ Pass |
+| 8 | Booking request honeypot and get | ✅ Pass |
+| 9 | Room price must be positive | ✅ Pass |
+| 10 | Staff sees accommodation requests | ✅ Pass |
 
 ## Admin, permissions & security (`tests/test_staff_security.py`)
 

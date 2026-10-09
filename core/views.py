@@ -19,6 +19,9 @@ def _parse_date(value):
 
 
 def home(request):
+    from living.models import RoomType
+    from living.views import building_image_url
+
     bundles = list(Bundle.objects.filter(is_active=True, featured=True).prefetch_related("items__product")[:4])
     categories = Category.objects.annotate(n=Count("products", filter=Q(products__is_active=True))).order_by("sort", "name")
     # "Frequently bought together": start from the most popular product in stock
@@ -35,6 +38,8 @@ def home(request):
         "halls": HALLS,
         "arrival": arrival,
         "earliest": slots.earliest_date(),
+        "living_image": building_image_url(),
+        "living_from": RoomType.objects.filter(is_active=True).order_by("price_per_week").first(),
     })
 
 

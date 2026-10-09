@@ -1,0 +1,60 @@
+{% extends "base.html" %}{% load ab %}
+{% block title %}{{ r.name }} – Bundle House{% endblock %}
+{% block description %}{{ r.summary }}{% endblock %}
+{% block main_style %}padding-top:28px;padding-bottom:88px;display:flex;flex-direction:column;gap:56px{% endblock %}
+{% block content %}
+<div class="stack" style="gap:20px">
+  <nav class="bc" aria-label="Breadcrumb"><a href="{% url 'core:home' %}">Home</a><span class="i i-cr" aria-hidden="true"></span><a href="{% url 'living:overview' %}">Accommodation</a><span class="i i-cr" aria-hidden="true"></span><span aria-current="page">{{ r.name }}</span></nav>
+  <div class="rsp" style="display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:start">
+    <div class="stack" style="gap:20px">
+      <div class="liv-room-img">{% if r.image %}<img src="{{ r.image.url }}" alt="{{ r.image_alt }}">{% else %}<span class="i i-bed s64" aria-hidden="true"></span>{% endif %}</div>
+      <p style="font-size:18px">{{ r.description }}</p>
+      <dl class="liv-specs">
+        <div><dt>Size</dt><dd>{{ r.size_m2 }} m²</dd></div>
+        <div><dt>Bed</dt><dd>{{ r.bed }}</dd></div>
+        <div><dt>Bathroom</dt><dd>{{ r.bathroom }}</dd></div>
+        <div><dt>Kitchen</dt><dd>{{ r.kitchen }}</dd></div>
+        <div><dt>Contract</dt><dd>{{ r.contract_weeks }} weeks</dd></div>
+        <div><dt>Building</dt><dd>{{ building.name }}, six minutes from campus</dd></div>
+      </dl>
+      {% if r.feature_list %}<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">{% for f in r.feature_list %}<li>{{ f }}</li>{% endfor %}</ul>{% endif %}
+    </div>
+
+    <div class="stack" style="gap:20px">
+      <div class="stack" style="gap:10px">
+        <span class="eyebrow">AstonBundle Living</span>
+        <h1 style="font-size:40px">{{ r.name }}</h1>
+        {% if r.accessible %}<span class="bdg b-ok" style="align-self:flex-start"><span class="i i-users" aria-hidden="true"></span>Wheelchair accessible</span>{% endif %}
+        <span><span class="num" style="font:800 40px/1 var(--disp)">{{ r.price_per_week|money }}</span><span class="muted"> per week</span></span>
+        <span class="small muted num">{{ r.contract_weeks }}-week contract: {{ r.contract_total|money }} in total, all bills included.</span>
+        <span class="small {% if r.rooms_available %}muted{% endif %}"{% if not r.rooms_available %} style="color:var(--red)"{% endif %}>{% if r.rooms_available %}{{ r.rooms_available }} room{{ r.rooms_available|pluralize }} left for the January intake{% else %}Fully booked — join the waiting list below{% endif %}</span>
+      </div>
+
+      <form method="post" action="{% url 'living:request' %}" class="card pad-l stack" style="gap:18px;box-shadow:var(--sh-2)" novalidate aria-labelledby="req-h">{% csrf_token %}
+        <h2 id="req-h" style="font-size:24px">Request this room</h2>
+        <p class="small muted">This sends a request to our residence team, who reply within one working day. Nothing is reserved and no payment is taken.</p>
+        {% if form.non_field_errors %}<div class="alert a-err" role="alert"><span class="i i-alert" aria-hidden="true"></span><div><b>{{ form.non_field_errors|join:" " }}</b></div></div>{% endif %}
+        {% if form.errors and not form.non_field_errors %}<div class="alert a-err" role="alert" data-focus tabindex="-1"><span class="i i-alert" aria-hidden="true"></span><div><b>Please fix {{ form.errors|length }} thing{{ form.errors|length|pluralize }} before sending.</b></div></div>{% endif %}
+        {% include "partials/field.html" with field=form.name autocomplete="name" %}
+        {% include "partials/field.html" with field=form.email type="email" autocomplete="email" %}
+        <div class="g2">{% include "partials/field.html" with field=form.room %}{% include "partials/field.html" with field=form.move_in %}</div>
+        {% include "partials/field.html" with field=form.needs textarea=True maxlength=1000 hint=form.needs.help_text %}
+        <div style="position:absolute;left:-9999px" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        <label class="chk"><input type="checkbox" name="agree" value="on"{% if form.agree.value %} checked{% endif %}{% if form.agree.errors %} aria-invalid="true" aria-describedby="agree-e"{% endif %}>I understand this is a request, not a booking.</label>
+        {% if form.agree.errors %}<span class="msg err" id="agree-e"><span class="i i-alert" aria-hidden="true"></span>{{ form.agree.errors|join:" " }}</span>{% endif %}
+        <button class="btn btn-p btn-lg" style="align-self:flex-start" type="submit" data-once><span class="i i-send" aria-hidden="true"></span>Send request</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<section class="stack" style="gap:20px" aria-labelledby="other-h">
+  <h2 id="other-h" style="font-size:28px">Other room types</h2>
+  <div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+    {% for o in rooms %}{% if o.pk != r.pk %}<a href="{{ o.get_absolute_url }}" class="card liv-fac" style="text-decoration:none;color:inherit">
+      <div class="liv-fac-img">{% if o.image %}<img src="{{ o.image.url }}" alt="" loading="lazy">{% endif %}</div>
+      <div class="stack" style="gap:4px;padding:16px 20px 20px"><b style="font-size:18px">{{ o.name }}</b><span class="small muted">{{ o.size_m2 }} m² · {{ o.price_per_week|money }} / week</span></div>
+    </a>{% endif %}{% endfor %}
+  </div>
+</section>
+{% endblock %}

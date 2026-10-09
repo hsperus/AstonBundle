@@ -23,6 +23,8 @@ from django.utils import timezone
 from accounts.models import DemoEmail, Role, User
 from catalog.models import Bundle, BundleItem, Category, Product
 from catalog.seed_data import BUNDLES, CATEGORIES, PRODUCTS
+from living import seed_data as living_data
+from living.models import Facility, RoomType
 from inventory.models import PurchaseOrder, Reason, StockMovement
 from orders.basket import allocate_bundle_price
 from orders.models import Order, OrderEvent, OrderLine, OrderStatus, ReturnItem, ReturnRequest, ReturnStatus
@@ -30,6 +32,7 @@ from reviews.models import Review, refresh_product_rating
 from support.models import Enquiry
 
 SEED_IMAGES = settings.BASE_DIR / "catalog" / "seed_images"
+LIVING_IMAGES = settings.BASE_DIR / "living" / "seed_images"
 
 DEMO_PASSWORDS = {
     "customer": os.environ.get("SEED_CUSTOMER_PASSWORD", "Student2026!demo"),
@@ -97,6 +100,7 @@ class Command(BaseCommand):
         if opts["reset"]:
             self._reset()
         self._catalogue()
+        self._living()
         self._accounts()
         if not opts["no_history"] and not Order.objects.filter(is_test_data=True).exists():
             self._history()
@@ -126,6 +130,33 @@ class Command(BaseCommand):
         DemoEmail.objects.all().delete()
         User.objects.filter(is_test_data=True).delete()
         self.stdout.write("Reset done.")
+
+    @transaction.atomic
+    def _living(self):
+        """Fictional residence (AstonBundle Living). Images are AI-generated (see docs/AI_USE_NOTE.md)."""
+        from django.core.files.storage import default_storage
+
+        def attach(obj, slug):
+            img = LIVING_IMAGES / f"{slug}.webp"
+            if img.exists() and not obj.image:
+                with img.open("rb") as f:
+                    obj.image.save(f"{slug}.webp", File(f), save=True)
+
+        D = living_data
+        for (slug, name, price, weeks, m2, bed, bath, kitchen, avail, accessible, sort, summary, alt, feats, desc) in D.ROOMS:
+            r, _ = RoomType.objects.update_or_create(slug=slug, defaults=dict(
+                name=name, price_per_week=Decimal(price), contract_weeks=weeks, size_m2=m2, bed=bed, bathroom=bath, kitchen=kitchen,
+                rooms_available=avail, accessible=accessible, sort=sort, summary=summary, image_alt=alt, features=feats, description=desc))
+            attach(r, slug)
+        for (slug, name, icon, sort, summary, alt) in D.FACILITIES:
+            f, _ = Facility.objects.update_or_create(slug=slug, defaults=dict(name=name, icon=icon, sort=sort, summary=summary, image_alt=alt))
+            attach(f, slug)
+        building = LIVING_IMAGES / f"{D.BUILDING['image']}.webp"
+        target = f"living/{D.BUILDING['image']}.webp"
+        if building.exists() and not default_storage.exists(target):
+            with building.open("rb") as f:
+                default_storage.save(target, File(f))
+        self.stdout.write(f"Living: {RoomType.objects.count()} room types, {Facility.objects.count()} facilities.")
 
     @transaction.atomic
     def _catalogue(self):

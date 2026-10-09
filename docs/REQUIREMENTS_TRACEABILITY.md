@@ -31,4 +31,5 @@ Source: *DG4AGA E-Commerce Platform Development Project Brief 2026/27*. Test nam
 | 4f | Sustainability, ethics, social, accessibility, security, data governance | About → “Doing this responsibly”; privacy and accessibility pages; AI model cards | **Portfolio narrative: team to write** |
 | 4g | Fictional/test data only | seed data; Demo inbox; test checkout | README |
 | 6 | AI-enabled feature, evaluated, limitations and risks | `ai/recommender.py`, `ai/forecast.py`, Admin → AI insights | `test_association_rules_learn_co_purchases`, `test_recommendations_never_include_out_of_stock`, `test_rules_require_lift_above_one`, `test_suggested_reorder_formula` |
+| 7 | Optional extension that supports the business | Student accommodation (`living` app, `/living/`): room types, facilities, booking requests to the staff inbox | `tests/test_living.py` (10 tests), end-to-end checks “accommodation …” |
 | 8 | README covering setup, dependencies, DB, licences, testing, limitations | `README.md` | — |

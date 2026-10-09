@@ -90,6 +90,7 @@ To test registration, use any address ending in `@aston.ac.uk` (for example `mar
 | Low-stock and out-of-stock thresholds | per product; rule explained on the Inventory page |
 | Operational summaries | Admin dashboard: KPIs, orders chart, low stock, forecast |
 | AI extension | “Frequently bought together” (association rules) and demand forecast (quantile gradient boosting), see §7 |
+| Extension: student accommodation | `/living/`: Bundle House, a fictional residence six minutes from campus — four room types (price per week, contract total, size, availability, an accessible studio) and seven shared facilities. Students send a booking request (validated, honeypot, rate-limited); it arrives in Admin → Enquiries as topic “Accommodation”. Nothing is reserved or paid |
 
 ## 6. Architecture
 
@@ -108,6 +109,7 @@ To test registration, use any address ending in `@aston.ac.uk` (for example `mar
 | `support` | contact form and enquiries |
 | `staff` | admin panel |
 | `ai` | recommender and forecast |
+| `living` | student accommodation: room types, facilities, booking requests |
 
 * **Design system:** `static/css/astonbundle.css` (tokens and UI kit from the team’s Claude Design files) plus `static/css/site.css` (layout and responsive rules).
 
@@ -147,7 +149,7 @@ Both models are trained by `python manage.py train_models` (the seed command run
 ## 8. Tests
 
 ```bash
-pytest                    # 76 tests, about 5 seconds (SQLite or PostgreSQL)
+pytest                    # 86 tests, about 5 seconds (SQLite or PostgreSQL)
 ```
 
 The tests cover:
@@ -161,7 +163,7 @@ The tests cover:
 
 GitHub Actions (`.github/workflows/tests.yml`) runs the tests against PostgreSQL on every push.
 
-End-to-end smoke test over real HTTP (84 checks: registration, password reset, basket, every payment outcome, cancellation, returns, reviews, admin journeys and role permissions):
+End-to-end smoke test over real HTTP (89 checks: registration, password reset, basket, every payment outcome, cancellation, returns, reviews, accommodation requests, admin journeys and role permissions):
 
 ```bash
 python manage.py runserver          # in one terminal
@@ -183,11 +185,14 @@ Evidence documents for the evidence pack:
 | Icons | Outline icons based on Lucide, ISC Licence |
 | Illustrations and logo | made by the team |
 | Product photos | Generated with OpenAI `gpt-image-1`; branded items use the team’s own AstonBundle logo as a reference image. No third-party logos. Prompts: `catalog/seed_images/_prompts.json`. See `docs/AI_USE_NOTE.md`. |
+| Accommodation photos | Generated with OpenAI `gpt-image-1` using the team’s AstonBundle logo as a reference image; the building is fictional and does not show any real Aston University residence or logo. Prompts: `living/seed_images/_prompts.json`. |
 | Libraries | Django (BSD-3), scikit-learn (BSD-3), NumPy (BSD-3), WhiteNoise (MIT), Gunicorn (MIT), psycopg (LGPL-3), Pillow (MIT-CMU), python-dotenv (BSD-3), dj-database-url (BSD-2) |
 | Weather figures (Arrival Guide) | rounded typical values for guidance |
 | Exchange rates | indicative, fixed in `config/settings.py` (`FX_RATES`); only used for the “≈” estimate |
 
 ## 10. Known limitations
+
+* Bundle House is a fictional residence. Booking requests are recorded for staff to answer; there is no room allocation, contract signing or rent payment.
 
 * Payments and emails are simulations by design (brief §3.1 and the ethics rules). The card and Apple Pay screens imitate Stripe test mode and Apple Pay; they are not connected to either service.
 * Product photos are AI-generated images, not photos of real stock. Admins can replace them by uploading photos.

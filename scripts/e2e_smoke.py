@@ -168,6 +168,20 @@ def public():
     check("contact form is recorded", Enquiry.objects.filter(message__contains=TAG).exists(), b.url)
 step("public", public)
 
+
+def living():
+    b = Browser()
+    b.go("/living/"); check("accommodation page lists rooms and facilities", b.status == 200 and "Bundle House" in b.text() and "Classic En-suite" in b.text() and "Cinema room" in b.text(), b.status)
+    img = re.search(r'src="(/media/living/[^"]+)"', b.html)
+    check("accommodation photo is served", img and b._do(img.group(1))[0] == 200)
+    b.go("/living/rooms/studio/"); check("room page shows price and request form", "£259.00" in b.text() and 'name="move_in"' in b.html)
+    b.submit({"name": "E2E Resident", "email": f"living.{TAG}@example.com", "move_in": "2027-01-09", "needs": f"E2E {TAG}", "agree": None}, has="move_in")
+    check("room request without confirmation is refused", "request, not a booking" in b.text() and not Enquiry.objects.filter(message__contains=TAG, topic="accommodation").exists())
+    b.submit({"name": "E2E Resident", "email": f"living.{TAG}@example.com", "move_in": "2027-01-09", "needs": f"E2E {TAG}", "agree": "on"}, has="move_in")
+    e = Enquiry.objects.filter(topic="accommodation", message__contains=TAG).first()
+    check("room request reaches the staff inbox", e is not None and "Studio" in e.message and "/contact/sent" in b.url, b.url)
+step("living", living)
+
 # ---------------------------------------------------------------- register, verify, profile, password, reset
 cust = Browser()
 def register():

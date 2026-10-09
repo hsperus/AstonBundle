@@ -9,6 +9,7 @@ TOPICS = [
     ("product", "Product question"),
     ("account", "My account"),
     ("accessibility", "Accessibility"),
+    ("accommodation", "Accommodation (Bundle House)"),
     ("other", "Something else"),
 ]
 

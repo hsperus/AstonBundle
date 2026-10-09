@@ -158,7 +158,23 @@ dialog.modal::backdrop{background:rgba(30,10,39,.55)}
 /* Checkout */ .wallet-rows{margin:0}.wallet-rows>div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:14px 24px;border-bottom:1px solid var(--g200)}
 /* Checkout */ .wallet-rows dt{color:var(--g600);font-size:14px}.wallet-rows dd{margin:0}.wallet-total{font-size:22px;font-weight:700}
 .collage{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#fff}.collage img{border-radius:0}
-@media (max-width:1180px){
+/* Living */ .liv-hero{display:grid;grid-template-columns:1fr 1.25fr;border-radius:24px;overflow:hidden;background:var(--navy);color:var(--cream)}
+/* Living */ .liv-hero>img{width:100%;height:100%;min-height:440px;object-fit:cover;order:2}
+/* Living */ .liv-hero-text{padding:40px 44px;align-self:center}
+/* Living */ .liv-hero-text h1{color:#fff;font-size:44px}.liv-hero .btn.liv-btn-light{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+/* Living */ .liv-hero .btn.liv-btn-light:hover{background:rgba(255,255,255,.12)}
+/* Living */ .liv-ph{aspect-ratio:3/2}
+/* Living */ .liv-rooms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+/* Living */ .liv-fac{overflow:hidden;padding:0;display:flex;flex-direction:column}
+/* Living */ .liv-fac-img{aspect-ratio:3/2;background:var(--cream-2);display:grid;place-items:center}.liv-fac-img img{width:100%;height:100%;object-fit:cover}
+/* Living */ .liv-band{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:center;background:var(--navy);color:var(--cream);border-radius:24px;padding:40px 48px}
+/* Living */ .liv-band h2{color:#fff}.liv-incl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+/* Living */ .liv-incl li{display:flex;gap:10px;align-items:center}.liv-incl .i{color:var(--coral-on-navy)}
+/* Living */ .liv-room-img{border-radius:20px;overflow:hidden;aspect-ratio:3/2;background:var(--cream-2)}.liv-room-img img{width:100%;height:100%;object-fit:cover}
+/* Living */ .liv-specs{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin:0}.liv-specs dt{color:var(--g600);font-size:14px}.liv-specs dd{margin:0;font-weight:700}
+/* Living */ .liv-teaser{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;background:var(--navy);border-radius:24px;overflow:hidden;text-decoration:none}
+/* Living */ .liv-teaser img{width:100%;height:100%;min-height:280px;object-fit:cover}.liv-teaser:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+@media (max-width:1180px){.liv-rooms{grid-template-columns:repeat(2,minmax(0,1fr))}
   .cols-4{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   .cols-5{grid-template-columns:repeat(3,minmax(0,1fr))!important}
 }
@@ -166,7 +182,7 @@ dialog.modal::backdrop{background:rgba(30,10,39,.55)}
   .hdr .guide-link{display:none}
   .nav .nav-note{display:none}
 }
-@media (max-width:900px){
+@media (max-width:900px){.liv-hero{grid-template-columns:1fr}.liv-hero>img{order:0;min-height:0;height:300px}.liv-teaser img{min-height:220px}
   .frame h1{font-size:34px!important}.frame h2{font-size:28px}.frame h3{font-size:21px}.frame h4{font-size:18px}
   body.frame{font-size:16px}
   .wrap{padding:0 16px}
@@ -202,7 +218,7 @@ dialog.modal::backdrop{background:rgba(30,10,39,.55)}
   .toc{display:none!important}
   .chd .wrap{height:auto!important;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
 }
-@media (max-width:560px){.paycards{grid-template-columns:1fr}
+@media (max-width:560px){.liv-rooms{grid-template-columns:1fr}.liv-hero{grid-template-columns:1fr}.liv-hero>img{order:0;min-height:0;height:220px}.liv-hero-text{padding:24px 20px}.liv-hero-text h1{font-size:30px}.liv-band{padding:28px 20px}.liv-incl,.liv-specs{grid-template-columns:1fr}.paycards{grid-template-columns:1fr}
   .irow{grid-template-columns:56px 1fr!important}
   .irow>:nth-child(3){grid-column:1/-1;justify-content:flex-start!important}
 

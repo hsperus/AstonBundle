@@ -1,0 +1,86 @@
+[
+  {
+    "image": "room-accessible",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Accessible student studio designed for wheelchair users: spacious open floor, height-adjustable desk, lowered kitchenette counter, wide doorway to a level-access wet room with grab rails, double bed with a purple cushion embroidered with the AstonBundle logo.",
+    "file": "accessible-studio.webp"
+  },
+  {
+    "image": "building",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Exterior of a modern five-storey student residence of red-brick and light stone with large windows, a glass entrance and a few young trees. Above the entrance, a large illuminated purple sign shows the AstonBundle logo in white. Blue sky, early evening light.",
+    "file": "building.webp"
+  },
+  {
+    "image": "cinema",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Small private cinema room for residents: tiered rows of purple velvet seats, large screen showing a soft purple glow with the white AstonBundle logo on it, warm dim lighting.",
+    "file": "cinema.webp"
+  },
+  {
+    "image": "room-classic",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Classic en-suite student bedroom: three-quarter bed with white bedding and a purple throw, a cushion embroidered with the AstonBundle logo, oak desk with chair and lamp, wardrobe, pinboard, window with city view, door to a small private shower room.",
+    "file": "classic-ensuite.webp"
+  },
+  {
+    "image": "games",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Games and social room: pool table, table football, sofas, a big TV with a games console, string lights. A purple neon sign on the wall shows the AstonBundle logo.",
+    "file": "games.webp"
+  },
+  {
+    "image": "gym",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Residents' gym: treadmills, exercise bikes, rack of dumbbells, rubber floor, mirrors, bright lighting. The AstonBundle logo in white on a purple wall.",
+    "file": "gym.webp"
+  },
+  {
+    "image": "kitchen",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Shared student kitchen and dining area for six: two hobs, ovens, large fridge, long oak dining table with chairs, bright and clean. A purple wall panel with the white AstonBundle logo above the dining table.",
+    "file": "kitchen.webp"
+  },
+  {
+    "image": "room-premium",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Premium en-suite student bedroom, larger: double bed with cream bedding, purple cushion embroidered with the AstonBundle logo, wide oak desk with monitor stand, armchair, full-height wardrobe, large window, door to a modern shower room.",
+    "file": "premium-ensuite.webp"
+  },
+  {
+    "image": "reception",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Reception lobby of the student residence: curved oak reception desk, parcel lockers along one wall, comfortable seating, plants. On the purple feature wall behind the desk, a large white AstonBundle logo.",
+    "file": "reception.webp"
+  },
+  {
+    "image": "room-studio",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Self-contained student studio: double bed, compact kitchenette with hob, sink and fridge, small dining table for two, oak desk, sofa with a purple cushion embroidered with the AstonBundle logo, large window.",
+    "file": "studio.webp"
+  },
+  {
+    "image": "study",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Quiet study lounge: rows of oak desks with task lamps and power sockets, group study booths with screens, bookshelves, large windows. The AstonBundle logo is etched on a frosted glass partition.",
+    "file": "study.webp"
+  },
+  {
+    "image": "terrace",
+    "model": "gpt-image-1",
+    "endpoint": "edits+logo",
+    "prompt": "Professional architectural interior/exterior photograph for a student accommodation website, landscape 3:2. Modern, bright, welcoming UK student residence in Birmingham. Natural daylight, realistic materials, clean and tidy, warm cream walls and oak wood with deep purple (#5F0066) brand accents. No people. Photorealistic, high detail. The supplied image is the AstonBundle brand logo: a white paper-plane triangle above the single word 'AstonBundle'. Include exactly this logo in the scene as described, clearly visible and legible, keeping its shape and spelling exactly (triangle mark + 'AstonBundle'). Do not add any other words, signs, logos or brand names anywhere.\nScene: Rooftop terrace of the student residence with outdoor seating, planters, festoon lights and a view over the Birmingham skyline at sunset. A purple parasol printed with the white AstonBundle logo.",
+    "file": "terrace.webp"
+  }
+]
