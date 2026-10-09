@@ -3,6 +3,7 @@
 services:
   db:
     image: postgres:16
+    restart: unless-stopped
     environment:
       POSTGRES_DB: astonbundle
       POSTGRES_USER: astonbundle
@@ -15,6 +16,7 @@ services:
       retries: 10
   web:
     build: .
+    restart: unless-stopped
     env_file: .env
     environment:
       DATABASE_URL: postgres://astonbundle:${POSTGRES_PASSWORD:-astonbundle}@db:5432/astonbundle
