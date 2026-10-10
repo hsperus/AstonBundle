@@ -28,12 +28,13 @@
   <div class="cols-5" style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:24px">
     {% for ini, name, bg in team %}<div class="card pad stack" style="gap:10px;align-items:flex-start"><span class="av" style="background:var(--{{ bg }})" aria-hidden="true">{{ ini }}</span><b>{{ name }}</b><span class="small muted">Group 2 · DG4AGA</span></div>{% endfor %}
   </div>
-  <section id="credits" class="card pad-l stack" style="gap:14px" aria-labelledby="crh"><h2 id="crh" style="font-size:26px">Credits &amp; sources</h2><p class="muted">AstonBundle is a fictional business for the DG4AGA module. All products, prices, reviews, orders and people in the shop are test data. No real payments are taken and no emails are sent.</p>
+  <section id="credits" class="card pad-l stack" style="gap:14px" aria-labelledby="crh"><h2 id="crh" style="font-size:26px">Credits &amp; sources</h2><p class="muted">AstonBundle is a fictional business for the DG4AGA module. All products, prices, reviews, orders, people and the Bundle House residence are test data. No real payments are taken and no emails are sent.</p>
     <div class="cols-3" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
       <div class="stack" style="gap:4px"><b>Fonts</b><span class="small">Bricolage Grotesque, Atkinson Hyperlegible, Alegreya Sans — SIL Open Font Licence 1.1, hosted on our own server</span></div>
       <div class="stack" style="gap:4px"><b>Icons</b><span class="small">Outline icons based on Lucide — ISC Licence</span></div>
-      <div class="stack" style="gap:4px"><b>Images</b><span class="small">Illustrations and product placeholders made by the team. No third-party photos are used.</span></div>
-      <div class="stack" style="gap:4px"><b>Software</b><span class="small">Django (BSD-3), scikit-learn (BSD-3), pandas (BSD-3), NumPy (BSD-3), WhiteNoise (MIT), Gunicorn (MIT)</span></div>
+      <div class="stack" style="gap:4px"><b>Illustrations &amp; logo</b><span class="small">Made by the team. The Aston University logo is not used anywhere on this site.</span></div>
+      <div class="stack" style="gap:4px"><b>Photos</b><span class="small">All product and accommodation photos are AI-generated (OpenAI image model) from the team’s prompts, using the team’s own AstonBundle logo. They do not show real stock or a real building.</span></div>
+      <div class="stack" style="gap:4px"><b>Software</b><span class="small">Django (BSD-3), scikit-learn (BSD-3), NumPy (BSD-3), WhiteNoise (MIT), Gunicorn (MIT), Pillow (MIT-CMU), psycopg (LGPL-3)</span></div>
       <div class="stack" style="gap:4px"><b>Weather figures</b><span class="small">Rounded typical averages for Birmingham, for guidance only.</span></div>
       <div class="stack" style="gap:4px"><b>Exchange rates</b><span class="small">Indicative rates for the home-currency estimate only. You always pay in GBP.</span></div>
     </div></section>

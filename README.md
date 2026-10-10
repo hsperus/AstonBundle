@@ -60,6 +60,8 @@ Then run `python manage.py migrate` and `python manage.py seed` once. `python ma
 
 ## 4. Test accounts (for markers)
 
+The passwords below are the defaults for a **local** install. The deployed site uses different passwords, supplied to the marking team in the submission notes.
+
 | Role | Email | Password | Sign in at |
 |---|---|---|---|
 | Student (customer) | demo.student@aston.ac.uk | `Student2026!demo` | `/account/sign-in/` |
