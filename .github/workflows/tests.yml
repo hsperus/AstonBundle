@@ -5,7 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        # Official image via the AWS public mirror: Docker Hub rate-limits shared CI runners
+        image: public.ecr.aws/docker/library/postgres:16
         env:
           POSTGRES_USER: ab
           POSTGRES_PASSWORD: ab
